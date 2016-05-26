@@ -80,14 +80,43 @@ void* platform_process(void *fd)
 	}
 	xyprintf(0,"json_wlanparameter : %s", json_wlanparameter->valuestring);
 
-	cJSON *json_apmac = NULL;
-	json_apmac = cJSON_GetObjectItem(json,"apmac");
-	if (!json_apmac){
+	cJSON *json_acip = NULL;
+	json_acip = cJSON_GetObjectItem(json,"wlanacip");
+	if (!json_acip){
 		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
 		goto JSON_ERR;
 	}
-	xyprintf(0,"json_apmac : %s", json_apmac->valuestring);
-	
+	xyprintf(0,"json_acip : %s", json_acip->valuestring);
+
+	cJSON *json_usernum = NULL;
+	json_usernum = cJSON_GetObjectItem(json,"usernum");
+	if (!json_usernum){
+		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+		goto JSON_ERR;
+	}
+	xyprintf(0,"json_usernum : %s", json_usernum->valuestring);
+
+	cJSON *json_usercode = NULL;
+	json_usercode = cJSON_GetObjectItem(json,"usercode");
+	if (!json_usercode){
+		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+		goto JSON_ERR;
+	}
+	xyprintf(0,"json_usercode : %s", json_usercode->valuestring);
+
+	ST_REQ_AUTH req_auth;
+	strcpy(req_auth.userip, json_wlanuserip->valuestring);
+	strcpy(req_auth.name, json_usernum->valuestring);
+	strcpy(req_auth.password, json_usercode->valuestring);
+
+
+	if( SendReqAuthAndRecv(&req_auth, json_acip->valuestring, PORTAL_TO_AC_PORT ) ){
+
+	}
+
+
+
+
 	// 发送返回值
 	char *res = "{\"stat\":\"ok\"}";
 	xyprintf(0, "** res -- %d -- %s", strlen(res), res);
@@ -98,9 +127,6 @@ void* platform_process(void *fd)
 	
 	cJSON_Delete(json);
 	wt_close_sock( &sockfd );
-#if SERVER_MUTUAL_DEBUG
-	xyprintf(0, "PLATFORM:Request completion of the platform!!!");
-#endif
 	return (void*)0;
 
 	//错误处理 使用内核中常用的goto模式～

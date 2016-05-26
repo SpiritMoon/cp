@@ -5,10 +5,14 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 ACACDIR	wt/Rules.mk	/^ACACDIR=$(WTDIR)\/acac$/;"	m
-ACK_AUTH	header.h	/^const UINT8 ACK_AUTH      = 0x04;   \/\/Client<-----Server  Server AC设备对Portal Server请求认证报文的响应报文$/;"	v
-ACK_CHALLENGE	header.h	/^const UINT8 ACK_CHALLENGE = 0x02;   \/\/Client<-----Server  Server AC设备对Portal Server请求Challeng报文的响应报文$/;"	v
-ACK_INFO	header.h	/^const UINT8 ACK_INFO      = 0x0a;   \/\/Server --> Client   信息询问的应答报文$/;"	v
-ACK_LOGOUT	header.h	/^const UINT8 ACK_LOGOUT    = 0x06;   \/\/Client<-----Server  Server AC设备对Portal Server请求下线报文的响应报文  $/;"	v
+ACK_AUTH	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 ACK_AUTH      = 0x04;   \/\/Client<-----Server  Server AC�豸��Portal Server������֤���ĵ���Ӧ����$/;"	v
+ACK_AUTH	header.h	101;"	d
+ACK_CHALLENGE	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 ACK_CHALLENGE = 0x02;   \/\/Client<-----Server  Server AC�豸��Portal Server����Challeng���ĵ���Ӧ����$/;"	v
+ACK_CHALLENGE	header.h	99;"	d
+ACK_INFO	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 ACK_INFO      = 0x0a;   \/\/Server --> Client   ��Ϣѯ�ʵ�Ӧ����$/;"	v
+ACK_INFO	header.h	108;"	d
+ACK_LOGOUT	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 ACK_LOGOUT    = 0x06;   \/\/Client<-----Server  Server AC�豸��Portal Server�������߱��ĵ���Ӧ����  $/;"	v
+ACK_LOGOUT	header.h	104;"	d
 AC_CMD_CTRLCMD	wt/header.h	486;"	d
 AC_CMD_CTRLCMD_ACK	wt/header.h	487;"	d
 AC_CMD_DOWNLOAD_APINFO	wt/header.h	484;"	d
@@ -32,7 +36,8 @@ AC_LOGIN_ILLEGAL	wt/header.h	/^	AC_LOGIN_ILLEGAL	=0x05,  \/\/ 随机ID 错误，
 AC_LOGIN_LOGGED	wt/header.h	/^	AC_LOGIN_LOGGED		=0x04,  \/\/ 账号已登录$/;"	e	enum:ac_login_state
 AC_LOGIN_LOGINOK	wt/header.h	/^	AC_LOGIN_LOGINOK	=0x07,  \/\/ 登陆成功$/;"	e	enum:ac_login_state
 AC_LOGIN_NOUSER	wt/header.h	/^	AC_LOGIN_NOUSER		=0x02,  \/\/ 没有该用户$/;"	e	enum:ac_login_state
-AFF_ACK_AUTH	header.h	/^const UINT8 AFF_ACK_AUTH  = 0x07;   \/\/Client----->Server  Server  Portal Server对收到的认证成功响应报文的确认报文$/;"	v
+AFF_ACK_AUTH	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 AFF_ACK_AUTH  = 0x07;   \/\/Client----->Server  Server  Portal Server���յ�����֤�ɹ���Ӧ���ĵ�ȷ�ϱ���$/;"	v
+AFF_ACK_AUTH	header.h	105;"	d
 AG_CONN_FAIL_ERR	wt/header.h	291;"	d
 AG_CONN_FAIL_ISOK	wt/header.h	289;"	d
 AG_CONN_FAIL_NONE	wt/header.h	288;"	d
@@ -52,25 +57,36 @@ BG_PORT	wt/header.h	357;"	d
 BG_ROUTER_ADD	wt/header.h	468;"	d
 BG_ROUTER_DEL	wt/header.h	469;"	d
 BIN_DIR	wt/Rules.mk	/^BIN_DIR=\/mx$/;"	m
+BIT_ISSET	cmcc_portal/cmcc_portal/UtilFunc.h	29;"	d
 BOSSDIR	wt/Rules.mk	/^BOSSDIR=$(WTDIR)\/boss$/;"	m
 BOSS_DEBUG	wt/ss.c	9;"	d	file:
 BOSS_PROCESS_THREAD	wt/ss.c	/^void* BOSS_PROCESS_THREAD(void* fd)$/;"	f
 BOSS_SOCKFD	wt/ss.c	/^static int		BOSS_SOCKFD;						\/\/ 与boss连接的BOSS_SOCKFD$/;"	v	file:
 CC	Makefile	/^CC=gcc$/;"	m
 CC	wt/Rules.mk	/^CC=gcc$/;"	m
+CODE.cpp	cmcc_portal/cmcc_portal/makefile	/^CODE.cpp = Portal.cpp \\$/;"	m
+CONFIG_FILE_NAME	header.h	14;"	d
 CONFIG_FILE_NAME	wt/header.h	14;"	d
 CONN_BOSS	wt/ss.c	/^int CONN_BOSS()$/;"	f
+CPP.o	cmcc_portal/cmcc_portal/makefile	/^CPP.o = $(CODE.cpp:.cpp=.o)$/;"	m
 CThread_pool	wt/pool.c	/^} CThread_pool;$/;"	t	typeref:struct:__anon3	file:
 CThread_worker	wt/pool.c	/^} CThread_worker;$/;"	t	typeref:struct:worker	file:
-Challenge	header.h	/^const UINT8 Challenge       = 0x03;        \/\/16（固定） Chap方式加密的魔术字$/;"	v
-ChapPassWord	header.h	/^const UINT8 ChapPassWord    = 0x04;        \/\/16（固定）  经过Chap方式加密后的密码$/;"	v
+Challenge	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 Challenge       = 0x03;        \/\/16���̶��� Chap��ʽ���ܵ�ħ����$/;"	v
+Challenge	header.h	114;"	d
+ChapPassWord	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 ChapPassWord    = 0x04;        \/\/16���̶���  ����Chap��ʽ���ܺ������$/;"	v
+ChapPassWord	header.h	115;"	d
+CreateTCPSocket	cmcc_portal/cmcc_portal/SocketFunc.cpp	/^bool CreateTCPSocket(int &sockfd)$/;"	f
+CreateUDPSock	cmcc_portal/cmcc_portal/SocketFunc.cpp	/^bool CreateUDPSock(int &sockfd)$/;"	f
+CreateUDPSock	portal.c	/^int CreateUDPSock(int *sockfd)$/;"	f
 DAILY_REPORT_THREAD	wt/time_task.c	/^void* DAILY_REPORT_THREAD(void *fd)$/;"	f
-DEPEND	Makefile	/^DEPEND=main.o logs.o net.o server_mutual.o cJSON.o$/;"	m
+DEPEND	Makefile	/^DEPEND=main.o logs.o net.o server_mutual.o portal.o cJSON.o$/;"	m
 ERROR_NONE	wt/header.h	/^	ERROR_NONE			=0x01,  \/\/ 未知错误$/;"	e	enum:ac_login_state
 F	wt/encode.c	85;"	d	file:
 FF	wt/encode.c	93;"	d	file:
+FLAGS	cmcc_portal/cmcc_portal/makefile	/^FLAGS = -g -Wall $(INCLUDE)$/;"	m
 G	wt/encode.c	86;"	d	file:
 GACDIR	wt/Rules.mk	/^GACDIR=$(WTDIR)\/gac$/;"	m
+GCC	cmcc_portal/cmcc_portal/makefile	/^GCC = g++$/;"	m
 GET_MD5	wt/encode.c	/^void GET_MD5(char *in, unsigned int len, char *out)$/;"	f
 GET_MD5	wt/encode.c	14;"	d	file:
 GG	wt/encode.c	94;"	d	file:
@@ -80,11 +96,13 @@ H	wt/encode.c	87;"	d	file:
 HH	wt/encode.c	95;"	d	file:
 I	wt/encode.c	88;"	d	file:
 II	wt/encode.c	96;"	d	file:
+INCLUDE	cmcc_portal/cmcc_portal/makefile	/^INCLUDE = -I.\/ -I..\/include$/;"	m
 INCLUDE	wt/Rules.mk	/^INCLUDE=-I$(PUBDIR)$/;"	m
 INIT_LIST_HEAD	wt/list.h	/^static inline void INIT_LIST_HEAD(struct list_head *list)$/;"	f
 INVALID_DATA_CLEAN_THREAD	wt/time_task.c	/^void* INVALID_DATA_CLEAN_THREAD(void *fd)$/;"	f
 IS_CONN_BOSS	wt/guide_header.h	12;"	d
 LIB	Makefile	/^LIB=-lpthread -lm$/;"	m
+LIBDIR	cmcc_portal/cmcc_portal/makefile	/^LIBDIR = -L -lltime -L..\/lib -lktstd -L\/usr\/lib64 -L\/usr\/local\/lib -lz -lm -lcrypto$/;"	m
 LIST_HEAD	wt/list.h	22;"	d
 LIST_HEAD_INIT	wt/list.h	20;"	d
 LOGS_MAX_SIZE	header.h	9;"	d
@@ -102,32 +120,45 @@ MAX_EPOLL_NUM	header.h	12;"	d
 MAX_EPOLL_NUM	wt/header.h	12;"	d
 MD5_MSG_RESOLOVE	wt/encode.c	/^int MD5_MSG_RESOLOVE(char* version, char* md5_msg, int md5_len, char *msg, int *len)$/;"	f
 MONDAY	wt/time_task.c	1154;"	d	file:
-NTF_LOGOUT	header.h	/^const UINT8 NTF_LOGOUT    = 0x08;   \/\/Server --> Client   Client 用户被强制下线通知报文 $/;"	v
+NTF_LOGOUT	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 NTF_LOGOUT    = 0x08;   \/\/Server --> Client   Client �û���ǿ������֪ͨ���� $/;"	v
+NTF_LOGOUT	header.h	106;"	d
+OBJS.o	cmcc_portal/cmcc_portal/makefile	/^OBJS.o = $(CPP.o)$/;"	m
 ODBCLIB	wt/Rules.mk	/^ODBCLIB=-lodbc$/;"	m
 ONCE_METASTASIS_LOG_NUM	wt/time_task.c	382;"	d	file:
 PASS_ARRAY	wt/encode.c	/^char PASS_ARRAY[6][10] = {$/;"	v
 PASS_ARRAY	wt/encode.c	10;"	d	file:
 PMKCachePeriod	wt/header.h	/^	unsigned short	PMKCachePeriod;			\/\/PMK缓存周期(网络字节序)$/;"	m	struct:ac_wpa_key_st
-PORTAL_IP_LEN	header.h	106;"	d
-PORTAL_MAC_LEN	header.h	107;"	d
-PORTAL_PASSWORD_LEN	header.h	105;"	d
-PORTAL_USERNAME_LEN	header.h	104;"	d
+PORTAL_IP_LEN	cmcc_portal/cmcc_portal/Common.h	11;"	d
+PORTAL_IP_LEN	header.h	143;"	d
+PORTAL_MAC_LEN	cmcc_portal/cmcc_portal/Common.h	12;"	d
+PORTAL_MAC_LEN	header.h	144;"	d
+PORTAL_PASSWORD_LEN	cmcc_portal/cmcc_portal/Common.h	10;"	d
+PORTAL_PASSWORD_LEN	header.h	142;"	d
+PORTAL_TO_AC_PORT	header.h	23;"	d
+PORTAL_USERNAME_LEN	cmcc_portal/cmcc_portal/Common.h	9;"	d
+PORTAL_USERNAME_LEN	header.h	141;"	d
 PP	wt/encode.c	91;"	d	file:
+PRINT_USER_LOG	header.h	16;"	d
 PRINT_USER_LOG	wt/header.h	18;"	d
 PROBEDIR	wt/Rules.mk	/^PROBEDIR=$(WTDIR)\/probe$/;"	m
 PTHREADLIB	wt/Rules.mk	/^PTHREADLIB=-lpthread -lm$/;"	m
 PUBDIR	wt/Rules.mk	/^PUBDIR=$(WTDIR)\/pub$/;"	m
 PUBLIC_DEPEND	Makefile	/^PUBLIC_DEPEND=$(PUBDIR)\/*.o$/;"	m
 PUBLIC_DEPEND	wt/Rules.mk	/^PUBLIC_DEPEND=$(PUBDIR)\/*.o$/;"	m
-PassWord	header.h	/^const UINT8 PassWord        = 0x02;        \/\/<=16（可变） 用户提交的明文密码$/;"	v
+PassWord	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 PassWord        = 0x02;        \/\/<=16���ɱ䣩 �û��ύ����������$/;"	v
+PassWord	header.h	113;"	d
 PreAuthentication	wt/header.h	/^	unsigned short	PreAuthentication;		\/\/预认证0:关闭1:打开(网络字节序)$/;"	m	struct:ac_wpa_key_st
 RECV_BOSS_DATA	wt/ss.c	/^int RECV_BOSS_DATA(int *len, unsigned int recv_time)$/;"	f
 RECV_CANUSE_NUM	wt/ss.c	/^int RECV_CANUSE_NUM(int len)$/;"	f
 RECV_ROUTER	wt/ss.c	/^int RECV_ROUTER(int len)$/;"	f
-REQ_AUTH	header.h	/^const UINT8 REQ_AUTH      = 0x03;   \/\/Client----->Server  Server Portal Server向AC设备发送的请求认证报文$/;"	v
-REQ_CHALLENGE	header.h	/^const UINT8 REQ_CHALLENGE = 0x01;   \/\/Client----->Server  Portal Server 向AC设备发送的请求Challeng报文$/;"	v
-REQ_INFO	header.h	/^const UINT8 REQ_INFO      = 0x09;   \/\/Client --> Server   信息询问报文 $/;"	v
-REQ_LOGOUT	header.h	/^const UINT8 REQ_LOGOUT    = 0x05;   \/\/Client----->Server  Server  若ErrCode字段值为0x00，表示此报文是Portal Server向AC设备发送的请求用户下线报文；$/;"	v
+REQ_AUTH	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 REQ_AUTH      = 0x03;   \/\/Client----->Server  Server Portal Server��AC�豸���͵�������֤����$/;"	v
+REQ_AUTH	header.h	100;"	d
+REQ_CHALLENGE	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 REQ_CHALLENGE = 0x01;   \/\/Client----->Server  Portal Server ��AC�豸���͵�����Challeng����$/;"	v
+REQ_CHALLENGE	header.h	98;"	d
+REQ_INFO	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 REQ_INFO      = 0x09;   \/\/Client --> Server   ��Ϣѯ�ʱ��� $/;"	v
+REQ_INFO	header.h	107;"	d
+REQ_LOGOUT	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 REQ_LOGOUT    = 0x05;   \/\/Client----->Server  Server  ��ErrCode�ֶ�ֵΪ0x00����ʾ�˱�����Portal Server��AC�豸���͵������û����߱��ģ�$/;"	v
+REQ_LOGOUT	header.h	102;"	d
 RESERVE_DAYS	wt/time_task.c	383;"	d	file:
 RL	wt/encode.c	89;"	d	file:
 RTS_ADD	wt/rts.c	/^void RTS_ADD(char* name, unsigned int num)$/;"	f
@@ -144,23 +175,36 @@ SEND_SHANGHU_PART	wt/ss.c	/^int SEND_SHANGHU_PART(char* buf, int num)$/;"	f
 SERVER_MUTUAL_DEBUG	server_mutual.c	8;"	d	file:
 SGUIDEDIR	wt/Rules.mk	/^SGUIDEDIR=$(WTDIR)\/sguide$/;"	m
 SHANGHU_ONCE_NUM	wt/header.h	358;"	d
+SOCK_STAT_ADD	header.h	17;"	d
 SOCK_STAT_ADD	wt/header.h	20;"	d
+SOCK_STAT_ADDED	header.h	18;"	d
 SOCK_STAT_ADDED	wt/header.h	21;"	d
+SOCK_STAT_DEL	header.h	19;"	d
 SOCK_STAT_DEL	wt/header.h	22;"	d
-SOURCE	Makefile	/^SOURCE=main.c logs.c net.c server_mutual.c cJSON.c$/;"	m
+SOURCE	Makefile	/^SOURCE=main.c logs.c net.c server_mutual.c portal.c cJSON.c$/;"	m
 SOURCE	wt/Makefile	/^SOURCE=utils.c sql.c net.c logs.c ini.c pool.c cJSON.c ac_utils.c encode.c order.c$/;"	m
 STATISCITS_DEBUG	wt/time_task.c	8;"	d	file:
 STATISTICS_THREAD	wt/time_task.c	/^void* STATISTICS_THREAD(void *fd)$/;"	f
 STMPDIR	wt/Rules.mk	/^STMPDIR=$(WTDIR)\/stmp$/;"	m
+ST_PORTAL_AC	cmcc_portal/cmcc_portal/Common.h	/^}ST_PORTAL_AC;$/;"	t	typeref:struct:portal_ac
 ST_PORTAL_AC	header.h	/^}ST_PORTAL_AC;$/;"	t	typeref:struct:portal_ac
+ST_PORTAL_AC_ATTR	cmcc_portal/cmcc_portal/Common.h	/^}ST_PORTAL_AC_ATTR;$/;"	t	typeref:struct:portal_ac_attr
 ST_PORTAL_AC_ATTR	header.h	/^}ST_PORTAL_AC_ATTR;$/;"	t	typeref:struct:portal_ac_attr
+ST_REQ_AUTH	cmcc_portal/cmcc_portal/Common.h	/^}ST_REQ_AUTH;$/;"	t	typeref:struct:req_auth
 ST_REQ_AUTH	header.h	/^}ST_REQ_AUTH;$/;"	t	typeref:struct:req_auth
+ST_REQ_MAC_QUERY	cmcc_portal/cmcc_portal/Common.h	/^}ST_REQ_MAC_QUERY;$/;"	t	typeref:struct:req_mac_query
 ST_REQ_MAC_QUERY	header.h	/^}ST_REQ_MAC_QUERY;$/;"	t	typeref:struct:req_mac_query
-TARGET	Makefile	/^TARGET=a.out$/;"	m
+SendReqAuthAndRecv	cmcc_portal/cmcc_portal/Portal.cpp	/^int SendReqAuthAndRecv(const ST_REQ_AUTH& req_auth, const char* ac_ip, const int port)$/;"	f
+SendReqAuthAndRecv	portal.c	/^int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port)$/;"	f
+SendReqLogoutAndRecv	cmcc_portal/cmcc_portal/Portal.cpp	/^int SendReqLogoutAndRecv(const char* userip, const char* ac_ip, const int port)$/;"	f
+SendReqLogoutAndRecv	portal.c	/^int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)$/;"	f
+TARGET	Makefile	/^TARGET=cp.out$/;"	m
+TARGET	cmcc_portal/cmcc_portal/makefile	/^TARGET = libPortal.so$/;"	m
 TESTDIR	wt/Rules.mk	/^TESTDIR=$(WTDIR)\/test$/;"	m
 TFREE_DEBUG	wt/time_task.c	110;"	d	file:
 TFREE_THREAD	wt/time_task.c	/^void* TFREE_THREAD(void *fd)$/;"	f
-UserName	header.h	/^const UINT8 UserName        = 0x01;        \/\/<=253 （可变） 用 户 名$/;"	v
+UserName	cmcc_portal/cmcc_portal/Common.h	/^const UINT8 UserName        = 0x01;        \/\/<=253 ���ɱ䣩 �� �� ��$/;"	v
+UserName	header.h	112;"	d
 VERSION_ARRAY	wt/encode.c	/^const char* VERSION_ARRAY[1] = {"5.1.17"};$/;"	v
 VERSION_ARRAY	wt/encode.c	9;"	d	file:
 WRITE_LOG	header.h	10;"	d
@@ -168,8 +212,14 @@ WRITE_LOG	wt/header.h	10;"	d
 WTDIR	wt/Rules.mk	/^WTDIR=$(CURDIR)$/;"	m
 WT_HEADER_H	header.h	7;"	d
 WT_HEADER_H	wt/header.h	7;"	d
+WT_SQL_ERROR	header.h	15;"	d
 WT_SQL_ERROR	wt/header.h	16;"	d
+_CMCC_COMMON_H_	cmcc_portal/cmcc_portal/Common.h	2;"	d
+_GLOBAL_H	cmcc_portal/cmcc_portal/Global.h	15;"	d
 _LINUX_LIST_H	wt/list.h	2;"	d
+_SOCKETFUNC_H	cmcc_portal/cmcc_portal/SocketFunc.h	15;"	d
+_UTILFUNC_H	cmcc_portal/cmcc_portal/UtilFunc.h	15;"	d
+__PORTAL_H__	cmcc_portal/cmcc_portal/Portal.h	15;"	d
 __list_add	wt/list.h	/^static inline void __list_add(struct list_head *new,$/;"	f
 __list_del	wt/list.h	/^static inline void __list_del(struct list_head * prev, struct list_head * next)$/;"	f
 __u16	wt/header.h	/^typedef unsigned short __u16;$/;"	t
@@ -183,6 +233,7 @@ ac_ap_wifi_base_conf_st	wt/header.h	/^struct ac_ap_wifi_base_conf_st$/;"	s
 ac_ap_wifi_base_list_st	wt/header.h	/^struct ac_ap_wifi_base_list_st$/;"	s
 ac_ap_wifi_wds_conf_st	wt/header.h	/^struct ac_ap_wifi_wds_conf_st$/;"	s
 ac_ap_wifi_wds_list_st	wt/header.h	/^struct ac_ap_wifi_wds_list_st$/;"	s
+ac_attr	cmcc_portal/cmcc_portal/Common.h	/^	char ac_attr[512];$/;"	m	struct:portal_ac
 ac_attr	header.h	/^	char ac_attr[512];$/;"	m	struct:portal_ac
 ac_base_info_st	wt/header.h	/^struct ac_base_info_st$/;"	s
 ac_head_st	wt/header.h	/^typedef struct ac_head_st$/;"	s
@@ -197,6 +248,7 @@ ac_state_st	wt/header.h	/^typedef struct ac_state_st$/;"	s
 ac_state_st	wt/header.h	/^}ac_state_st;$/;"	t	typeref:struct:ac_state_st
 ac_wep_key_st	wt/header.h	/^struct ac_wep_key_st$/;"	s
 ac_wpa_key_st	wt/header.h	/^struct ac_wpa_key_st$/;"	s
+acip	cmcc_portal/cmcc_portal/Common.h	/^    char acip[PORTAL_IP_LEN]; $/;"	m	struct:req_mac_query
 acip	header.h	/^    char acip[PORTAL_IP_LEN]; $/;"	m	struct:req_mac_query
 addr	ac_recv.c	/^	struct sockaddr_in addr;$/;"	v	typeref:struct:sockaddr_in
 addr	wt/header.h	/^	__u8  addr[128];				\/\/ 设备地址$/;"	m	struct:ac_base_info_st
@@ -255,8 +307,10 @@ ap_version	wt/header.h	/^	__u8  ap_version[32];	\/\/ AP 版本信息$/;"	m	struc
 ap_yo_num	wt/header.h	/^	unsigned int ap_yo_num;$/;"	m	struct:bg_daily_msg
 arg	wt/pool.c	/^    void			*arg;						\/\/ 回调函数的参数$/;"	m	struct:worker	file:
 atime	wt/header.h	/^	__u8  atime[50];		\/\/ 系统启动到现在的时间（以秒为单位）$/;"	m	struct:ac_ap_base_conf_st
-attrNum	header.h	/^	UINT8 attrNum;		\/\/ 表示其后边可变长度的属性字段属性的个数，长度为 1 字节$/;"	m	struct:portal_ac
-attrVal	header.h	/^	UINT8 attrVal[253];$/;"	m	struct:portal_ac_attr
+attrNum	cmcc_portal/cmcc_portal/Common.h	/^	UINT8 attrNum;		\/\/ ��ʾ���߿ɱ䳤�ȵ������ֶ����Եĸ���������Ϊ 1 �ֽ�$/;"	m	struct:portal_ac
+attrNum	header.h	/^	unsigned char attrNum;		\/\/ 表示其后边可变长度的属性字段属性的个数，长度为 1 字节$/;"	m	struct:portal_ac
+attrVal	cmcc_portal/cmcc_portal/Common.h	/^	UINT8 attrVal[253];$/;"	m	struct:portal_ac_attr
+attrVal	header.h	/^	unsigned char attrVal[253];$/;"	m	struct:portal_ac_attr
 auth_code	wt/guide_header.h	/^	unsigned int auth_code;$/;"	m	struct:authenticate_node
 auth_code	wt/header.h	/^	unsigned int auth_code;				\/\/ 认证服务器代码$/;"	m	struct:ag_msg_conn_res
 auth_srv	wt/header.h	/^	__u8	auth_srv[64];			\/\/ 认证服务器地址,比如: www.auth_srv.com:8080$/;"	m	struct:cer_msg_st
@@ -375,6 +429,9 @@ cgv_third_port	wt/main.c	/^int  cgv_third_port;					\/\/ 开放给第三方程�
 channel	wt/header.h	/^	__u8 channel;								\/\/ 频道$/;"	m	struct:ac_ap_wifi_base_conf_st
 child	cJSON.h	/^	struct cJSON *child;		\/* An array or object item will have a child pointer pointing to a chain of the items in the array\/object. *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
 cli_addr	ac_recv.c	/^	struct sockaddr_in cli_addr;$/;"	v	typeref:struct:sockaddr_in
+cmcclogin_handler	cmcc_portal/cmcclogin/mod_cmcclogin.c	/^static int cmcclogin_handler(request_rec *r)$/;"	f	file:
+cmcclogin_module	cmcc_portal/cmcclogin/mod_cmcclogin.c	/^module AP_MODULE_DECLARE_DATA cmcclogin_module = {$/;"	v
+cmcclogin_register_hooks	cmcc_portal/cmcclogin/mod_cmcclogin.c	/^static void cmcclogin_register_hooks(apr_pool_t *p)$/;"	f	file:
 cmdID	wt/header.h	/^	unsigned char	cmdID;			\/\/ 命令号，参考上述宏定义。$/;"	m	struct:ac_head_st
 code_convert	wt/utils.c	/^int code_convert(char *from_charset, char *to_charset, char *inbuf, size_t inlen, char *outbuf, size_t outlen)$/;"	f
 company_addr	wt/header.h	/^	char	company_addr[256];$/;"	m	struct:bg_conn_msg
@@ -425,7 +482,8 @@ encrypt_type	wt/header.h	/^	unsigned char encrypt_type; \/*0:NONE,1:WEP*\/$/;"	m
 end_ipaddr	wt/header.h	/^	__u32 end_ipaddr;		\/\/ 结束IP地址(网络字节序)$/;"	m	struct:ac_ap_dhcp_conf_st
 env_handle	wt/header.h	/^	SQLHENV		env_handle;						\/\/ Handle ODBC environment 环境句柄$/;"	m	struct:wt_sql_handle
 ep	cJSON.c	/^static const char *ep;$/;"	v	file:
-errCode	header.h	/^	UINT8 errCode;		\/\/ ErrCode字段和Type字段一起表示一定的意义，长度为 1字节$/;"	m	struct:portal_ac
+errCode	cmcc_portal/cmcc_portal/Common.h	/^	UINT8 errCode;		\/\/ ErrCode�ֶκ�Type�ֶ�һ���ʾһ�������壬����Ϊ 1�ֽ�$/;"	m	struct:portal_ac
+errCode	header.h	/^	unsigned char errCode;		\/\/ ErrCode字段和Type字段一起表示一定的意义，长度为 1字节$/;"	m	struct:portal_ac
 err_msg	wt/header.h	/^	char		err_msg[200];$/;"	m	struct:wt_sql_handle
 firstByteMark	cJSON.c	/^static const unsigned char firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC };$/;"	v	file:
 flag	wt/header.h	/^	__u32							flag;				\/\/ 第1位设置为1表示base_info有参数。。。(网络字节序)，在服务端下发时才有用$/;"	m	struct:ac_ap_conf_st
@@ -437,7 +495,13 @@ ftime	wt/header.h	/^	__u8  ftime[50];		\/\/ 系统空闲的时间（以秒为单
 fuzeren	wt/header.h	/^		char			fuzeren[32];$/;"	m	struct:bg_shanghu_msg::bg_shanghu_node
 fzr_name	wt/header.h	/^	char	fzr_name[32];$/;"	m	struct:bg_conn_msg
 fzr_tel	wt/header.h	/^	char	fzr_tel[32];$/;"	m	struct:bg_conn_msg
+g_ACPort	cmcc_portal/cmcc_portal/Portal.cpp	/^int g_ACPort = 11111;$/;"	v
+g_Log	cmcc_portal/cmcc_portal/send.cpp	/^CKTLog g_Log;$/;"	v
+g_Log	cmcc_portal/cmcclogin/mod_cmcclogin.c	/^	static CKTLog	g_Log;$/;"	v	file:
+g_bInit	cmcc_portal/cmcclogin/mod_cmcclogin.c	/^	static bool	g_bInit = false;$/;"	v	file:
 gateway	wt/header.h	/^	__u32 gateway;			\/\/ AP 网关(网络字节序)$/;"	m	struct:ac_ap_base_conf_st
+generateSerialNo	cmcc_portal/cmcc_portal/Portal.cpp	/^unsigned short generateSerialNo()$/;"	f
+generateSerialNo	portal.c	/^unsigned short generateSerialNo()$/;"	f
 get_config	wt/main.c	/^int get_config()$/;"	f
 get_cur_queue_size	wt/pool.c	/^unsigned int inline get_cur_queue_size()$/;"	f
 get_ini	wt/ini.c	/^int get_ini(char *buf, const char* key, char* value)$/;"	f
@@ -475,6 +539,7 @@ http_passwd	wt/header.h	/^	__u8 http_passwd[32];	\/\/ WB管理密码$/;"	m	struc
 http_username	wt/header.h	/^	__u8 http_username[32];	\/\/ WEB管理账号$/;"	m	struct:ac_ap_base_conf_st
 id	wt/header.h	/^		unsigned int	id;$/;"	m	struct:bg_rts_msg::bg_rt_node
 init_ini	wt/ini.c	/^int init_ini(char* filename, int *fd, char* buf, int len)$/;"	f
+intIp_to_strIp	cmcc_portal/cmcc_portal/UtilFunc.cpp	/^string intIp_to_strIp(unsigned int pIp)$/;"	f
 ip	wt/guide_header.h	/^	unsigned int ip;						\/\/设备ip$/;"	m	struct:authenticate_stat
 ip_to_str	wt/utils.c	/^void ip_to_str(char* cip, __u32 sip)$/;"	f
 ipaddr	wt/header.h	/^	__u32 ipaddr;			\/\/ AP IP地址(网络字节序)$/;"	m	struct:ac_ap_base_conf_st
@@ -498,7 +563,8 @@ key4	wt/header.h	/^	unsigned char key4[27];$/;"	m	struct:ac_wep_key_st
 key4type	wt/header.h	/^	unsigned char key4type; \/*1:ASCII 0:HEX*\/$/;"	m	struct:ac_wep_key_st
 last_time	wt/guide_header.h	/^	time_t		 last_time;					\/\/最后状态报告时间$/;"	m	struct:authenticate_node
 lease_time	wt/header.h	/^	__u32 lease_time;		\/\/ 租期时间(秒)(网络字节序)$/;"	m	struct:ac_ap_dhcp_conf_st
-len	header.h	/^	UINT8 len;$/;"	m	struct:portal_ac_attr
+len	cmcc_portal/cmcc_portal/Common.h	/^	UINT8 len;$/;"	m	struct:portal_ac_attr
+len	header.h	/^	unsigned char len;$/;"	m	struct:portal_ac_attr
 len	wt/header.h	/^	__u16	len;					\/\/ 数据包的长度$/;"	m	struct:msg_head_st
 len	wt/header.h	/^	unsigned int	len;$/;"	m	struct:bg_msg_head
 len	wt/header.h	/^	unsigned short len;				\/\/ 报文长度$/;"	m	struct:ag_msg_head
@@ -544,6 +610,8 @@ logs_tm	wt/logs.c	/^static time_t logs_tm;				\/\/ log时间$/;"	v	file:
 mac	wt/header.h	/^	__u8 mac[6];				\/\/ MAC地址$/;"	m	struct:ac_ap_wifi_wds_list_st
 mac	wt/header.h	/^	char		 mac[16];$/;"	m	struct:ag_msg_mac
 mac_num	wt/header.h	/^		unsigned int	mac_num;$/;"	m	struct:bg_shanghu_msg::bg_shanghu_node
+main	cmcc_portal/cmcc_portal/recv.cpp	/^int main()$/;"	f
+main	cmcc_portal/cmcc_portal/send.cpp	/^int main(int argc ,char* argv[])$/;"	f
 main	main.c	/^int main(int argc, char** argv)$/;"	f
 main	wt/main.c	/^int main(int argc, char** argv)$/;"	f
 malloc_fn	cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
@@ -631,6 +699,8 @@ msg_order_wifi_monitor_get	wt/header.h	/^	msg_order_wifi_monitor_get,			\/\/53 �
 msg_order_wifi_monitor_result	wt/header.h	/^	msg_order_wifi_monitor_result,		\/\/52 配置无线探针回复$/;"	e	enum:msg_order_type
 msg_order_wifi_monitor_send	wt/header.h	/^	msg_order_wifi_monitor_send,			\/\/54 获取无线探针设置回复$/;"	e	enum:msg_order_type
 msg_order_wifi_monitor_set	wt/header.h	/^	msg_order_wifi_monitor_set = 51,		\/\/51 配置无线探针$/;"	e	enum:msg_order_type
+msleep	cmcc_portal/cmcc_portal/UtilFunc.h	28;"	d
+name	cmcc_portal/cmcc_portal/Common.h	/^    char name[PORTAL_USERNAME_LEN];$/;"	m	struct:req_auth
 name	header.h	/^    char name[PORTAL_USERNAME_LEN];$/;"	m	struct:req_auth
 name	wt/guide_header.h	/^	char				name[32];$/;"	m	struct:rt_node
 name	wt/header.h	/^		char			name[128];$/;"	m	struct:bg_shanghu_msg::bg_shanghu_node
@@ -660,13 +730,16 @@ pad	wt/header.h	/^	__u8 pad[2];								\/\/ 保留$/;"	m	struct:ac_ap_wifi_wds_c
 pad	wt/header.h	/^	unsigned char	pad;$/;"	m	struct:ac_wpa_key_st
 pad	wt/header.h	/^	unsigned char pad[2];$/;"	m	struct:ac_wep_key_st
 pad2	wt/header.h	/^	__u8 pad2[2];			\/\/ 保留	$/;"	m	struct:ac_ap_base_conf_st
-pap_chap	header.h	/^	UINT8 pap_chap;		\/\/ 认证方式，长度为 1 字节$/;"	m	struct:portal_ac
+pap_chap	cmcc_portal/cmcc_portal/Common.h	/^	UINT8 pap_chap;		\/\/ ��֤��ʽ������Ϊ 1 �ֽ�$/;"	m	struct:portal_ac
+pap_chap	header.h	/^	unsigned char pap_chap;		\/\/ 认证方式，长度为 1 字节$/;"	m	struct:portal_ac
 parse_array	cJSON.c	/^static const char *parse_array(cJSON *item,const char *value)$/;"	f	file:
 parse_number	cJSON.c	/^static const char *parse_number(cJSON *item,const char *num)$/;"	f	file:
 parse_object	cJSON.c	/^static const char *parse_object(cJSON *item,const char *value)$/;"	f	file:
 parse_string	cJSON.c	/^static const char *parse_string(cJSON *item,const char *str)$/;"	f	file:
 parse_value	cJSON.c	/^static const char *parse_value(cJSON *item,const char *value)$/;"	f	file:
 passwd	wt/header.h	/^	int passwd;						\/\/ 请求码$/;"	m	struct:ag_msg_conn
+password	cmcc_portal/cmcc_portal/Common.h	/^	char password[PORTAL_PASSWORD_LEN];\/\/��ѯ�����û���¼����$/;"	m	struct:req_mac_query
+password	cmcc_portal/cmcc_portal/Common.h	/^    char password[PORTAL_PASSWORD_LEN];$/;"	m	struct:req_auth
 password	header.h	/^	char password[PORTAL_PASSWORD_LEN];\/\/查询到的用户登录密码$/;"	m	struct:req_mac_query
 password	header.h	/^    char password[PORTAL_PASSWORD_LEN];$/;"	m	struct:req_auth
 php_sockfd	wt/header.h	/^	int		php_sockfd;$/;"	m	struct:bg_conn_msg
@@ -675,10 +748,8 @@ phy_mode	wt/header.h	/^	__u8 phy_mode;								\/\/ PHY模式，0:CCK,1:OFDM,2:HT
 plan_month_statiscits	wt/time_task.c	/^int plan_month_statiscits(wt_sql_handle *s1_handle, wt_sql_handle *s2_handle, wt_sql_handle *iud_handle, char* s_yesterday, char* s_month_first_day)$/;"	f
 plan_yesterday_statiscits	wt/time_task.c	/^int plan_yesterday_statiscits(wt_sql_handle *s1_handle, wt_sql_handle *s2_handle, wt_sql_handle *iud_handle, char* s_yesterday)$/;"	f
 platform_conn_thread	server_mutual.c	/^void* platform_conn_thread(void *fd)$/;"	f
-platform_mac_process	server_mutual.c	/^int platform_mac_process(cJSON *json, cJSON *order_json)$/;"	f
 platform_port	wt/header.h	/^	unsigned int platform_port;			\/\/ 认证服务器开放给平台的端口$/;"	m	struct:ag_msg_conn_res
 platform_process	server_mutual.c	/^void* platform_process(void *fd)$/;"	f
-platform_router_process	server_mutual.c	/^int platform_router_process(cJSON *json, cJSON *order_json)$/;"	f
 pool	wt/pool.c	/^CThread_pool *pool = NULL;			\/\/线程池对象？$/;"	v
 pool_add_worker	wt/pool.c	/^int pool_add_worker (void *(*process) (void *arg, wt_sql_handle *handle), void *arg)$/;"	f
 pool_adjust	wt/pool.c	/^void* pool_adjust (void* arg)$/;"	f
@@ -688,8 +759,10 @@ port	wt/guide_header.h	/^	int					port;				\/\/开放给路由器的端口$/;"	m
 port	wt/header.h	/^	__u32 port;				\/\/ 代理端口$/;"	m	struct:ac_proxy_st
 port	wt/header.h	/^	unsigned int port;				\/\/ 开放的端口$/;"	m	struct:ag_msg_conn
 port	wt/header.h	/^	unsigned short port;			\/\/ 端口, 修改后会重启集中管理和认证$/;"	m	struct:addr_set_st
-portal_ac	header.h	/^	portal_ac()$/;"	f	struct:portal_ac
+portal_ac	cmcc_portal/cmcc_portal/Common.h	/^	portal_ac()$/;"	f	struct:portal_ac
+portal_ac	cmcc_portal/cmcc_portal/Common.h	/^typedef struct portal_ac$/;"	s
 portal_ac	header.h	/^typedef struct portal_ac$/;"	s
+portal_ac_attr	cmcc_portal/cmcc_portal/Common.h	/^typedef struct portal_ac_attr$/;"	s
 portal_ac_attr	header.h	/^typedef struct portal_ac_attr$/;"	s
 prev	cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::
 prev	wt/list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::
@@ -698,6 +771,7 @@ print_number	cJSON.c	/^static char *print_number(cJSON *item)$/;"	f	file:
 print_object	cJSON.c	/^static char *print_object(cJSON *item,int depth,int fmt)$/;"	f	file:
 print_string	cJSON.c	/^static char *print_string(cJSON *item)	{return print_string_ptr(item->valuestring);}$/;"	f	file:
 print_string_ptr	cJSON.c	/^static char *print_string_ptr(const char *str)$/;"	f	file:
+print_usage	cmcc_portal/cmcc_portal/send.cpp	/^void print_usage(int type)$/;"	f
 print_value	cJSON.c	/^static char *print_value(cJSON *item,int depth,int fmt)$/;"	f	file:
 process	wt/pool.c	/^    void			*(*process) (void* arg, wt_sql_handle *hendle);	\/\/ 回调函数，任务运行时会调用此函数，注意也可声明成其它形式$/;"	m	struct:worker	file:
 qq	wt/header.h	/^	char	qq[16];$/;"	m	struct:bg_conn_msg
@@ -712,10 +786,13 @@ random_pair	wt/header.h	/^}random_pair;$/;"	t	typeref:struct:random_pair
 rarurl	wt/header.h	/^		char			rarurl[128];$/;"	m	struct:bg_rts_msg::bg_rt_node
 readRet	ac_recv.c	/^	int readRet = recvfrom(sockfd, (unsigned char*)&stAckAuth, sizeof(stAckAuth), 0, (struct sockaddr*)&cli_addr, &addr_len);$/;"	v
 rekeyinterval	wt/header.h	/^	unsigned int	rekeyinterval;			\/\/密钥更新间隔(网络字节序)$/;"	m	struct:ac_wpa_key_st
-reqID	header.h	/^	UINT16 reqID;		\/\/ 2个字节，由AC设备随机生成$/;"	m	struct:portal_ac
-req_auth	header.h	/^    req_auth()$/;"	f	struct:req_auth
+reqID	cmcc_portal/cmcc_portal/Common.h	/^	UINT16 reqID;		\/\/ 2���ֽڣ���AC�豸�������$/;"	m	struct:portal_ac
+reqID	header.h	/^	unsigned short reqID;		\/\/ 2个字节，由AC设备随机生成$/;"	m	struct:portal_ac
+req_auth	cmcc_portal/cmcc_portal/Common.h	/^    req_auth()$/;"	f	struct:req_auth
+req_auth	cmcc_portal/cmcc_portal/Common.h	/^typedef struct req_auth$/;"	s
 req_auth	header.h	/^typedef struct req_auth$/;"	s
-req_mac_query	header.h	/^    req_mac_query()$/;"	f	struct:req_mac_query
+req_mac_query	cmcc_portal/cmcc_portal/Common.h	/^    req_mac_query()$/;"	f	struct:req_mac_query
+req_mac_query	cmcc_portal/cmcc_portal/Common.h	/^typedef struct req_mac_query$/;"	s
 req_mac_query	header.h	/^typedef struct req_mac_query$/;"	s
 res	wt/header.h	/^	unsigned char	res;			\/\/ 保留$/;"	m	struct:ac_head_st
 reserve	wt/header.h	/^	unsigned char	reserve;$/;"	m	struct:bg_msg_head
@@ -740,7 +817,8 @@ router_used_num	wt/header.h	/^	unsigned int router_used_num;$/;"	m	struct:bg_dai
 router_yo_num	wt/header.h	/^	unsigned int router_yo_num;$/;"	m	struct:bg_daily_msg
 routers	wt/header.h	/^	unsigned int routers[0];$/;"	m	struct:ag_msg_router
 rssi_down	wt/header.h	/^	char rssi_down;								\/\/ 信号低于阀值主动踢下线$/;"	m	struct:ac_ap_wifi_base_conf_st
-rsv	header.h	/^	UINT8 rsv;			\/\/ 保留字段，长度为 1 字节，在所有报文中值为 0$/;"	m	struct:portal_ac
+rsv	cmcc_portal/cmcc_portal/Common.h	/^	UINT8 rsv;			\/\/ �����ֶΣ�����Ϊ 1 �ֽڣ������б�����ֵΪ 0$/;"	m	struct:portal_ac
+rsv	header.h	/^	unsigned char rsv;			\/\/ 保留字段，长度为 1 字节，在所有报文中值为 0$/;"	m	struct:portal_ac
 rt_node	wt/guide_header.h	/^typedef struct rt_node{$/;"	s
 rt_node	wt/guide_header.h	/^}rt_node;$/;"	t	typeref:struct:rt_node
 rt_num	wt/header.h	/^	int		rt_num;				\/\/ 设备类型数$/;"	m	struct:bg_num_msg
@@ -752,10 +830,13 @@ run	wt/main.c	/^void run()$/;"	f
 sec_flag	wt/header.h	/^	__u16	sec_flag;				\/\/ 数据加密方式,0: 不加密；其它可扩展$/;"	m	struct:msg_head_st
 security_mode	wt/header.h	/^	__u8 security_mode;		\/\/ 0:关闭,1:开放式,2:共享式,3:WEPAUTO,4:WPA个人,5:WPA2个人,6:WPA\/WPA2个人,7:WPA,8:WPA2,9:WPA1WPA2,10:IEEE8021X(占时不做)$/;"	m	struct:ac_ap_wifi_base_list_st
 send_addr_set	wt/order.c	/^int send_addr_set(int sockfd, msg_head_st* msg_head, int order, char* addr, int port)$/;"	f
+serial	cmcc_portal/cmcc_portal/Common.h	/^	int serial;$/;"	m	struct:req_mac_query
 serial	header.h	/^	int serial;$/;"	m	struct:req_mac_query
-serialNo	header.h	/^	UINT16 serialNo;	\/\/ 报文的序列号，长度为 2 字节$/;"	m	struct:portal_ac
+serialNo	cmcc_portal/cmcc_portal/Common.h	/^	UINT16 serialNo;	\/\/ ���ĵ����кţ�����Ϊ 2 �ֽ�$/;"	m	struct:portal_ac
+serialNo	header.h	/^	unsigned short serialNo;	\/\/ 报文的序列号，长度为 2 字节$/;"	m	struct:portal_ac
 session	wt/header.h	/^	unsigned int	session;		\/\/ 会话ID$/;"	m	struct:ac_head_st
 session_timeout	wt/header.h	/^	unsigned int	session_timeout;		\/\/会话超时(网络字节序)$/;"	m	struct:ac_wpa_key_st
+setNonBlock	cmcc_portal/cmcc_portal/SocketFunc.cpp	/^bool setNonBlock(int sockfd)$/;"	f
 sgv_ac_interval	wt/main.c	/^unsigned int sgv_ac_interval;$/;"	v
 sgv_status_update_interval	wt/main.c	/^unsigned int sgv_status_update_interval;			\/\/ 状态更新线程执行间隔时间$/;"	v
 sgv_tfree_interval	wt/main.c	/^unsigned int sgv_tfree_interval;					\/\/ tfree更新线程执行间隔时间$/;"	v
@@ -801,16 +882,21 @@ ssid_charset	wt/header.h	/^	__u8 ssid_charset:4;	\/\/ SSID编码,0:GB2312,1:UTF-
 ssid_num	wt/header.h	/^	__u8 ssid_num;								\/\/ SSID数$/;"	m	struct:ac_ap_wifi_base_conf_st
 stAckAuth	ac_recv.c	/^	ST_PORTAL_AC stAckAuth;$/;"	v
 start_ipaddr	wt/header.h	/^	__u32 start_ipaddr;		\/\/ 开始IP地址(网络字节序)$/;"	m	struct:ac_ap_dhcp_conf_st
+stat	cmcc_portal/cmcc_portal/Common.h	/^	int stat;\/\/=1:��ѯ���Ѵ���  =0:û�в�ѯ��  =-1:ִ�в�ѯʧ��$/;"	m	struct:req_mac_query
 stat	header.h	/^	int stat;\/\/=1:查询到已存在  =0:没有查询到  =-1:执行查询失败$/;"	m	struct:req_mac_query
 stat	wt/guide_header.h	/^	int					stat;				\/\/1 需要添加监听 0 已添加 -1 需要删除$/;"	m	struct:authenticate_node
 state	wt/header.h	/^	__u32   state;						\/\/ 状态,2:成功，3为失败，服务器下发配置参数时客户端回应$/;"	m	struct:ac_state_st
 state	wt/header.h	/^	__u8	state;						\/\/ 7..表示成功，其他需要取 msg 看错误信息。$/;"	m	struct:ac_login_st
+std	cmcc_portal/cmcclogin/mod_cmcclogin.c	/^using namespace std;$/;"	v
+strIp_to_intIp	cmcc_portal/cmcc_portal/UtilFunc.cpp	/^unsigned int strIp_to_intIp(string pIp)$/;"	f
 string	cJSON.h	/^	char *string;				\/* The item's name string, if this item is the child of, or is in the list of subitems of an object. *\/$/;"	m	struct:cJSON
 suffix_object	cJSON.c	/^static void suffix_object(cJSON *prev,cJSON *item) {prev->next=item;item->prev=prev;}$/;"	f	file:
 swap	wt/guide_header.h	/^	unsigned int swap;$/;"	m	struct:authenticate_node
 swap	wt/guide_header.h	/^	unsigned int swap;$/;"	m	struct:authenticate_stat
 swap	wt/header.h	/^	unsigned int swap;$/;"	m	struct:ag_msg_stat
 tags	wt/header.h	/^	unsigned char	tags[16];		\/\/ 校验和，全包检验$/;"	m	struct:ac_head_st
+tcpRead	cmcc_portal/cmcc_portal/SocketFunc.cpp	/^int tcpRead(int socket, unsigned char *pucMsg, int slLen)$/;"	f
+tcpSend	cmcc_portal/cmcc_portal/SocketFunc.cpp	/^int tcpSend(int socket, unsigned char *pucMsg, int slLen)$/;"	f
 tel	wt/header.h	/^		char			tel[32];$/;"	m	struct:bg_shanghu_msg::bg_shanghu_node
 tel	wt/header.h	/^	__u8  tel[32];					\/\/ 联系电话$/;"	m	struct:ac_base_info_st
 third_id	wt/header.h	/^	__u8	third_id[64];			\/\/ 保留字段,可根据需要解释其意义,比如用于第三方认证服务器生成的ID$/;"	m	struct:msg_head_st
@@ -828,10 +914,16 @@ total_mem	wt/guide_header.h	/^	unsigned int total_mem;					\/\/总内存$/;"	m	s
 total_mem	wt/header.h	/^	unsigned int total_mem;$/;"	m	struct:ag_msg_stat
 total_num	wt/header.h	/^	int		total_num;			\/\/ 总数量$/;"	m	struct:bg_num_msg
 type	cJSON.h	/^	int type;					\/* The type of the item, as above. *\/$/;"	m	struct:cJSON
-type	header.h	/^	UINT8 type;			\/\/ 报文的类型，长度为 1 字节$/;"	m	struct:portal_ac
-type	header.h	/^	UINT8 type;$/;"	m	struct:portal_ac_attr
+type	cmcc_portal/cmcc_portal/Common.h	/^	UINT8 type;			\/\/ ���ĵ����ͣ�����Ϊ 1 �ֽ�$/;"	m	struct:portal_ac
+type	cmcc_portal/cmcc_portal/Common.h	/^	UINT8 type;$/;"	m	struct:portal_ac_attr
+type	header.h	/^	unsigned char type;			\/\/ 报文的类型，长度为 1 字节$/;"	m	struct:portal_ac
+type	header.h	/^	unsigned char type;$/;"	m	struct:portal_ac_attr
 type	wt/header.h	/^	__u32 type;						\/\/ 设备类型0.. 网吧,1..企业，2..小区3..KTV ，4..咖啡厅，5..公共场所，6..运营机构，7..酒店，8..连锁,9..酒吧$/;"	m	struct:ac_base_info_st
 type	wt/header.h	/^	char	type[15];$/;"	m	struct:bg_router_msg
+udpReadFrom	cmcc_portal/cmcc_portal/SocketFunc.cpp	/^int udpReadFrom(int socket, unsigned char *rcvBuf, int slLen)$/;"	f
+udpReadFrom	portal.c	/^int udpReadFrom(int socket, unsigned char *rcvBuf, int slLen)$/;"	f
+udpSendTo	cmcc_portal/cmcc_portal/SocketFunc.cpp	/^int udpSendTo(int socket, string strIp, int port, unsigned char *sendBuf, int slLen)$/;"	f
+udpSendTo	portal.c	/^int udpSendTo(int socket, char* ip, int port, unsigned char *buf, int len)$/;"	f
 unuse_num	wt/header.h	/^		unsigned short	unuse_num;$/;"	m	struct:bg_shanghu_msg::bg_shanghu_node
 upurl	wt/header.h	/^		char			upurl[128];$/;"	m	struct:bg_rts_msg::bg_rt_node
 url_data	wt/header.h	/^	__u8	url_data[0];			\/\/ 域名白名单,域名间以分号分隔$/;"	m	struct:cer_msg_st
@@ -842,19 +934,26 @@ used_mem	wt/guide_header.h	/^	unsigned int used_mem;					\/\/已使用内存$/;"
 used_mem	wt/header.h	/^	unsigned int used_mem;$/;"	m	struct:ag_msg_stat
 user	wt/header.h	/^	struct ac_ap_user_st			user; $/;"	m	struct:ac_ap_conf_st	typeref:struct:ac_ap_conf_st::ac_ap_user_st
 userID	wt/header.h	/^	__u32   userID;						\/\/ 用户ID（代理商ID)$/;"	m	struct:ac_login_st
-userIP	header.h	/^	UINT32 userIP;		\/\/ Portal用户的IP地址，长度为 4 字节，其值由Portal Server根据其获得的IP地址填写$/;"	m	struct:portal_ac
+userIP	cmcc_portal/cmcc_portal/Common.h	/^	UINT32 userIP;		\/\/ Portal�û���IP��ַ������Ϊ 4 �ֽڣ���ֵ��Portal Server�������õ�IP��ַ��д$/;"	m	struct:portal_ac
+userIP	header.h	/^	unsigned int userIP;		\/\/ Portal用户的IP地址，长度为 4 字节，其值由Portal Server根据其获得的IP地址填写$/;"	m	struct:portal_ac
+userName	cmcc_portal/cmcc_portal/Common.h	/^	char userName[PORTAL_USERNAME_LEN];\/\/��ѯ���ĵ�¼�û���$/;"	m	struct:req_mac_query
 userName	header.h	/^	char userName[PORTAL_USERNAME_LEN];\/\/查询到的登录用户名$/;"	m	struct:req_mac_query
-userPort	header.h	/^	UINT16 userPort;	\/\/ UserPort字段目前没有用到，长度为 2 字节，在所有报文中其值为0$/;"	m	struct:portal_ac
+userPort	cmcc_portal/cmcc_portal/Common.h	/^	UINT16 userPort;	\/\/ UserPort�ֶ�Ŀǰû���õ�������Ϊ 2 �ֽڣ������б�������ֵΪ0$/;"	m	struct:portal_ac
+userPort	header.h	/^	unsigned short userPort;	\/\/ UserPort字段目前没有用到，长度为 2 字节，在所有报文中其值为0$/;"	m	struct:portal_ac
 user_auth	wt/header.h	/^	__u8 user_auth;								\/\/ 用户认证上网0:禁用,1:启用$/;"	m	struct:ac_ap_wifi_base_conf_st
 user_num	wt/header.h	/^	__u32 user_num;				\/\/ (网络字节序) 当前用户数$/;"	m	struct:ac_ap_user_st
 user_ssid_num	wt/header.h	/^	__u8  user_ssid_num[8];		\/\/ 每个SSID下的用户数$/;"	m	struct:ac_ap_user_st
+userip	cmcc_portal/cmcc_portal/Common.h	/^    char userip[PORTAL_IP_LEN];$/;"	m	struct:req_auth
+userip	cmcc_portal/cmcc_portal/Common.h	/^    char userip[PORTAL_IP_LEN];$/;"	m	struct:req_mac_query
 userip	header.h	/^    char userip[PORTAL_IP_LEN];$/;"	m	struct:req_auth
 userip	header.h	/^    char userip[PORTAL_IP_LEN];$/;"	m	struct:req_mac_query
+usermac	cmcc_portal/cmcc_portal/Common.h	/^    char usermac[PORTAL_MAC_LEN];$/;"	m	struct:req_mac_query
 usermac	header.h	/^    char usermac[PORTAL_MAC_LEN];$/;"	m	struct:req_mac_query
 valuedouble	cJSON.h	/^	double valuedouble;			\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
 valueint	cJSON.h	/^	int valueint;				\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
 valuestring	cJSON.h	/^	char *valuestring;			\/* The item's string, if type==cJSON_String *\/$/;"	m	struct:cJSON
-ver	header.h	/^	UINT8 ver;			\/\/ 协议的版本号，长度为 1 字节，目前定义的值为 0x01$/;"	m	struct:portal_ac
+ver	cmcc_portal/cmcc_portal/Common.h	/^	UINT8 ver;			\/\/ Э��İ汾�ţ�����Ϊ 1 �ֽڣ�Ŀǰ�����ֵΪ 0x01$/;"	m	struct:portal_ac
+ver	header.h	/^	unsigned char ver;			\/\/ 协议的版本号，长度为 1 字节，目前定义的值为 0x01$/;"	m	struct:portal_ac
 ver	wt/header.h	/^	__u8	ver;					\/\/ 版本,初始为1; 添加 third_id 后改为2, 目前为4 2.3没有设备序列号$/;"	m	struct:msg_head_st
 ver	wt/header.h	/^	unsigned char	ver;			\/\/ 版本号（目前版本号为4）$/;"	m	struct:ac_head_st
 ver	wt/header.h	/^	unsigned char	ver;$/;"	m	struct:bg_msg_head
@@ -888,5 +987,6 @@ xyprintf_bg_num_msg	wt/utils.c	/^void xyprintf_bg_num_msg(bg_num_msg *msg)$/;"	f
 xyprintf_bg_router_msg	wt/utils.c	/^void xyprintf_bg_router_msg(bg_router_msg *msg)$/;"	f
 xyprintf_cer_msg_head	wt/utils.c	/^void inline xyprintf_cer_msg_head(cer_msg_st *msg)$/;"	f
 xyprintf_msg_head	wt/utils.c	/^void inline xyprintf_msg_head(msg_head_st *msg_head)$/;"	f
+xyprintf_portal_ac	portal.c	/^void xyprintf_portal_ac(ST_PORTAL_AC* pa)$/;"	f
 yesterday	wt/header.h	/^	char		 yesterday[16];$/;"	m	struct:bg_daily_msg
 zuobiao	wt/header.h	/^		char			zuobiao[32];$/;"	m	struct:bg_shanghu_msg::bg_shanghu_node

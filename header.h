@@ -11,21 +11,17 @@
 
 #define MAX_EPOLL_NUM			65536				//epoll 最大数量
 
-#if 0
-
-
 #define CONFIG_FILE_NAME		"config.ini"		//配置文件名
-
 #define WT_SQL_ERROR			6l					// 全局数据库错误标识码
-
 #define PRINT_USER_LOG			1					// 是否打印user操作的log 比如上下线等
-
 #define SOCK_STAT_ADD		 1				// 设备需要添加到epoll列表
 #define SOCK_STAT_ADDED		 0				// 设备已添加到epoll列表
 #define SOCK_STAT_DEL		-1				// 设备出错,应从当前链表删除
-
 //#define ADVERTISING			1				// 广告系统Advertising
-#endif 
+
+
+#define PORTAL_TO_AC_PORT	2000
+
 
 #include <stdio.h>  
 #include <stdlib.h>  
@@ -68,12 +64,7 @@ int wt_recv_block(int sock, unsigned char *buf, int len);
 void* platform_conn_thread(void *fd);
 
 extern int  cgv_platform_port;
-
-
-
-
-
-#if 0
+/*
 #include <sql.h>
 #include <sqlext.h>
 #include <sqltypes.h>
@@ -98,32 +89,30 @@ typedef struct wt_sql_handle{
 	char		err_msg[200];
 	char		sql_str[1024];
 }wt_sql_handle;
-#endif
+*/
 
-#if 0
-#define PORTAL_USERNAME_LEN  128
-#define PORTAL_PASSWORD_LEN  128
-#define PORTAL_IP_LEN  16
-#define PORTAL_MAC_LEN  18
+
+
 //Portal报文类型
-const unsigned char REQ_CHALLENGE = 0x01;   //Client----->Server  Portal Server 向AC设备发送的请求Challeng报文
-const unsigned char ACK_CHALLENGE = 0x02;   //Client<-----Server  Server AC设备对Portal Server请求Challeng报文的响应报文
-const unsigned char REQ_AUTH      = 0x03;   //Client----->Server  Server Portal Server向AC设备发送的请求认证报文
-const unsigned char ACK_AUTH      = 0x04;   //Client<-----Server  Server AC设备对Portal Server请求认证报文的响应报文
-const unsigned char REQ_LOGOUT    = 0x05;   //Client----->Server  Server  若ErrCode字段值为0x00，表示此报文是Portal Server向AC设备发送的请求用户下线报文；
+
+#define REQ_CHALLENGE 0x01;   //Client----->Server  Portal Server 向AC设备发送的请求Challeng报文
+#define ACK_CHALLENGE 0x02;   //Client<-----Server  Server AC设备对Portal Server请求Challeng报文的响应报文
+#define REQ_AUTH    0x03;   //Client----->Server  Server Portal Server向AC设备发送的请求认证报文
+#define ACK_AUTH       0x04;   //Client<-----Server  Server AC设备对Portal Server请求认证报文的响应报文
+#define REQ_LOGOUT     0x05;   //Client----->Server  Server  若ErrCode字段值为0x00，表示此报文是Portal Server向AC设备发送的请求用户下线报文；
                                     //若ErrCode字段值为0x01，表示该报文是Portal Server发送的超时报文，其原因是Portal Server发出的各种请求在规定时间内没有收到响应报文。  
-const unsigned char ACK_LOGOUT    = 0x06;   //Client<-----Server  Server AC设备对Portal Server请求下线报文的响应报文  
-const unsigned char AFF_ACK_AUTH  = 0x07;   //Client----->Server  Server  Portal Server对收到的认证成功响应报文的确认报文
-const unsigned char NTF_LOGOUT    = 0x08;   //Server --> Client   Client 用户被强制下线通知报文 
-const unsigned char REQ_INFO      = 0x09;   //Client --> Server   信息询问报文 
-const unsigned char ACK_INFO      = 0x0a;   //Server --> Client   信息询问的应答报文
+#define ACK_LOGOUT     0x06;   //Client<-----Server  Server AC设备对Portal Server请求下线报文的响应报文  
+#define AFF_ACK_AUTH   0x07;   //Client----->Server  Server  Portal Server对收到的认证成功响应报文的确认报文
+#define NTF_LOGOUT     0x08;   //Server --> Client   Client 用户被强制下线通知报文 
+#define REQ_INFO       0x09;   //Client --> Server   信息询问报文 
+#define ACK_INFO       0x0a;   //Server --> Client   信息询问的应答报文
 
 
 //属性类型
-const unsigned char UserName        = 0x01;        //<=253 （可变） 用 户 名
-const unsigned char PassWord        = 0x02;        //<=16（可变） 用户提交的明文密码
-const unsigned char Challenge       = 0x03;        //16（固定） Chap方式加密的魔术字
-const unsigned char ChapPassWord    = 0x04;        //16（固定）  经过Chap方式加密后的密码
+#define UserName         0x01;        //<=253 （可变） 用 户 名
+#define PassWord         0x02;        //<=16（可变） 用户提交的明文密码
+#define Challenge        0x03;        //16（固定） Chap方式加密的魔术字
+#define ChapPassWord     0x04;        //16（固定）  经过Chap方式加密后的密码
 
 //======================AC begin======================
 typedef struct portal_ac_attr
@@ -131,11 +120,6 @@ typedef struct portal_ac_attr
 	unsigned char type;
 	unsigned char len;
 	unsigned char attrVal[253];
-
-//	portal_ac_attr()
-//	{
-//		memset(this, 0, sizeof(portal_ac_attr));
-//	}
 }ST_PORTAL_AC_ATTR;
 
 typedef struct portal_ac
@@ -150,21 +134,20 @@ typedef struct portal_ac
 	unsigned short userPort;	// UserPort字段目前没有用到，长度为 2 字节，在所有报文中其值为0
 	unsigned char errCode;		// ErrCode字段和Type字段一起表示一定的意义，长度为 1字节
 	unsigned char attrNum;		// 表示其后边可变长度的属性字段属性的个数，长度为 1 字节
-//	ST_PORTAL_AC_ATTR ac_attr[5];
+	
 	char ac_attr[512];
 }ST_PORTAL_AC;
 //======================AC end======================
+#define PORTAL_USERNAME_LEN  128
+#define PORTAL_PASSWORD_LEN  128
+#define PORTAL_IP_LEN  16
+#define PORTAL_MAC_LEN  18
 
 typedef struct req_auth
 {
     char userip[PORTAL_IP_LEN];
     char name[PORTAL_USERNAME_LEN];
     char password[PORTAL_PASSWORD_LEN];
-    
-    //req_auth()
-    //{
-     ///   bzero(this,sizeof(req_auth));
-    //}
 }ST_REQ_AUTH;
 
 
@@ -177,20 +160,9 @@ typedef struct req_mac_query
     char acip[PORTAL_IP_LEN]; 
     char userip[PORTAL_IP_LEN];
     char usermac[PORTAL_MAC_LEN];
-    //req_mac_query()
-    //{
-   // 	bzero(this,sizeof(req_mac_query));
-    //}
 }ST_REQ_MAC_QUERY;
-#endif
 
 
-
-
-
-
-
-
-
+int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port);
 
 #endif //WT_HEADER_H
