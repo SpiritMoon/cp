@@ -164,5 +164,7 @@ typedef struct req_mac_query
 
 
 int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port);
+void* radius_conn_thread(void *fd);
+void* protal_test_thread(void* fd);
 
 #endif //WT_HEADER_H

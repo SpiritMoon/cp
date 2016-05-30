@@ -64,23 +64,24 @@ int udpReadFrom(int socket, unsigned char *rcvBuf, int slLen)
 	int slRead = 0;
 	struct sockaddr_in cli_addr;
 	socklen_t addr_len = sizeof(cli_addr);
+	int count = 0;
 
 	while(1){
 		slRead = recvfrom(socket, rcvBuf, slLen, MSG_DONTWAIT, (struct sockaddr *)&cli_addr, &addr_len);
 		if (slRead == -1){
 			if ((errno == EINTR) || (errno == EAGAIN) || (errno == EWOULDBLOCK)){
-				if (tFirstTime == 0){
-					tFirstTime = time(NULL);
+				xyprintf(0,"no msg recv, sleep 1s continue!");
+				sleep(1);
+				count++;
+				if(count >= 10){
+					return -1;
 				}
-				else{
-					if ((time(NULL) - tFirstTime) > 5){
-						return -1;
-					}
-				}
-				usleep(100);
 				continue;
 			}
-			xyprintf(errno, "ERROR - %s - %s - %d", __FILE__, __func__, __LINE__);
+			else {
+				xyprintf(errno, "ERROR - %s - %s - %d", __FILE__, __func__, __LINE__);
+				return -1;
+			}
 		}
 		else{
 			break;
@@ -184,8 +185,13 @@ int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port)
 	xyprintf_portal_ac(&stAckAuth);
 
 	close(sockfd);
-   
-	return stAckAuth.errCode;
+  
+	if(stAckAuth.errCode == 0){
+		return 0;
+	}
+	else {
+		return -1;
+	}
 }
 
 int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
@@ -233,5 +239,32 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 
 	close(sockfd);
     
-	return stAckLogout.errCode;
+	if(stAckLogout.errCode == 0){
+		return 0;
+	}
+	else {
+		return -1;
+	}
+}
+
+
+void* protal_test_thread(void* fd)
+{
+	pthread_detach(pthread_self());
+	xyprintf(0, "protal test thread is working!!");
+	while(1){
+		ST_REQ_AUTH req_auth;
+		strcpy(req_auth.userip, "10.187.226.4");
+		strcpy(req_auth.name, "18866120427");
+		strcpy(req_auth.password, "123456");
+		
+		if( SendReqAuthAndRecv(&req_auth, "111.17.237.28", PORTAL_TO_AC_PORT ) ){
+			xyprintf(0, "stat: failed");
+		}
+		else{
+			xyprintf(0, "stat: ok");
+		}
+		sleep(60);
+	}
+	pthread_exit(NULL);
 }

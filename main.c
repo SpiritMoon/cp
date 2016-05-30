@@ -197,6 +197,15 @@ void run()
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 	}
 	/**********************************************************************************/
+//	if( pthread_create(&pt, NULL, radius_conn_thread, NULL) != 0 ){
+//		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+//	}
+	/**********************************************************************************/
+	/**********************************************************************************/
+//	if( pthread_create(&pt, NULL, protal_test_thread, NULL) != 0 ){
+//		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+//	}
+	/**********************************************************************************/
 
 	while(1){
 //		guide_conn_thread();

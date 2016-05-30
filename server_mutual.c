@@ -107,18 +107,21 @@ void* platform_process(void *fd)
 	ST_REQ_AUTH req_auth;
 	strcpy(req_auth.userip, json_wlanuserip->valuestring);
 	strcpy(req_auth.name, json_usernum->valuestring);
-	strcpy(req_auth.password, json_usercode->valuestring);
+	strcpy(req_auth.password, "123456");
 
+	char *res;
 
 	if( SendReqAuthAndRecv(&req_auth, json_acip->valuestring, PORTAL_TO_AC_PORT ) ){
-
+		res = "{\"stat\":\"failed\"}";
+	}
+	else {
+		res = "{\"stat\":\"ok\"}";
 	}
 
 
 
 
 	// 发送返回值
-	char *res = "{\"stat\":\"ok\"}";
 	xyprintf(0, "** res -- %d -- %s", strlen(res), res);
 	if( send(sockfd, res, strlen(res), 0) <= 0){
 		xyprintf(0, "PLATFORM_ERROR:%d %s %d -- Res platform's massage error!", sockfd, __FILE__, __LINE__);
