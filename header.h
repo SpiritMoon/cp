@@ -6,21 +6,32 @@
 #ifndef WT_HEADER_H
 #define WT_HEADER_H
 
-#define LOGS_MAX_SIZE			( 5 * 1024 * 1024 )	//单个log文件大小 1M
-#define WRITE_LOG				1					//是否写log文件
+#define IS_DAEMON_EXIST			0					// 精灵线程
 
-#define MAX_EPOLL_NUM			65536				//epoll 最大数量
+#define LOGS_MAX_SIZE			( 5 * 1024 * 1024 )	// 单个log文件大小 1M
+#define WRITE_LOG				1					// 是否写log文件
 
-#define CONFIG_FILE_NAME		"config.ini"		//配置文件名
-#define WT_SQL_ERROR			6l					// 全局数据库错误标识码
-#define PRINT_USER_LOG			1					// 是否打印user操作的log 比如上下线等
-#define SOCK_STAT_ADD		 1				// 设备需要添加到epoll列表
-#define SOCK_STAT_ADDED		 0				// 设备已添加到epoll列表
-#define SOCK_STAT_DEL		-1				// 设备出错,应从当前链表删除
+#define MAX_EPOLL_NUM			65536				// epoll 最大数量
+
+#define CONFIG_FILE_NAME		"config.ini"		// 配置文件名
+
+#define PORTAL_TO_AC_PORT		2000				// AC开放给portal的端口
+#define AC_TO_PORTAL_PORT		50100				// PORTAL开放给AC的端口
+
+
+
+
+
+
+
+
+//#define WT_SQL_ERROR			6l					// 全局数据库错误标识码
+//#define SOCK_STAT_ADD		 1				// 设备需要添加到epoll列表
+//#define SOCK_STAT_ADDED		 0				// 设备已添加到epoll列表
+//#define SOCK_STAT_DEL		-1				// 设备出错,应从当前链表删除
 //#define ADVERTISING			1				// 广告系统Advertising
 
 
-#define PORTAL_TO_AC_PORT	2000
 
 
 #include <stdio.h>  
@@ -59,11 +70,21 @@ int wt_sock_init(int *sockfd, int port, int listen_num);
 void wt_close_sock(int *sock);
 int wt_send_block(int sock, unsigned char *buf, int len);
 int wt_recv_block(int sock, unsigned char *buf, int len);
+int UDP_create(int *sockfd);
+int UDP_send_block(int socket, char* ip, int port, unsigned char *buf, int len);
+int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen);
 
 // platform
 void* platform_conn_thread(void *fd);
-
+// 平台连接的端口
 extern int  cgv_platform_port;
+
+// 配置文件
+int init_ini(char* filename, int *fd, char* buf, int len);
+int get_ini(char *buf, const char* key, char* value);
+void destroy_ini(int fd);
+
+
 /*
 #include <sql.h>
 #include <sqlext.h>

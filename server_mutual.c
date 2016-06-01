@@ -5,7 +5,142 @@
  *****************************************************/
 #include "header.h"
 
+struct plat_para{
+	char* type;					// 报文类型 auth-tel, auth-wx, auth-getmac
+	char* usernum;				// auth-tel：手机号，auth-wx：微信openid，auth-getmac：空
+	char* usercode;				// auth-tel：验证码，auth-wx：tid，auth-getmac：空
+	char* wlanuserip;			// 用户ip
+	char* wlanacname;			// ac标识名称
+	char* ssid;					// ssid
+	char* wlanacip;				// ac ip
+	char* wlanparameter;		// 加密的mac
+	char* wlanuserfirsturl;		// 访问的url
+};
+
 #define SERVER_MUTUAL_DEBUG			1
+
+/** 
+ *@brief  打印struct plat_para的信息
+ *@param  
+ *@return 
+ */
+void xyprintf_plat_para(struct plat_para *para)
+{
+	xyprintf(0, "plat_para->type = %s\n\
+			->usernum = %s\n\
+			->usercode = %s\n\
+			->wlanuserip = %s\n\
+			->wlanacname = %s\n\
+			->ssid = %s\n\
+			->wlanacip = %s\n\
+			->wlanparameter = %s\n\
+			->wlanuserfirsturl = %s",
+			para->type,
+			para->usernum,
+			para->usercode,
+			para->wlanuserip,
+			para->wlanacname,
+			para->ssid,
+			para->wlanacip,
+			para->wlanparameter,
+			para->wlanuserfirsturl
+			);
+}
+
+/** 
+ *@brief  装换获取到的json数据
+ *@param  
+ *@return 
+ */
+int get_plat_para(cJSON *json, struct plat_para *para)
+{
+	cJSON *temp = NULL;
+	
+	// 获取type
+	temp = cJSON_GetObjectItem(json,"type");
+	if (!temp){
+		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+		return -1;
+	}
+	para->type = temp->valuestring;
+
+	if( strcmp( para->type, "auth-getmac" ) ){
+	
+		// get usernum
+		temp = cJSON_GetObjectItem(json,"usernum");
+		if (!temp){
+			xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+			return -1;
+		}
+		para->usernum = temp->valuestring;
+
+		// get usercode
+		temp = cJSON_GetObjectItem(json,"usercode");
+		if (!temp){
+			xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+			return -1;
+		}
+		para->usercode = temp->valuestring;
+	}
+	else {
+		para->usernum = "NULL";
+		para->usercode = "NULL";
+	}
+
+	// get wlanuserip
+	temp = cJSON_GetObjectItem(json,"wlanuserip");
+	if (!temp){
+		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+		return -1;
+	}
+	para->wlanuserip = temp->valuestring;
+
+	// get wlanacname
+	temp = cJSON_GetObjectItem(json,"wlanacname");
+	if (!temp){
+		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+		return -1;
+	}
+	para->wlanacname = temp->valuestring;
+
+	// get ssid 
+	temp = cJSON_GetObjectItem(json,"ssid");
+	if (!temp){
+		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+		return -1;
+	}
+	para->ssid = temp->valuestring;
+
+	// get wlanparameter
+	temp = cJSON_GetObjectItem(json,"wlanparameter");
+	if (!temp){
+		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+		return -1;
+	}
+	para->wlanparameter = temp->valuestring;
+
+	// get wlanacip 
+	temp = cJSON_GetObjectItem(json,"wlanacip");
+	if (!temp){
+		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+		return -1;
+	}
+	para->wlanacip = temp->valuestring;
+
+	// get wlanuserfirsturl 
+	temp = cJSON_GetObjectItem(json,"wlanuserfirsturl");
+	if (!temp){
+		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
+		return -1;
+	}
+	para->wlanuserfirsturl = temp->valuestring;
+
+#if SERVER_MUTUAL_DEBUG
+	xyprintf_plat_para(para);
+#endif
+
+	return 0;
+}
 
 /** 
  *@brief  平台命令处理函数 在platform_fun内被调用
@@ -31,95 +166,35 @@ void* platform_process(void *fd)
 	//晒一下
 	xyprintf(0, "PLATFORM:Platform's msg: %s", buf);
 #endif
-
-	//比较是否是json头部
-	//if(strncmp( buf,"php-stream:",11)) {
-	//	xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
-	//	goto DATA_ERR;
-	//}
 	
-	//解析json用到的临时变量
-	cJSON *json = NULL;
-
 	// 主体json
-	json=cJSON_Parse( buf );
+	cJSON *json=cJSON_Parse( buf );
 	if (!json){
 		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
 		goto DATA_ERR;
 	}
 
-	cJSON *json_wlanuserip = NULL;
-	json_wlanuserip = cJSON_GetObjectItem(json,"wlanuserip");
-	if (!json_wlanuserip){
+	// 获取json内容
+	struct plat_para para;
+	if( get_plat_para(json, &para) ){
 		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
-		goto JSON_ERR;
+		goto DATA_ERR;
 	}
-	xyprintf(0,"json_wlanuserip : %s", json_wlanuserip->valuestring);
 
-	cJSON *json_wlanacname = NULL;
-	json_wlanacname = cJSON_GetObjectItem(json,"wlanacname");
-	if (!json_wlanacname){
-		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
-		goto JSON_ERR;
-	}
-	xyprintf(0,"json_wlanacname : %s", json_wlanacname->valuestring);
-
-	cJSON *json_ssid = NULL;
-	json_ssid = cJSON_GetObjectItem(json,"ssid");
-	if (!json_ssid){
-		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
-		goto JSON_ERR;
-	}
-	xyprintf(0,"json_ssid : %s", json_ssid->valuestring);
-
-	cJSON *json_wlanparameter = NULL;
-	json_wlanparameter = cJSON_GetObjectItem(json,"wlanparameter");
-	if (!json_wlanparameter){
-		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
-		goto JSON_ERR;
-	}
-	xyprintf(0,"json_wlanparameter : %s", json_wlanparameter->valuestring);
-
-	cJSON *json_acip = NULL;
-	json_acip = cJSON_GetObjectItem(json,"wlanacip");
-	if (!json_acip){
-		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
-		goto JSON_ERR;
-	}
-	xyprintf(0,"json_acip : %s", json_acip->valuestring);
-
-	cJSON *json_usernum = NULL;
-	json_usernum = cJSON_GetObjectItem(json,"usernum");
-	if (!json_usernum){
-		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
-		goto JSON_ERR;
-	}
-	xyprintf(0,"json_usernum : %s", json_usernum->valuestring);
-
-	cJSON *json_usercode = NULL;
-	json_usercode = cJSON_GetObjectItem(json,"usercode");
-	if (!json_usercode){
-		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
-		goto JSON_ERR;
-	}
-	xyprintf(0,"json_usercode : %s", json_usercode->valuestring);
-
+	// 准备发送数据到ac
 	ST_REQ_AUTH req_auth;
-	strcpy(req_auth.userip, json_wlanuserip->valuestring);
-	strcpy(req_auth.name, json_usernum->valuestring);
-	strcpy(req_auth.password, "123456");
+	strcpy(req_auth.userip, para.wlanuserip);
+	strcpy(req_auth.name, para.usernum);
+	strcpy(req_auth.password, para.usercode);
 
 	char *res;
 
-	if( SendReqAuthAndRecv(&req_auth, json_acip->valuestring, PORTAL_TO_AC_PORT ) ){
+	if( SendReqAuthAndRecv(&req_auth, para.wlanacip, PORTAL_TO_AC_PORT ) ){
 		res = "{\"stat\":\"failed\"}";
 	}
 	else {
 		res = "{\"stat\":\"ok\"}";
 	}
-
-
-
 
 	// 发送返回值
 	xyprintf(0, "** res -- %d -- %s", strlen(res), res);

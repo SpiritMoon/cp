@@ -227,3 +227,89 @@ int wt_recv_block(int sock, unsigned char *buf, int len/*, int block_flag*/)
 	return 0;
 }
 
+/************************  UDP  *******************************/
+
+/** 
+ *@brief  UDP create
+ *@param  
+ *@return 
+ */
+int UDP_create(int *sockfd)
+{
+	if((*sockfd = socket(AF_INET, SOCK_DGRAM, 0)) == -1){
+		xyprintf(errno, "ERROR - %s - %s - %d", __FILE__, __func__, __LINE__);
+		return -1;
+	}
+
+    //int reuse = 1;
+    //setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+	int on=1;
+	setsockopt(*sockfd,SOL_SOCKET,SO_REUSEADDR | SO_BROADCAST,&on,sizeof(on));
+    
+	struct timeval r;
+    r.tv_sec = 5;
+    setsockopt(*sockfd, SOL_SOCKET, SO_RCVTIMEO, &r, sizeof(r));
+	setsockopt(*sockfd, SOL_SOCKET, SO_SNDTIMEO, &r, sizeof(r));
+
+	return 0;
+}
+
+/** 
+ *@brief  UDP send
+ *@param  
+ *@return 
+ */
+int UDP_send_block(int socket, char* ip, int port, unsigned char *buf, int len)
+{
+	struct sockaddr_in s_addr;
+	socklen_t addr_len = sizeof(s_addr);
+	s_addr.sin_family = AF_INET;
+	s_addr.sin_port = htons(port);
+	s_addr.sin_addr.s_addr = inet_addr(ip);
+
+	if( sendto(socket, buf, len, 0, (struct sockaddr *)&s_addr, sizeof(s_addr)) <= 0){
+		xyprintf(errno, "ERROR - %s - %s - %d", __FILE__, __func__, __LINE__);
+		return -1;
+	}
+
+	return 0;
+}
+
+/** 
+ *@brief  UDP recv
+ *@param  
+ *@return 
+ */
+int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen)
+{
+	time_t tFirstTime = 0;
+
+	int slRead = 0;
+	struct sockaddr_in cli_addr;
+	socklen_t addr_len = sizeof(cli_addr);
+	int count = 0;
+
+	while(1){
+		slRead = recvfrom(socket, rcvBuf, slLen, MSG_DONTWAIT, (struct sockaddr *)&cli_addr, &addr_len);
+		if (slRead == -1){
+			if ((errno == EINTR) || (errno == EAGAIN) || (errno == EWOULDBLOCK)){
+				xyprintf(0,"no msg recv, sleep 1s continue!");
+				sleep(1);
+				count++;
+				if(count >= 5){
+					return -1;
+				}
+				continue;
+			}
+			else {
+				xyprintf(errno, "ERROR - %s - %s - %d", __FILE__, __func__, __LINE__);
+				return -1;
+			}
+		}
+		else{
+			break;
+		}
+	}
+	return 0;
+}
+

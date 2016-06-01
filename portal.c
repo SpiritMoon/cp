@@ -1,5 +1,10 @@
 #include "header.h"
 
+/** 
+ *@brief  打印ST_PORTAL_AC的信息
+ *@param  
+ *@return 
+ */
 void xyprintf_portal_ac(ST_PORTAL_AC* pa)
 {
 	xyprintf(0, "ST_PORTAL_AC->ver = 0x%x\n\
@@ -39,78 +44,11 @@ void xyprintf_portal_ac(ST_PORTAL_AC* pa)
 	}
 }
 
-
-
-int udpSendTo(int socket, char* ip, int port, unsigned char *buf, int len)
-{
-	struct sockaddr_in s_addr;
-	socklen_t addr_len = sizeof(s_addr);
-	s_addr.sin_family = AF_INET;
-	s_addr.sin_port = htons(port);
-	s_addr.sin_addr.s_addr = inet_addr(ip);
-
-	if( sendto(socket, buf, len, 0, (struct sockaddr *)&s_addr, sizeof(s_addr)) <= 0){
-		xyprintf(errno, "ERROR - %s - %s - %d", __FILE__, __func__, __LINE__);
-		return -1;
-	}
-
-	return 0;
-}
-
-int udpReadFrom(int socket, unsigned char *rcvBuf, int slLen)
-{
-	time_t tFirstTime = 0;
-
-	int slRead = 0;
-	struct sockaddr_in cli_addr;
-	socklen_t addr_len = sizeof(cli_addr);
-	int count = 0;
-
-	while(1){
-		slRead = recvfrom(socket, rcvBuf, slLen, MSG_DONTWAIT, (struct sockaddr *)&cli_addr, &addr_len);
-		if (slRead == -1){
-			if ((errno == EINTR) || (errno == EAGAIN) || (errno == EWOULDBLOCK)){
-				xyprintf(0,"no msg recv, sleep 1s continue!");
-				sleep(1);
-				count++;
-				if(count >= 10){
-					return -1;
-				}
-				continue;
-			}
-			else {
-				xyprintf(errno, "ERROR - %s - %s - %d", __FILE__, __func__, __LINE__);
-				return -1;
-			}
-		}
-		else{
-			break;
-		}
-	}
-
-	return 0;
-}
-
-int CreateUDPSock(int *sockfd)
-{
-	if((*sockfd = socket(AF_INET, SOCK_DGRAM, 0)) == -1){
-		xyprintf(errno, "ERROR - %s - %s - %d", __FILE__, __func__, __LINE__);
-		return -1;
-	}
-
-    //int reuse = 1;
-    //setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
-	int on=1;
-	setsockopt(*sockfd,SOL_SOCKET,SO_REUSEADDR | SO_BROADCAST,&on,sizeof(on));
-    
-	struct timeval r;
-    r.tv_sec = 5;
-    setsockopt(*sockfd, SOL_SOCKET, SO_RCVTIMEO, &r, sizeof(r));
-	setsockopt(*sockfd, SOL_SOCKET, SO_SNDTIMEO, &r, sizeof(r));
-
-	return 0;
-}
-
+/** 
+ *@brief  获取验证码
+ *@param  
+ *@return 
+ */
 unsigned short generateSerialNo()
 {
     unsigned short retNo = 0;
@@ -121,10 +59,15 @@ unsigned short generateSerialNo()
 	return retNo;
 }
 
+/** 
+ *@brief  发送认证报文
+ *@param  
+ *@return 
+ */
 int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port)
 {
     int sockfd = 0;
-    if (CreateUDPSock(&sockfd)){
+    if (UDP_create(&sockfd)){
 		xyprintf(0, "ERROR - %s - %s - %d - create udp socket failed!", __FILE__, __func__, __LINE__);
         return -1;
     }
@@ -167,7 +110,7 @@ int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port)
 	xyprintf_portal_ac(&stReqAuth);
 
 	// 10.REQ_AUTH
-	if (udpSendTo(sockfd, ac_ip, port, (unsigned char *)&stReqAuth, 16+reqAuthAttr[0].len+reqAuthAttr[1].len) < 0){
+	if (UDP_send_block(sockfd, ac_ip, port, (unsigned char *)&stReqAuth, 16+reqAuthAttr[0].len+reqAuthAttr[1].len) < 0){
 		xyprintf(0, "ERROR - %s - %s - %d - send udp failed!", __FILE__, __func__, __LINE__);
 		close(sockfd);
 		return -1;
@@ -176,7 +119,7 @@ int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port)
     ST_PORTAL_AC stAckAuth;
 	
 	// 13.ACK_AUTH
-	if( udpReadFrom(sockfd, (unsigned char*)&stAckAuth, sizeof (stAckAuth)) < 0){
+	if( UDP_recv_block(sockfd, (unsigned char*)&stAckAuth, sizeof (stAckAuth)) < 0){
 		xyprintf(0, "ERROR - %s - %s - %d - send udp failed!", __FILE__, __func__, __LINE__);
 		close(sockfd);
 		return -1;
@@ -194,10 +137,15 @@ int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port)
 	}
 }
 
+/** 
+ *@brief  发送登出报文
+ *@param  
+ *@return 
+ */
 int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 {
     int sockfd = 0;
-    if (CreateUDPSock(&sockfd)){
+    if (UDP_create(&sockfd)){
 		xyprintf(0, "ERROR - %s - %s - %d - create udp socket failed!", __FILE__, __func__, __LINE__);
         return -1;
     }
@@ -218,7 +166,7 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 
 	xyprintf_portal_ac(&stReqLogout);
 
-	if (udpSendTo(sockfd, ac_ip, port, (unsigned char *)&stReqLogout, sizeof (stReqLogout)) < 0){
+	if (UDP_send_block(sockfd, ac_ip, port, (unsigned char *)&stReqLogout, sizeof (stReqLogout)) < 0){
 		xyprintf(0, "ERROR - %s - %s - %d - send udp failed!", __FILE__, __func__, __LINE__);
 		close(sockfd);
 		return -1;
@@ -229,7 +177,7 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 
     ST_PORTAL_AC stAckLogout;
 	// 5.ACK_LOGOUT
-	if( udpReadFrom(sockfd, (unsigned char*)&stAckLogout, sizeof (stAckLogout)) < 0 ) {
+	if( UDP_recv_block(sockfd, (unsigned char*)&stAckLogout, sizeof (stAckLogout)) < 0 ) {
 		xyprintf(0, "ERROR - %s - %s - %d - send udp failed!", __FILE__, __func__, __LINE__);
 		close(sockfd);
 		return -1;
@@ -248,6 +196,11 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 }
 
 
+/** 
+ *@brief  测试线程
+ *@param  
+ *@return 
+ */
 void* protal_test_thread(void* fd)
 {
 	pthread_detach(pthread_self());

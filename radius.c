@@ -59,10 +59,6 @@ void xyprintf_radius_bag(struct radius_bag* rb)
 	}
 }
 
-
-
-
-
 void* radius_pro_thread(void *fd)
 {
 	pthread_detach(pthread_self());

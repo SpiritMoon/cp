@@ -6,9 +6,9 @@ LIB=-lpthread -lm
 #-lodbc
 PUBLIC_DEPEND=$(PUBDIR)/*.o
 
-SOURCE=main.c logs.c net.c server_mutual.c radius.c portal.c cJSON.c
-DEPEND=main.o logs.o net.o server_mutual.o radius.o portal.o cJSON.o
-TARGET=a.out
+SOURCE=main.c logs.c ini.c net.c server_mutual.c radius.c portal.c cJSON.c
+DEPEND=main.o logs.o ini.o net.o server_mutual.o radius.o portal.o cJSON.o
+TARGET=cp.out
 
 
 all:clean out mv
@@ -20,7 +20,8 @@ out:
 	@$(CC) $(DEPEND) -o $(TARGET) $(LIB)
 
 mv:
-	@mv $(TARGET) ~/out/
+	@mv $(TARGET) ~/a.out/
+	@cp config.ini ~/a.out/
 	-@rm -f *.o
 
 GDB:
