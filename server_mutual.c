@@ -1,10 +1,13 @@
 /*****************************************************
  *
- * 引导服务器 与 其他服务器的交互
+ * 与web服务器的交互
  *
  *****************************************************/
 #include "header.h"
 
+#define SERVER_MUTUAL_DEBUG			1
+
+// 
 struct plat_para{
 	char* type;					// 报文类型 auth-tel, auth-wx, auth-getmac
 	char* usernum;				// auth-tel：手机号，auth-wx：微信openid，auth-getmac：空
@@ -17,7 +20,6 @@ struct plat_para{
 	char* wlanuserfirsturl;		// 访问的url
 };
 
-#define SERVER_MUTUAL_DEBUG			1
 
 /** 
  *@brief  打印struct plat_para的信息

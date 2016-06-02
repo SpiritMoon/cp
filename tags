@@ -4,36 +4,37 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-ACK_AUTH	header.h	122;"	d
-ACK_CHALLENGE	header.h	120;"	d
-ACK_INFO	header.h	129;"	d
-ACK_LOGOUT	header.h	125;"	d
+ACK_AUTH	header.h	110;"	d
+ACK_CHALLENGE	header.h	108;"	d
+ACK_INFO	header.h	117;"	d
+ACK_LOGOUT	header.h	113;"	d
 AC_TO_PORTAL_PORT	header.h	19;"	d
-AFF_ACK_AUTH	header.h	126;"	d
+AFF_ACK_AUTH	header.h	114;"	d
 CC	Makefile	/^CC=gcc$/;"	m
 CONFIG_FILE_NAME	header.h	16;"	d
-Challenge	header.h	135;"	d
-ChapPassWord	header.h	136;"	d
-DEPEND	Makefile	/^DEPEND=main.o logs.o ini.o net.o server_mutual.o radius.o portal.o cJSON.o$/;"	m
+Challenge	header.h	123;"	d
+ChapPassWord	header.h	124;"	d
+DEPEND	Makefile	/^DEPEND=main.o sql.o logs.o ini.o net.o server_mutual.o radius.o portal.o cJSON.o$/;"	m
 IS_DAEMON_EXIST	header.h	9;"	d
-LIB	Makefile	/^LIB=-lpthread -lm$/;"	m
+LIB	Makefile	/^LIB=-lpthread -lm -lodbc$/;"	m
 LOGS_MAX_SIZE	header.h	11;"	d
 MAKE	Makefile	/^MAKE=make$/;"	m
 MAX_EPOLL_NUM	header.h	14;"	d
-NTF_LOGOUT	header.h	127;"	d
-PORTAL_IP_LEN	header.h	164;"	d
-PORTAL_MAC_LEN	header.h	165;"	d
-PORTAL_PASSWORD_LEN	header.h	163;"	d
+NTF_LOGOUT	header.h	115;"	d
+PORTAL_IP_LEN	header.h	151;"	d
+PORTAL_MAC_LEN	header.h	152;"	d
+PORTAL_PASSWORD_LEN	header.h	150;"	d
 PORTAL_TO_AC_PORT	header.h	18;"	d
-PORTAL_USERNAME_LEN	header.h	162;"	d
+PORTAL_USERNAME_LEN	header.h	149;"	d
 PUBLIC_DEPEND	Makefile	/^PUBLIC_DEPEND=$(PUBDIR)\/*.o$/;"	m
-PassWord	header.h	134;"	d
-REQ_AUTH	header.h	121;"	d
-REQ_CHALLENGE	header.h	119;"	d
-REQ_INFO	header.h	128;"	d
-REQ_LOGOUT	header.h	123;"	d
-SERVER_MUTUAL_DEBUG	server_mutual.c	20;"	d	file:
-SOURCE	Makefile	/^SOURCE=main.c logs.c ini.c net.c server_mutual.c radius.c portal.c cJSON.c$/;"	m
+PassWord	header.h	122;"	d
+RADIUS_DEBUG	radius.c	8;"	d	file:
+REQ_AUTH	header.h	109;"	d
+REQ_CHALLENGE	header.h	107;"	d
+REQ_INFO	header.h	116;"	d
+REQ_LOGOUT	header.h	111;"	d
+SERVER_MUTUAL_DEBUG	server_mutual.c	8;"	d	file:
+SOURCE	Makefile	/^SOURCE=main.c sql.c logs.c ini.c net.c server_mutual.c radius.c portal.c cJSON.c$/;"	m
 ST_PORTAL_AC	header.h	/^}ST_PORTAL_AC;$/;"	t	typeref:struct:portal_ac
 ST_PORTAL_AC_ATTR	header.h	/^}ST_PORTAL_AC_ATTR;$/;"	t	typeref:struct:portal_ac_attr
 ST_REQ_AUTH	header.h	/^}ST_REQ_AUTH;$/;"	t	typeref:struct:req_auth
@@ -44,16 +45,17 @@ TARGET	Makefile	/^TARGET=cp.out$/;"	m
 UDP_create	net.c	/^int UDP_create(int *sockfd)$/;"	f
 UDP_recv_block	net.c	/^int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen)$/;"	f
 UDP_send_block	net.c	/^int UDP_send_block(int socket, char* ip, int port, unsigned char *buf, int len)$/;"	f
-UserName	header.h	133;"	d
+UserName	header.h	121;"	d
 WRITE_LOG	header.h	12;"	d
 WT_HEADER_H	header.h	7;"	d
+WT_SQL_ERROR	header.h	21;"	d
 ac_attr	header.h	/^	char ac_attr[512];$/;"	m	struct:portal_ac
 acip	header.h	/^    char acip[PORTAL_IP_LEN]; $/;"	m	struct:req_mac_query
 attrNum	header.h	/^	unsigned char attrNum;		\/\/ 表示其后边可变长度的属性字段属性的个数，长度为 1 字节$/;"	m	struct:portal_ac
 attrVal	header.h	/^	unsigned char attrVal[253];$/;"	m	struct:portal_ac_attr
-attributes	radius.c	/^	struct radius_attr attributes[0];$/;"	m	struct:radius_bag	typeref:struct:radius_bag::radius_attr	file:
-authenticator	radius.c	/^	unsigned char authenticator[16];	\/\/md5$/;"	m	struct:radius_bag	file:
-buf	radius.c	/^	char buf[1024];$/;"	m	struct:radius_recv	file:
+attributes	header.h	/^	struct radius_attr attributes[0];$/;"	m	struct:radius_bag	typeref:struct:radius_bag::radius_attr
+authenticator	header.h	/^	unsigned char authenticator[16];$/;"	m	struct:radius_bag
+buf	header.h	/^	char buf[1024];					\/\/ radius数据包信息$/;"	m	struct:radius_recv
 cJSON	cJSON.h	/^typedef struct cJSON {$/;"	s
 cJSON	cJSON.h	/^} cJSON;$/;"	t	typeref:struct:cJSON
 cJSON_AddFalseToObject	cJSON.h	121;"	d
@@ -113,23 +115,26 @@ cgv_sql_name	main.c	/^char cgv_sql_name[32];					\/\/ sql name$/;"	v
 cgv_sql_pass	main.c	/^char cgv_sql_pass[32];					\/\/ sql password$/;"	v
 cgv_sql_user	main.c	/^char cgv_sql_user[32];					\/\/ sql user$/;"	v
 child	cJSON.h	/^	struct cJSON *child;		\/* An array or object item will have a child pointer pointing to a chain of the items in the array\/object. *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
-client	radius.c	/^	struct sockaddr_in client;$/;"	m	struct:radius_recv	typeref:struct:radius_recv::sockaddr_in	file:
-code	radius.c	/^	unsigned char code;			\/\/$/;"	m	struct:radius_bag	file:
+client	header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:radius_recv	typeref:struct:radius_recv::sockaddr_in
+code	header.h	/^	unsigned char code;$/;"	m	struct:radius_bag
+conn_handle	header.h	/^	SQLHDBC		conn_handle;					\/\/ Handle connection 连接句柄$/;"	m	struct:wt_sql_handle
 create_reference	cJSON.c	/^static cJSON *create_reference(cJSON *item) {cJSON *ref=cJSON_New_Item();if (!ref) return 0;memcpy(ref,item,sizeof(cJSON));ref->string=0;ref->type|=cJSON_IsReference;ref->next=ref->prev=0;return ref;}$/;"	f	file:
 destroy_ini	ini.c	/^void destroy_ini(int fd)$/;"	f
+env_handle	header.h	/^	SQLHENV		env_handle;						\/\/ Handle ODBC environment 环境句柄$/;"	m	struct:wt_sql_handle
 ep	cJSON.c	/^static const char *ep;$/;"	v	file:
 errCode	header.h	/^	unsigned char errCode;		\/\/ ErrCode字段和Type字段一起表示一定的意义，长度为 1字节$/;"	m	struct:portal_ac
+err_msg	header.h	/^	char		err_msg[200];$/;"	m	struct:wt_sql_handle
 firstByteMark	cJSON.c	/^static const unsigned char firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC };$/;"	v	file:
 free_fn	cJSON.h	/^      void (*free_fn)(void *ptr);$/;"	m	struct:cJSON_Hooks
 generateSerialNo	portal.c	/^unsigned short generateSerialNo()$/;"	f
 get_config	main.c	/^int get_config()$/;"	f
 get_ini	ini.c	/^int get_ini(char *buf, const char* key, char* value)$/;"	f
 get_plat_para	server_mutual.c	/^int get_plat_para(cJSON *json, struct plat_para *para)$/;"	f
-identifier	radius.c	/^	unsigned char identifier;	\/\/$/;"	m	struct:radius_bag	file:
+identifier	header.h	/^	unsigned char identifier;$/;"	m	struct:radius_bag
 init_ini	ini.c	/^int init_ini(char* filename, int *fd, char* buf, int len)$/;"	f
 len	header.h	/^	unsigned char len;$/;"	m	struct:portal_ac_attr
-length	radius.c	/^	unsigned char length;$/;"	m	struct:radius_attr	file:
-length	radius.c	/^	unsigned short length;		\/\/ 长度$/;"	m	struct:radius_bag	file:
+length	header.h	/^	unsigned char length;$/;"	m	struct:radius_attr
+length	header.h	/^	unsigned short length;$/;"	m	struct:radius_bag
 log_day	logs.c	/^int				log_day;			\/\/ 当前log文件对应的日期-天$/;"	v
 log_name	logs.c	/^char			log_name[32];		\/\/ log文件前缀名$/;"	v
 logs_buf	logs.c	/^static char logs_buf[2048];			\/\/ log内容$/;"	v	file:
@@ -168,20 +173,26 @@ print_string	cJSON.c	/^static char *print_string(cJSON *item)	{return print_stri
 print_string_ptr	cJSON.c	/^static char *print_string_ptr(const char *str)$/;"	f	file:
 print_value	cJSON.c	/^static char *print_value(cJSON *item,int depth,int fmt)$/;"	f	file:
 protal_test_thread	portal.c	/^void* protal_test_thread(void* fd)$/;"	f
-radius_attr	radius.c	/^struct radius_attr{$/;"	s	file:
-radius_bag	radius.c	/^struct radius_bag{$/;"	s	file:
+radius_attr	header.h	/^struct radius_attr{$/;"	s
+radius_bag	header.h	/^struct radius_bag{$/;"	s
 radius_conn_thread	radius.c	/^void* radius_conn_thread(void *fd)$/;"	f
 radius_pro_thread	radius.c	/^void* radius_pro_thread(void *fd)$/;"	f
-radius_recv	radius.c	/^struct radius_recv{$/;"	s	file:
+radius_recv	header.h	/^struct radius_recv{$/;"	s
+recv_ret	header.h	/^	int recv_ret;					\/\/ 接收到的长度$/;"	m	struct:radius_recv
 reqID	header.h	/^	unsigned short reqID;		\/\/ 2个字节，由AC设备随机生成$/;"	m	struct:portal_ac
 req_auth	header.h	/^typedef struct req_auth$/;"	s
 req_mac_query	header.h	/^typedef struct req_mac_query$/;"	s
-ret	radius.c	/^	int ret;$/;"	m	struct:radius_recv	file:
 rsv	header.h	/^	unsigned char rsv;			\/\/ 保留字段，长度为 1 字节，在所有报文中值为 0$/;"	m	struct:portal_ac
 run	main.c	/^void run()$/;"	f
 serial	header.h	/^	int serial;$/;"	m	struct:req_mac_query
 serialNo	header.h	/^	unsigned short serialNo;	\/\/ 报文的序列号，长度为 2 字节$/;"	m	struct:portal_ac
 skip	cJSON.c	/^static const char *skip(const char *in) {while (in && *in && (unsigned char)*in<=32) in++; return in;}$/;"	f	file:
+sql_err	header.h	/^	SQLLEN		sql_err;$/;"	m	struct:wt_sql_handle
+sql_mlen	header.h	/^	SQLSMALLINT	sql_mlen;$/;"	m	struct:wt_sql_handle
+sql_ret	header.h	/^	SQLRETURN	sql_ret;$/;"	m	struct:wt_sql_handle
+sql_stat	header.h	/^	char		sql_stat[12];					\/\/ Status SQL$/;"	m	struct:wt_sql_handle
+sql_str	header.h	/^	char		sql_str[1024];$/;"	m	struct:wt_sql_handle
+sqlstr_handle	header.h	/^	SQLHSTMT	sqlstr_handle;					\/\/ 数据库执行语句句柄$/;"	m	struct:wt_sql_handle
 ssid	server_mutual.c	/^	char* ssid;					\/\/ ssid$/;"	m	struct:plat_para	file:
 stat	header.h	/^	int stat;\/\/=1:查询到已存在  =0:没有查询到  =-1:执行查询失败$/;"	m	struct:req_mac_query
 string	cJSON.h	/^	char *string;				\/* The item's name string, if this item is the child of, or is in the list of subitems of an object. *\/$/;"	m	struct:cJSON
@@ -189,7 +200,7 @@ suffix_object	cJSON.c	/^static void suffix_object(cJSON *prev,cJSON *item) {prev
 type	cJSON.h	/^	int type;					\/* The type of the item, as above. *\/$/;"	m	struct:cJSON
 type	header.h	/^	unsigned char type;			\/\/ 报文的类型，长度为 1 字节$/;"	m	struct:portal_ac
 type	header.h	/^	unsigned char type;$/;"	m	struct:portal_ac_attr
-type	radius.c	/^	unsigned char type;$/;"	m	struct:radius_attr	file:
+type	header.h	/^	unsigned char type;$/;"	m	struct:radius_attr
 type	server_mutual.c	/^	char* type;					\/\/ 报文类型 auth-tel, auth-wx, auth-getmac$/;"	m	struct:plat_para	file:
 userIP	header.h	/^	unsigned int userIP;		\/\/ Portal用户的IP地址，长度为 4 字节，其值由Portal Server根据其获得的IP地址填写$/;"	m	struct:portal_ac
 userName	header.h	/^	char userName[PORTAL_USERNAME_LEN];\/\/查询到的登录用户名$/;"	m	struct:req_mac_query
@@ -199,7 +210,7 @@ userip	header.h	/^    char userip[PORTAL_IP_LEN];$/;"	m	struct:req_auth
 userip	header.h	/^    char userip[PORTAL_IP_LEN];$/;"	m	struct:req_mac_query
 usermac	header.h	/^    char usermac[PORTAL_MAC_LEN];$/;"	m	struct:req_mac_query
 usernum	server_mutual.c	/^	char* usernum;				\/\/ auth-tel：手机号，auth-wx：微信openid，auth-getmac：空$/;"	m	struct:plat_para	file:
-value	radius.c	/^	unsigned char value[0];$/;"	m	struct:radius_attr	file:
+value	header.h	/^	unsigned char value[0];$/;"	m	struct:radius_attr
 valuedouble	cJSON.h	/^	double valuedouble;			\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
 valueint	cJSON.h	/^	int valueint;				\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
 valuestring	cJSON.h	/^	char *valuestring;			\/* The item's string, if type==cJSON_String *\/$/;"	m	struct:cJSON
@@ -215,6 +226,11 @@ wt_send_block	net.c	/^int wt_send_block(int sock, unsigned char *buf, int len)$/
 wt_setblocking	net.c	/^int inline wt_setblocking(int sockfd)$/;"	f
 wt_setnonblocking	net.c	/^int inline wt_setnonblocking(int sockfd)$/;"	f
 wt_sock_init	net.c	/^int wt_sock_init(int *sockfd, int port, int listen_num)$/;"	f
+wt_sql_destroy	sql.c	/^void wt_sql_destroy(wt_sql_handle *handle)$/;"	f
+wt_sql_exec	sql.c	/^int inline wt_sql_exec(wt_sql_handle *handle)$/;"	f
+wt_sql_handle	header.h	/^typedef struct wt_sql_handle{$/;"	s
+wt_sql_handle	header.h	/^}wt_sql_handle;$/;"	t	typeref:struct:wt_sql_handle
+wt_sql_init	sql.c	/^int wt_sql_init(wt_sql_handle *handle, char* sql_name, char* sql_user, char* sql_pass)$/;"	f
 xyprintf	logs.c	/^int xyprintf(int err_no, char* format, ...)$/;"	f
 xyprintf_plat_para	server_mutual.c	/^void xyprintf_plat_para(struct plat_para *para)$/;"	f
 xyprintf_portal_ac	portal.c	/^void xyprintf_portal_ac(ST_PORTAL_AC* pa)$/;"	f

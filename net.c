@@ -48,7 +48,7 @@ int wt_sock_init(int *sockfd, int port, int listen_num)
 		goto ERR_END;
 	}
 	//完成
-	xyprintf(0, "** O(∩ _∩ )O ~~ Socket Ready!!! port is %d, listen num is %d!", port, listen_num);
+	xyprintf(0, "TCP socket Ready!!! port is %d, listen num is %d!", port, listen_num);
 	return 0;
 
 ERR_END:

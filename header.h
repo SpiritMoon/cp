@@ -18,18 +18,11 @@
 #define PORTAL_TO_AC_PORT		2000				// AC开放给portal的端口
 #define AC_TO_PORTAL_PORT		50100				// PORTAL开放给AC的端口
 
+#define WT_SQL_ERROR			6l					// 全局数据库错误标识码
 
-
-
-
-
-
-
-//#define WT_SQL_ERROR			6l					// 全局数据库错误标识码
 //#define SOCK_STAT_ADD		 1				// 设备需要添加到epoll列表
 //#define SOCK_STAT_ADDED		 0				// 设备已添加到epoll列表
 //#define SOCK_STAT_DEL		-1				// 设备出错,应从当前链表删除
-//#define ADVERTISING			1				// 广告系统Advertising
 
 
 
@@ -60,6 +53,10 @@
 
 #include "cJSON.h"
 
+#include <sql.h>
+#include <sqlext.h>
+#include <sqltypes.h>
+
 // logs 函数
 int logs_init(char* prefix);
 void logs_destroy();
@@ -85,14 +82,6 @@ int get_ini(char *buf, const char* key, char* value);
 void destroy_ini(int fd);
 
 
-/*
-#include <sql.h>
-#include <sqlext.h>
-#include <sqltypes.h>
-
-typedef unsigned char __u8;
-typedef unsigned short __u16;
-typedef unsigned int __u32;
 
 extern char cgv_sql_name[32];
 extern char cgv_sql_user[32];
@@ -110,10 +99,9 @@ typedef struct wt_sql_handle{
 	char		err_msg[200];
 	char		sql_str[1024];
 }wt_sql_handle;
-*/
 
 
-
+/************************* Portal *******************************/
 //Portal报文类型
 
 #define REQ_CHALLENGE 0x01;   //Client----->Server  Portal Server 向AC设备发送的请求Challeng报文
@@ -135,7 +123,6 @@ typedef struct wt_sql_handle{
 #define Challenge        0x03;        //16（固定） Chap方式加密的魔术字
 #define ChapPassWord     0x04;        //16（固定）  经过Chap方式加密后的密码
 
-//======================AC begin======================
 typedef struct portal_ac_attr
 {
 	unsigned char type;
@@ -158,7 +145,7 @@ typedef struct portal_ac
 	
 	char ac_attr[512];
 }ST_PORTAL_AC;
-//======================AC end======================
+
 #define PORTAL_USERNAME_LEN  128
 #define PORTAL_PASSWORD_LEN  128
 #define PORTAL_IP_LEN  16
@@ -184,8 +171,93 @@ typedef struct req_mac_query
 }ST_REQ_MAC_QUERY;
 
 
+// 发送认证上线函数
 int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port);
-void* radius_conn_thread(void *fd);
+
+// protal 测试线程
 void* protal_test_thread(void* fd);
+
+/********************** Radius ****************************/
+
+// RADIUS协议的报文 属性域
+struct radius_attr{
+	/*
+	 * Type：Attribute Number 属性号
+	 * 用来说明数据包中表示的属性类型
+	 * 范围是1~255
+	 * 服务器和客户端都可以忽略不可识别类型的属性
+	 * 值为26，标识厂商私有属性。
+	 */
+	unsigned char type;
+	/*
+	 * length 属性长度 说明整个属性域的长度
+	 * 长度域最小值为3 表示属性域至少占3个字节
+	 * 如果AAA服务器收到的接入请求中属性长度无效，则发送接入拒绝包
+	 * 如果NAS收到的接入允许、接入拒绝和接入盘问中属性的长度也无效，则必须以接入拒绝对待，或者被简单的直接丢弃。
+	 */
+	unsigned char length;
+	/*
+	 * Value 值 表示属于自己的特性和特征
+	 * 即使该域为null，这个域也必须出现在属性域中
+	 * 有6种属性值——整数(INT) ；枚举(ENUM) ；IP地址(IPADDR) ；文本(STRING) ；日期(DATE) ；二进制字符串（BINARY) ；
+	 */
+	unsigned char value[0];
+};
+
+// RADIUS协议的报文
+struct radius_bag{
+	/*
+	 * Code：包类型；1字节，指示RADIUS包的类型。在接收到一个无效编码域的数据包后，该数据包只是会被简单的丢弃
+	 * 1:Access-Request认证请求包，必须包含User-Name
+	 * 2:Access-Accept认证接受包，回复1
+	 * 3:Access-Reject认证拒绝包，回复1
+	 * 4:Accounting-Request计费请求包
+	 * 5:Accounting-Response认证响应包
+	 */
+	unsigned char code;
+	
+	/* 
+	 * Identifier： 包标识；1字节，取值范围为0 ～255；
+	 * 用于匹配请求包和响应包，同一组请求包和响应包的Identifier应相同。
+	 * 如果在一个很短的时间片段里，一个请求有相同的客户源IP地址、源UDP端口号和标识符，RADIUS服务器会认为这是一个重复的请求而不响应处理。
+	 * 1字节意味着客户端在收到服务器的响应之前最多发送255（28-1）个请求。
+	 * Identifier段里的值是序列增长的。
+	 */
+	unsigned char identifier;
+
+	/*
+	 *  length： 包长度；2字节；标识了分组的长度，整个包中所有域的长度。
+	 *  长度域范围之外的字节被认为是附加的，并在接受的时候超长部分将被忽略。
+	 *  如果包长比长度域给出的短，也必须丢弃，最小长度为20，最大长度为4096。
+	 */
+	unsigned short length;
+
+	/*
+	 * Authenticator：验证字域；16 字节明文随机数；最重要的字节组最先被传输。
+	 * 该值用来认证来自RADIUS服务器的回复，也用于口令隐藏算法（加密）。
+	 * 该验证字分为两种：
+	 *  请求验证字——Request Authenticator 用在请求报文中，采用唯一的16字节随机码。
+	 *  响应验证字——Response Authenticator 用在响应报文中，用于鉴别响应报文的合法性。
+	 *  响应验证字＝MD5( Code + ID + length + 请求验证字 + Attributes+Key)
+	 */
+	unsigned char authenticator[16];
+
+	/*
+	 * Attributes：属性域
+	 * 用来在请求和响应报文中携带详细的认证、授权、信息和配置细节，来实现认证、授权、计费等功能。
+	 * 采用（Type、length、Value）三元组的形式提供，
+	 */
+	struct radius_attr attributes[0];
+};
+
+// 接收到的radius 数据
+struct radius_recv{
+	int recv_ret;					// 接收到的长度
+	struct sockaddr_in client;		// 客户端地址信息
+	char buf[1024];					// radius数据包信息
+};
+
+// radius 服务器监听线程
+void* radius_conn_thread(void *fd);
 
 #endif //WT_HEADER_H
