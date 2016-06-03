@@ -13,12 +13,15 @@
 
 #define MAX_EPOLL_NUM			65536				// epoll 最大数量
 
-#define CONFIG_FILE_NAME		"config.ini"		// 配置文件名
-
 #define PORTAL_TO_AC_PORT		2000				// AC开放给portal的端口
 #define AC_TO_PORTAL_PORT		50100				// PORTAL开放给AC的端口
 
-#define WT_SQL_ERROR			6l					// 全局数据库错误标识码
+#define TO_PLATFORM_PORT		5633				// 开放给平台的端口
+
+#define SQL_NAME				"xy"
+#define SQL_USER				"zxyl"
+#define SQL_PASSWD				"abcd@123"
+
 
 //#define SOCK_STAT_ADD		 1				// 设备需要添加到epoll列表
 //#define SOCK_STAT_ADDED		 0				// 设备已添加到epoll列表
@@ -51,11 +54,15 @@
 
 #include <pthread.h>  
 
-#include "cJSON.h"
+#include <openssl/md5.h>
+
 
 #include <sql.h>
 #include <sqlext.h>
 #include <sqltypes.h>
+
+#include "cJSON.h"
+#include "list.h"
 
 // logs 函数
 int logs_init(char* prefix);
@@ -73,21 +80,16 @@ int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen);
 
 // platform
 void* platform_conn_thread(void *fd);
-// 平台连接的端口
-extern int  cgv_platform_port;
 
-// 配置文件
-int init_ini(char* filename, int *fd, char* buf, int len);
-int get_ini(char *buf, const char* key, char* value);
-void destroy_ini(int fd);
+// user_mp_list
+void user_mp_list_init();
+void user_mp_list_add(unsigned int userid, char* usermac);
+int user_mp_list_find_and_del(unsigned int userid, char* usermac);
 
-
-
+//数据库操作所需参数
 extern char cgv_sql_name[32];
 extern char cgv_sql_user[32];
 extern char cgv_sql_pass[32];
-
-//数据库操作所需参数
 typedef struct wt_sql_handle{
 	SQLHENV		env_handle;						// Handle ODBC environment 环境句柄
 	SQLHDBC		conn_handle;					// Handle connection 连接句柄
@@ -252,8 +254,9 @@ struct radius_bag{
 
 // 接收到的radius 数据
 struct radius_recv{
-	int recv_ret;					// 接收到的长度
+	unsigned int recv_ret;			// 接收到的长度
 	struct sockaddr_in client;		// 客户端地址信息
+	socklen_t addrlen;				// 客户端地址长度
 	char buf[1024];					// radius数据包信息
 };
 

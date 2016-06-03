@@ -7,6 +7,18 @@
 
 #define RADIUS_DEBUG 1
 
+#define RADIUS_UDP_PORT	1812
+
+#define RADIUS_SECRET	"12345678"
+
+// radius密钥长度
+static unsigned int		RADIUS_SECRET_LEN		= 0;
+// radius基础数据包长度
+static unsigned int		RADIUS_BASIC_LEN		= sizeof(struct radius_bag);
+// radius socket
+static int				radius_udp_sockfd		= 0;
+// radius socket 互斥锁
+static pthread_mutex_t	radius_udp_sockfd_lock;
 
 /** 
  *@brief  打印radius数据包
@@ -15,7 +27,6 @@
  */
 void xyprintf_radius_bag(struct radius_bag* rb)
 {
-	unsigned short num = ((rb->length & 0xff00) >> 8) | ((rb->length & 0x00ff) << 8); 
 	
 	xyprintf(0, "radius_bag->code = 0x%x\n\
 			->identifier = 0x%x\n\
@@ -23,7 +34,7 @@ void xyprintf_radius_bag(struct radius_bag* rb)
 			->authenticator = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
 			rb->code,
 			rb->identifier,
-			num,
+			rb->length,
 			rb->authenticator[0], rb->authenticator[1], rb->authenticator[2], rb->authenticator[3],
 			rb->authenticator[4], rb->authenticator[5], rb->authenticator[6], rb->authenticator[7],
 			rb->authenticator[8], rb->authenticator[9], rb->authenticator[10], rb->authenticator[11],
@@ -33,8 +44,15 @@ void xyprintf_radius_bag(struct radius_bag* rb)
 	struct radius_attr *temp = rb->attributes;
 	unsigned char buf[1024];
 	for(;;){
+
+		// 判断数据包是否已经结束
+		if((char*)temp - (char*)rb >= rb->length){
+			break;
+		}
+		
 		memset(buf, 0, 1024);
 		memcpy(buf, temp->value, temp->length - 2);
+		
 		switch( temp->type ){
 			case 1:	// User-Name
 				xyprintf(0, "radius_attr->type = 1(User-Name)\n\
@@ -226,6 +244,7 @@ void xyprintf_radius_bag(struct radius_bag* rb)
 						->value = %s",
 						temp->length,
 						buf);
+				break;
 			default:
 				xyprintf(0, "Warning: Invalid Data Format!");
 				xyprintf(0, "radius_attr->type = %u\n\
@@ -236,11 +255,91 @@ void xyprintf_radius_bag(struct radius_bag* rb)
 		}
 		
 		temp = (struct radius_attr*)((char*)temp + temp->length);
-		
-		if((char*)temp - (char*)rb >= num){
+	}
+}
+
+/** 
+ *@brief	获取attr信息
+ *@param
+ *@return
+ */
+int get_attr_info(struct radius_bag* rb, unsigned char type, char *buf)
+{
+	int find_flag = -1;
+
+	struct radius_attr *temp = rb->attributes;
+
+	for(;;){
+		// 判断是否已经处理完
+		// 在处理完所有属性域以后，temp的地址应该是rb末尾的下一个地址
+		if((char*)temp - (char*)rb >= rb->length){
 			break;
 		}
+
+		if(temp->type == type){
+			memcpy(buf, temp->value, temp->length - 2);
+			find_flag = 0;
+			break;
+		}
+	
+		// 指向下一个属性域
+		// 用当前的地址加上当前属性域的长度
+		temp = (struct radius_attr*)((char*)temp + temp->length);
 	}
+
+	// 返回返回值 找到0 未找到1
+	return find_flag;
+}
+
+/** 
+ *@brief  radius数据包回复
+ *@param
+ *@return
+ */
+int radius_pro_recv(struct radius_recv *rr)
+{
+	struct radius_bag *rb = (struct radius_bag*)(rr->buf);
+	
+	// 回复包
+	struct radius_bag rrb;
+	rrb.code = rb->code + 1;
+	rrb.identifier = rb->identifier;
+	rrb.length = sizeof(rrb);
+	memcpy(rrb.authenticator, rb->authenticator, 16);
+
+	// 计算回复包md5
+	char buf[RADIUS_BASIC_LEN + RADIUS_SECRET_LEN];
+	memcpy(buf, &rrb, RADIUS_BASIC_LEN);
+	memcpy(buf + RADIUS_BASIC_LEN, RADIUS_SECRET, RADIUS_SECRET_LEN);
+
+#if RADIUS_DEBUG
+	xyprintf(0, "The buf of to count md5:\n\
+			%02x %02x %02x %02x\n\
+			%02x %02x %02x %02x	%02x %02x %02x %02x\n\
+			%02x %02x %02x %02x %02x %02x %02x %02x\n\
+			RADIUS_SECRET is %s",
+			buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7],
+			buf[8], buf[9], buf[10], buf[11], buf[12], buf[13], buf[14], buf[15],
+			buf[16], buf[17], buf[18], buf[19],
+			RADIUS_SECRET);
+#endif
+
+	MD5(buf, RADIUS_BASIC_LEN + RADIUS_SECRET_LEN ,rrb.authenticator);
+
+#if RADIUS_DEBUG	
+	xyprintf_radius_bag(&rrb);
+#endif
+	
+	// 加锁发送数据
+	pthread_mutex_lock(&radius_udp_sockfd_lock);
+	int ret = sendto(radius_udp_sockfd, &rrb, RADIUS_BASIC_LEN, 0, (struct sockaddr *)(&(rr->client)), rr->addrlen);
+	pthread_mutex_unlock(&radius_udp_sockfd_lock);
+	
+	if( ret <= 0 ){
+		xyprintf(errno, "ERROR - %s - %s - %d", __FILE__, __func__, __LINE__);
+		return -1;
+	}
+	return 0;
 }
 
 /** 
@@ -261,72 +360,128 @@ void* radius_pro_thread(void *fd)
 	xyprintf_radius_bag(rb);
 #endif
 	
-	//TODO 数据处理
-	
+	// 判断code是否不为1
+	if(rb->code != 1 && rb->code != 4){
+		xyprintf(0, "RADIUS DATA ERROR:code = %u", rb->code);
+		goto DATA_ERR;
+	}
 
+	// 转换长度的字节序，并判断长度是否正确
+	rb->length = ((rb->length & 0xff00) >> 8) | ((rb->length & 0x00ff) << 8); 
+	if(rr->recv_ret != rb->length){
+		xyprintf(0, "RADIUS DATA ERROR:recv_ret(%u) != length(%u)", rr->recv_ret, rb->length);
+		goto DATA_ERR;
+	}
+
+	// 获取用户帐号
+	char username[128] = {0};
+	if( get_attr_info(rb, 1, username) ){
+		xyprintf(0, "RADIUS DATA ERROR:Get username error!");
+		goto DATA_ERR;
+	}
+#if RADIUS_DEBUG
+	xyprintf(0, "username = %s", username);
+#endif
+	// 获取用户mac
+	char usermac[128] = {0};
+	if( get_attr_info(rb, 31, usermac) ){
+		xyprintf(0, "RADIUS DATA ERROR:Get usermac error!");
+		goto DATA_ERR;
+	}
+#if RADIUS_DEBUG
+	xyprintf(0, "usermac = %s", usermac);
+#endif
+	
+	//TODO 数据库操作
+	
+	// 回复报文
+	radius_pro_recv(rr);
+
+
+	free(rr);
+	pthread_exit(NULL);
+DATA_ERR:
 	free(rr);
 	xyprintf(0, "** O(∩ _∩ )O ~~ Radius process thread is end!!!");
 	pthread_exit(NULL);
 }
 
 /** 
- *@brief  平台连接监听线程函数
+ *@brief  radius服务器监听线程
  *@param  fd类型 void*	线程启动参数,未使用
  *@return nothing
  */
 void* radius_conn_thread(void *fd)
 {
 	pthread_detach(pthread_self());
+	
 	xyprintf(0, "** O(∩ _∩ )O ~~ Radius connection thread is running!!!");
+	
+	pthread_mutex_init(&radius_udp_sockfd_lock, 0);
+	RADIUS_SECRET_LEN = strlen(RADIUS_SECRET);
+	xyprintf(0, "RADIUS_SECRET is %s, len is %d", RADIUS_SECRET, RADIUS_SECRET_LEN);
+	
+	pthread_t pt;
+	
 	while(1){
-		int sockfd;
-
-		if((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) == -1){
+		// 初始化socket
+		if((radius_udp_sockfd = socket(AF_INET, SOCK_DGRAM, 0)) == -1){
 			xyprintf(errno, "%s %s %d", __FILE__, __func__, __LINE__);
 			sleep(10);
 			break;
 		}
 		
+		// 创建绑定端口信息 并绑定端口
 		struct sockaddr_in server;
 		bzero(&server,sizeof(server));
 		server.sin_family=AF_INET;
-		server.sin_port=htons(1812);
+		server.sin_port=htons( RADIUS_UDP_PORT );
 		server.sin_addr.s_addr= htonl (INADDR_ANY);
-		if(bind(sockfd, (struct sockaddr *)&server, sizeof(server)) == -1){
+		if(bind(radius_udp_sockfd, (struct sockaddr *)&server, sizeof(server)) == -1){
 			xyprintf(errno, "%s %s %d", __FILE__, __func__, __LINE__);
-			close(sockfd);
+			close(radius_udp_sockfd);
+			radius_udp_sockfd = 0;
 			sleep(10);
 			break;
-	    }   
+	    } 
 		
-		xyprintf(0, "UDP socket Ready!!! port is %d!", 1812);
-        
+		xyprintf(0, "UDP socket Ready!!! port is %d!", RADIUS_UDP_PORT);
+		
+		// 循环接收信息
 		while(1){
-			struct radius_recv *recv_temp = malloc(sizeof(struct radius_recv));
-			memset(recv_temp, 0, sizeof(struct radius_recv));
-			socklen_t addrlen = sizeof(recv_temp->client);
+
+			// 客户端信息
+			struct radius_recv *recv_temp = malloc( sizeof(struct radius_recv) );
+			memset(recv_temp, 0, sizeof( struct radius_recv ) );
+			recv_temp->addrlen = sizeof( recv_temp->client );
 			
-			recv_temp->recv_ret = recvfrom(sockfd, recv_temp->buf, 1024, 0, (struct sockaddr*)&(recv_temp->client), &addrlen);
+			// 接收信息
+			recv_temp->recv_ret = recvfrom(radius_udp_sockfd, recv_temp->buf, 1024, 0, (struct sockaddr*)&(recv_temp->client), &(recv_temp->addrlen) );
+			
+			// 判断返回值
 			if (recv_temp->recv_ret < 0){
 				xyprintf(errno, "%s %s %d", __FILE__, __func__, __LINE__);
 				free(recv_temp);
 				break;
 			}
 
-			xyprintf(0, "recv a msg in %p, ret is %d", recv_temp, recv_temp->recv_ret);
-			
-			pthread_t pt;
+			xyprintf(0, "recv a msg set in %p, ret is %d", recv_temp, recv_temp->recv_ret);
+		
+			// 创建线程处理
 			if( pthread_create(&pt, NULL, radius_pro_thread, (void*)recv_temp) != 0 ){
 				xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 				free(recv_temp);
 			}
 
         }
-		close(sockfd);
-		sleep(10);
+
+		// 关闭socket 等待重新创建
+		close(radius_udp_sockfd);
+		radius_udp_sockfd = 0;
 	}
 
 	//到不了的地方～～～
+	pthread_mutex_destroy(&radius_udp_sockfd_lock);
 	xyprintf(0, "PLATFORM_ERROR:✟ ✟ ✟ ✟  -- %s %d:Radius pthread is unnatural deaths!!!", __FILE__, __LINE__);
 	pthread_exit(NULL);
 }

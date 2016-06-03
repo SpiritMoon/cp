@@ -2,12 +2,12 @@ CC=gcc
 MAKE=make
 
 #编译选项
-LIB=-lpthread -lm -lodbc
+LIB=-lpthread -lm -lodbc -lcrypto
 #-lodbc
 PUBLIC_DEPEND=$(PUBDIR)/*.o
 
-SOURCE=main.c sql.c logs.c ini.c net.c server_mutual.c radius.c portal.c cJSON.c
-DEPEND=main.o sql.o logs.o ini.o net.o server_mutual.o radius.o portal.o cJSON.o
+SOURCE=main.c user_mp_list.c sql.c logs.c net.c server_mutual.c radius.c portal.c cJSON.c
+DEPEND=main.o user_mp_list.o sql.o logs.o net.o server_mutual.o radius.o portal.o cJSON.o
 TARGET=cp.out
 
 
@@ -21,7 +21,6 @@ out:
 
 mv:
 	@mv $(TARGET) ~/a.out/
-	@cp config.ini ~/a.out/
 	-@rm -f *.o
 
 GDB:
