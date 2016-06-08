@@ -6,7 +6,6 @@
 #ifndef WT_HEADER_H
 #define WT_HEADER_H
 
-#define IS_DAEMON_EXIST			0					// 精灵线程
 
 #define LOGS_MAX_SIZE			( 5 * 1024 * 1024 )	// 单个log文件大小 1M
 #define WRITE_LOG				1					// 是否写log文件
@@ -17,18 +16,6 @@
 #define AC_TO_PORTAL_PORT		50100				// PORTAL开放给AC的端口
 
 #define TO_PLATFORM_PORT		5633				// 开放给平台的端口
-
-#define SQL_NAME				"xy"
-#define SQL_USER				"zxyl"
-#define SQL_PASSWD				"abcd@123"
-
-
-//#define SOCK_STAT_ADD		 1				// 设备需要添加到epoll列表
-//#define SOCK_STAT_ADDED		 0				// 设备已添加到epoll列表
-//#define SOCK_STAT_DEL		-1				// 设备出错,应从当前链表删除
-
-
-
 
 #include <stdio.h>  
 #include <stdlib.h>  
@@ -87,9 +74,6 @@ void user_mp_list_add(unsigned int userid, char* usermac);
 int user_mp_list_find_and_del(unsigned int userid, char* usermac);
 
 //数据库操作所需参数
-extern char cgv_sql_name[32];
-extern char cgv_sql_user[32];
-extern char cgv_sql_pass[32];
 typedef struct wt_sql_handle{
 	SQLHENV		env_handle;						// Handle ODBC environment 环境句柄
 	SQLHDBC		conn_handle;					// Handle connection 连接句柄
@@ -102,6 +86,14 @@ typedef struct wt_sql_handle{
 	char		sql_str[1024];
 }wt_sql_handle;
 
+// sql
+int wt_sql_init(wt_sql_handle *handle, char* sql_name, char* sql_user, char* sql_pass);
+void wt_sql_destroy(wt_sql_handle *handle);
+int wt_sql_exec(wt_sql_handle *handle);
+// sql_fun
+int insert_discharged(char* userip, char* acip);
+int delete_discharged(char* userip, char* acip);
+void* loop_temp_discharged_thread(void *fd);
 
 /************************* Portal *******************************/
 //Portal报文类型
@@ -144,41 +136,26 @@ typedef struct portal_ac
 	unsigned short userPort;	// UserPort字段目前没有用到，长度为 2 字节，在所有报文中其值为0
 	unsigned char errCode;		// ErrCode字段和Type字段一起表示一定的意义，长度为 1字节
 	unsigned char attrNum;		// 表示其后边可变长度的属性字段属性的个数，长度为 1 字节
-	
 	char ac_attr[512];
 }ST_PORTAL_AC;
 
-#define PORTAL_USERNAME_LEN  128
-#define PORTAL_PASSWORD_LEN  128
-#define PORTAL_IP_LEN  16
-#define PORTAL_MAC_LEN  18
-
-typedef struct req_auth
-{
-    char userip[PORTAL_IP_LEN];
-    char name[PORTAL_USERNAME_LEN];
-    char password[PORTAL_PASSWORD_LEN];
-}ST_REQ_AUTH;
-
-
-typedef struct req_mac_query
-{
-	int serial;
-	int stat;//=1:查询到已存在  =0:没有查询到  =-1:执行查询失败
-	char userName[PORTAL_USERNAME_LEN];//查询到的登录用户名
-	char password[PORTAL_PASSWORD_LEN];//查询到的用户登录密码
-    char acip[PORTAL_IP_LEN]; 
-    char userip[PORTAL_IP_LEN];
-    char usermac[PORTAL_MAC_LEN];
-}ST_REQ_MAC_QUERY;
-
+// 接收到的portal 数据
+struct portal_recv{
+	unsigned int recv_ret;			// 接收到的长度
+	struct sockaddr_in client;		// 客户端地址信息
+	socklen_t addrlen;				// 客户端地址长度
+	char buf[1024];					// radius数据包信息
+};
 
 // 发送认证上线函数
-int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port);
+int SendReqAuthAndRecv(char* userip, char* usernum, char* usercode, char* ac_ip, int port);
 
 // protal 测试线程
-void* protal_test_thread(void* fd);
-
+void* portal_test_thread(void* fd);
+// portal 报文打印
+void xyprintf_portal_ac(ST_PORTAL_AC* pa);
+// portal 监听线程
+void* portal_conn_thread(void *fd);
 /********************** Radius ****************************/
 
 // RADIUS协议的报文 属性域
@@ -261,6 +238,13 @@ struct radius_recv{
 };
 
 // radius 服务器监听线程
-void* radius_conn_thread(void *fd);
+void* radius12_conn_thread(void *fd);
+void* radius13_conn_thread(void *fd);
+
+#define RADIUS_SECRET	"12345678"
+// radius密钥长度
+extern unsigned int		RADIUS_SECRET_LEN;
+// radius基础数据包长度
+extern unsigned int		RADIUS_BASIC_LEN;
 
 #endif //WT_HEADER_H

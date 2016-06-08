@@ -52,13 +52,13 @@ void user_mp_list_add(unsigned int userid, char* usermac)
 	list_add(&(node->node), &user_mp_list_head);
 #if USER_MP_LIST_DEBUG
 	user_mp_list_count ++;
-	xyprintf(0, "ADD:user_mp_list_count = %d", user_mp_list_count);
+	xyprintf(0, "ADD:user_mp_list_count = %d, id is %u, mac is %s", user_mp_list_count, node->userid, node->usermac);
 #endif
 	pthread_mutex_unlock(&user_mp_list_lock);
 }
 
 /** 
- *@brief  链表数据添加
+ *@brief  链表数据查找并删除
  *@return nothing
  */
 int user_mp_list_find_and_del(unsigned int userid, char* usermac)
@@ -75,7 +75,7 @@ int user_mp_list_find_and_del(unsigned int userid, char* usermac)
 			list_del( pos );
 #if USER_MP_LIST_DEBUG
 			user_mp_list_count --;
-			xyprintf(0, "DEL:user_mp_list_count = %d", user_mp_list_count);
+			xyprintf(0, "ADD:user_mp_list_count = %d, id is %u, mac is %s", user_mp_list_count, node->userid, node->usermac);
 #endif
 			break;
 		}

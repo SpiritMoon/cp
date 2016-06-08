@@ -296,7 +296,7 @@ int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen)
 				xyprintf(0,"no msg recv, sleep 1s continue!");
 				sleep(1);
 				count++;
-				if(count >= 5){
+				if(count >= 10){
 					return -1;
 				}
 				continue;

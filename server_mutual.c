@@ -38,7 +38,7 @@ void xyprintf_plat_para(struct plat_para *para)
 			->wlanacip = %s\n\
 			->apmac = %s\n\
 			->wlanparameter = %s\n\
-			->wlanuserfirsturl = %s",
+			->wlanuserfirsturl = %s\n",
 			para->type,
 			para->usernum,
 			para->usercode,
@@ -197,43 +197,82 @@ void* platform_process(void *fd)
 	xyprintf_plat_para(&para);
 #endif
 
-	if(!strcmp(para.type, "auth-tel")){
-		//TODO sql	
+	char res[128] = {0};
+
+	if(!strcmp(para.type, "auth-tel") || !strcmp(para.type, "auth-temp")){
+		unsigned int id;
+		if(!strcmp(para.type, "auth-temp")){
+			//根据wlanparameter查找是否存在对应用户 插入临时放行表 获取临时表id
+			int ret = insert_discharged(para.wlanuserip, para.wlanacip);
+			if(ret > 0){
+				id = ret;
+				xyprintf(0, "Get temp id is %u", id);
+			}
+			else {
+				xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
+				goto JSON_ERR;
+			}
+		}
+		else {
+			//TODO sql 查询数据库对应id值
+			id = ((unsigned int)time(0)) % 10000000;
+			xyprintf(0, "Create a id is %u", id);
+		}
+		
+		// 准备发送数据到ac
+		char username[128] = {0};
+		snprintf(username, 127, "%s-%u", &para.type[5], id);
 	
+		if( SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
+			snprintf(res, 127, "{\"stat\":\"failed\"}");
+		}
+		else {
+			// 如果是临时放行 获取mac地址
+			if(!strcmp(para.type, "auth-temp")){
+				int i = 0;
+				int find_flag = -1;
+				char usermac[64] = {0};
+				
+				for(; i < 10; i++){
+					if(!user_mp_list_find_and_del(id, usermac)){
+						xyprintf(0, "get mac success -- %s", usermac);
+						snprintf(res, 63, "{\"stat\":\"%s\"}", usermac);
+						find_flag = 0;
+						break;
+					}
+					usleep(100);
+					xyprintf(0, "Can not find usermac, sleep 100 us continue!");
+				}
+
+				// 没有找到的话
+				if(find_flag){
+					snprintf(res, 127, "{\"stat\":\"failed\"}");
+				}
+			}
+			else {
+				// 手机的 就是ok啦
+				snprintf(res, 127, "{\"stat\":\"ok\"}");
+			}
+		}
 	}
 	else if(!strcmp(para.type, "auth-wx")){
-		//TODO sql	
-	
-	}
-	else if(!strcmp(para.type, "auth-temp")){
-		//TODO sql	
-	
+		//TODO sql
+		//删除临时放行表中的记录
+		xyprintf(0, "is weixin, delete temp record, userip is %s, acip is %s", para.wlanuserip, para.wlanacip);
+		int ret = delete_discharged(para.wlanuserip, para.wlanacip);
+		if(ret < 0){
+			xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
+			goto JSON_ERR;
+		}
+		
+		snprintf(res, 127, "{\"stat\":\"ok\"}");
 	}
 	else {
 		xyprintf(0,"PLATFORM_ERROR:Type unknown(%s) -- %s -- %d!!!", para.type, __FILE__, __LINE__);
 		goto DATA_ERR;
 	}
 
-	// 准备发送数据到ac
-	ST_REQ_AUTH req_auth;
-	memset(&req_auth, 0 , sizeof(req_auth));
-	strcpy(req_auth.userip, para.wlanuserip);
-	strcpy(req_auth.name, para.usernum);
-	strcpy(req_auth.password, para.usercode);
-
-	char *res;
-/*
-	if( SendReqAuthAndRecv(&req_auth, para.wlanacip, PORTAL_TO_AC_PORT ) ){
-		res = "{\"stat\":\"failed\"}";
-	}
-	else {
-		res = "{\"stat\":\"ok\"}";
-	}
-*/
 	
-	//res = "{\"stat\":\"ok\"}";
-	res = "{\"stat\":\"e8:4e:06:2e:5a:8b\"}";
-
 	// 发送返回值
 	xyprintf(0, "** res -- %d -- %s", strlen(res), res);
 	if( send(sockfd, res, strlen(res), 0) <= 0){

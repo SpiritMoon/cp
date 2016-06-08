@@ -5,14 +5,8 @@
  *****************************************************/
 #include "header.h"
 
-//pthread_mutex_t		gv_task_lock;					// 数据库定时任务互斥锁
-//pthread_mutex_t		gv_boss_flag_lock;
-//int					gv_boss_flag = 0;				// boss控制的是否可以引导的标志
-//int					gv_heart_interval = 300;		// 心跳时间
-//int					gv_num_falg = 0;				// 数量控制falg
-//int					gv_total_num = 0;				// 设备数量
-//int					gv_rt_num = 0;					// 设备类型数量
-//LIST_HEAD(			gv_boss_rt_head);				// 设备类型链表
+#define IS_DAEMON_EXIST			0					// 精灵线程
+#define PORTAL_OFFLINE_TEST		0
 
 /** 
  *@brief  程序主体函数 由子进程运行
@@ -40,6 +34,9 @@ void run()
 			*************************************************************************\n",
 			getpid() );
 
+	RADIUS_SECRET_LEN = strlen(RADIUS_SECRET);
+	xyprintf(0, "RADIUS_SECRET is %s, len is %d", RADIUS_SECRET, RADIUS_SECRET_LEN);
+	
 	//初始化认证服务器list信息互斥锁 和 定时任务 互斥锁
 //	pthread_mutex_init(&gv_authenticate_list_lock, 0);
 
@@ -49,17 +46,29 @@ void run()
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 	}
 	/**********************************************************************************/
-	if( pthread_create(&pt, NULL, radius_conn_thread, NULL) != 0 ){
+	if( pthread_create(&pt, NULL, radius12_conn_thread, NULL) != 0 ){
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 	}
 	/**********************************************************************************/
-//	if( pthread_create(&pt, NULL, protal_test_thread, NULL) != 0 ){
-//		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
-//	}
+	if( pthread_create(&pt, NULL, portal_conn_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
 	/**********************************************************************************/
+	if( pthread_create(&pt, NULL, radius13_conn_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
+	/**********************************************************************************/
+	if( pthread_create(&pt, NULL, loop_temp_discharged_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
+	/**********************************************************************************/
+#if PORTAL_OFFLINE_TEST
+	if( pthread_create(&pt, NULL, portal_test_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
+#endif
 
 	while(1){
-//		guide_conn_thread();
 		sleep(100);
 	}
 
