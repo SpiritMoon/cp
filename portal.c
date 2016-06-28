@@ -1,7 +1,18 @@
+/*****************************************************
+ *
+ * Protal æœåŠ¡å™¨ç«¯
+ *
+ *****************************************************/
 #include "header.h"
 
+#define PORTAL_DEBUG 1
+#define PORTAL_RECV_PORT	50100
+
+static int				portal_recv_sockfd		= 0;	// portal recv socket
+static pthread_mutex_t	portal_recv_sockfd_lock;		// radius socket äº’æ–¥é”
+
 /** 
- *@brief  ´òÓ¡ST_PORTAL_ACµÄĞÅÏ¢
+ *@brief  æ‰“å°ST_PORTAL_ACçš„ä¿¡æ¯
  *@param  
  *@return 
  */
@@ -16,7 +27,7 @@ void xyprintf_portal_ac(ST_PORTAL_AC* pa)
 			->userIP = %u\n\
 			->userPort = %u\n\
 			->errCode = 0x%02x\n\
-			->attrNum = 0x%02x",
+			->attrNum = 0x%02x\n",
 			pa->ver,
 			pa->type,
 			pa->pap_chap,
@@ -31,7 +42,6 @@ void xyprintf_portal_ac(ST_PORTAL_AC* pa)
 	char buf[256];
 	int i = 0;
 	for(; i < pa->attrNum; i++){
-		xyprintf(0, "temp = %p", temp);
 		memset(buf, 0, 256);
 		memcpy(buf, temp->attrVal, temp->len -2);
 		xyprintf(0, "ST_PORTAL_AC_ATTR->type = 0x%x\n\
@@ -45,7 +55,7 @@ void xyprintf_portal_ac(ST_PORTAL_AC* pa)
 }
 
 /** 
- *@brief  »ñÈ¡ÑéÖ¤Âë
+ *@brief  è·å–éªŒè¯ç 
  *@param  
  *@return 
  */
@@ -60,11 +70,11 @@ unsigned short generateSerialNo()
 }
 
 /** 
- *@brief  ·¢ËÍÈÏÖ¤±¨ÎÄ
+ *@brief  å‘é€è®¤è¯æŠ¥æ–‡
  *@param  
  *@return 
  */
-int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port)
+int SendReqAuthAndRecv(char* userip, char* usernum, char* usercode, char* ac_ip, int port)
 {
     int sockfd = 0;
     if (UDP_create(&sockfd)){
@@ -79,34 +89,34 @@ int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port)
     stReqAuth.rsv = 0x00;
     stReqAuth.serialNo = generateSerialNo();
     stReqAuth.reqID = 0x0000;
-    inet_pton(AF_INET,req_auth->userip,(void*)&stReqAuth.userIP);
-//	stReqAuth.userIP = htonl(stReqAuth.userIP);	// PortalÓÃ»§µÄIPµØÖ·£¬³¤¶ÈÎª 4 ×Ö½Ú
-	stReqAuth.userPort = 0x0000;		// ³¤¶ÈÎª 2 ×Ö½Ú£¬ÔÚËùÓĞ±¨ÎÄÖĞÆäÖµÎª0
+    inet_pton(AF_INET, userip, (void*)&stReqAuth.userIP);
+//	stReqAuth.userIP = htonl(stReqAuth.userIP);	// Portalç”¨æˆ·çš„IPåœ°å€ï¼Œé•¿åº¦ä¸º 4 å­—èŠ‚
+	stReqAuth.userPort = 0x0000;		// é•¿åº¦ä¸º 2 å­—èŠ‚ï¼Œåœ¨æ‰€æœ‰æŠ¥æ–‡ä¸­å…¶å€¼ä¸º0
 	stReqAuth.errCode = 0x00;
 	stReqAuth.attrNum = 2;
 
 	ST_PORTAL_AC_ATTR reqAuthAttr[2] = { 0 };
-	// ×éÊôĞÔusername
+	// ç»„å±æ€§username
 	reqAuthAttr[0].type = UserName;
 	reqAuthAttr[0].len = 2;
-	reqAuthAttr[0].len += strlen( (char*)req_auth->name );
-	strncpy((char*)reqAuthAttr[0].attrVal, req_auth->name, sizeof(reqAuthAttr[0].attrVal)-1);
+	reqAuthAttr[0].len += strlen( (char*)usernum );
+	strncpy((char*)reqAuthAttr[0].attrVal, usernum, sizeof(reqAuthAttr[0].attrVal)-1);
 
-	xyprintf(0, "UserName: %s ,len= %d", req_auth->name, reqAuthAttr[0].len);
+	//xyprintf(0, "UserName: %s ,len= %d", usernum, reqAuthAttr[0].len);
 
-	// ´ò°üpassword
+	// æ‰“åŒ…password
 	reqAuthAttr[1].type = PassWord;
 	reqAuthAttr[1].len  = 2; 
-	reqAuthAttr[1].len += strlen( req_auth->password );
-	strncpy( (char*)reqAuthAttr[1].attrVal, req_auth->password, sizeof(reqAuthAttr[1].attrVal)-1); 
+	reqAuthAttr[1].len += strlen( usercode );
+	strncpy( (char*)reqAuthAttr[1].attrVal, usercode, sizeof(reqAuthAttr[1].attrVal)-1); 
 	
-	xyprintf(0, "password: %s ,len = %d", req_auth->password, reqAuthAttr[1].len);
-
-	// 10.REQ_AUTH ×é´ó°ü 
+	//xyprintf(0, "password: %s ,len = %d", usercode, reqAuthAttr[1].len);
+	// 10.REQ_AUTH ç»„å¤§åŒ… 
 
 	memcpy(stReqAuth.ac_attr, reqAuthAttr, reqAuthAttr[0].len);
 	memcpy(stReqAuth.ac_attr + reqAuthAttr[0].len, &reqAuthAttr[1], reqAuthAttr[1].len);
 
+	xyprintf(0, "**** send portal auth bag!");
 	xyprintf_portal_ac(&stReqAuth);
 
 	// 10.REQ_AUTH
@@ -120,11 +130,12 @@ int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port)
 	
 	// 13.ACK_AUTH
 	if( UDP_recv_block(sockfd, (unsigned char*)&stAckAuth, sizeof (stAckAuth)) < 0){
-		xyprintf(0, "ERROR - %s - %s - %d - send udp failed!", __FILE__, __func__, __LINE__);
+		xyprintf(0, "ERROR - %s - %s - %d - recv udp failed!", __FILE__, __func__, __LINE__);
 		close(sockfd);
 		return -1;
 	}
 
+	xyprintf(0, "recv portal auth req bag!");
 	xyprintf_portal_ac(&stAckAuth);
 
 	close(sockfd);
@@ -138,7 +149,7 @@ int SendReqAuthAndRecv(ST_REQ_AUTH *req_auth, char* ac_ip, int port)
 }
 
 /** 
- *@brief  ·¢ËÍµÇ³ö±¨ÎÄ
+ *@brief  å‘é€ç™»å‡ºæŠ¥æ–‡
  *@param  
  *@return 
  */
@@ -150,7 +161,7 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
         return -1;
     }
     
-    // 2.REQ_LOGOUT ×é°ü	
+    // 2.REQ_LOGOUT ç»„åŒ…	
     ST_PORTAL_AC stReqLogout;
     stReqLogout.ver = 0x01;
     stReqLogout.type = 0x05;
@@ -158,9 +169,9 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
     stReqLogout.rsv = 0x00;
     stReqLogout.serialNo = generateSerialNo();
     stReqLogout.reqID = 0x0000;
-    inet_pton(AF_INET,userip,(void*)&stReqLogout.userIP);
-//	stReqLogout.userIP = htonl(stReqLogout.userIP);	// PortalÓÃ»§µÄIPµØÖ·£¬³¤¶ÈÎª 4 ×Ö½Ú
-	stReqLogout.userPort = 0x0000;		// ³¤¶ÈÎª 2 ×Ö½Ú£¬ÔÚËùÓĞ±¨ÎÄÖĞÆäÖµÎª0
+    inet_pton(AF_INET, userip, (void*)&stReqLogout.userIP);
+//	stReqLogout.userIP = htonl(stReqLogout.userIP);	// Portalç”¨æˆ·çš„IPåœ°å€ï¼Œé•¿åº¦ä¸º 4 å­—èŠ‚
+	stReqLogout.userPort = 0x0000;		// é•¿åº¦ä¸º 2 å­—èŠ‚ï¼Œåœ¨æ‰€æœ‰æŠ¥æ–‡ä¸­å…¶å€¼ä¸º0
 	stReqLogout.errCode = 0;
 	stReqLogout.attrNum = 0;
 
@@ -173,7 +184,7 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 	}
 	xyprintf(0, "send success, port:%d, ac_ip:%s\n",port, ac_ip);
     
-	//11.12 ACÏòradius·¢ÆğÈÏÖ¤
+	//11.12 ACå‘radiuså‘èµ·è®¤è¯
 
     ST_PORTAL_AC stAckLogout;
 	// 5.ACK_LOGOUT
@@ -197,27 +208,141 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 
 
 /** 
- *@brief  ²âÊÔÏß³Ì
+ *@brief  æµ‹è¯•çº¿ç¨‹
  *@param  
  *@return 
  */
-void* protal_test_thread(void* fd)
+void* portal_test_thread(void* fd)
 {
 	pthread_detach(pthread_self());
 	xyprintf(0, "protal test thread is working!!");
 	while(1){
-		ST_REQ_AUTH req_auth;
-		strcpy(req_auth.userip, "10.187.226.4");
-		strcpy(req_auth.name, "18866120427");
-		strcpy(req_auth.password, "123456");
-		
-		if( SendReqAuthAndRecv(&req_auth, "111.17.237.28", PORTAL_TO_AC_PORT ) ){
+		if( SendReqLogoutAndRecv("10.187.226.14", "111.17.237.28", PORTAL_TO_AC_PORT) ){
 			xyprintf(0, "stat: failed");
 		}
 		else{
 			xyprintf(0, "stat: ok");
 		}
-		sleep(60);
+		
+		/*
+		if( SendReqAuthAndRecv("10.187.226.4", "18866120427", "123456", "111.17.237.28", PORTAL_TO_AC_PORT ) ){
+			xyprintf(0, "stat: failed");
+		}
+		else{
+			xyprintf(0, "stat: ok");
+		}
+		*/
+		
+		sleep(180);
 	}
+	pthread_exit(NULL);
+}
+
+/** 
+ *@brief  radiusæ•°æ®åŒ…å¤„ç†
+ *@param
+ *@return
+ */
+void* portal_pro_thread(void *fd)
+{
+	pthread_detach(pthread_self());
+	xyprintf(0, "** O(âˆ© _âˆ© )O ~~ Protal process thread is running!!!");
+	
+	struct portal_recv *pr = (struct portal_recv*)fd;
+	struct portal_ac  *pa = (struct portal_ac*)(pr->buf);
+
+#if PORTAL_DEBUG
+	xyprintf(0, "pr = %p, pr->recv_ret = %d", pr, pr->recv_ret);
+	xyprintf_portal_ac(pa);
+#endif
+	
+	//TODO æ•°æ®åº“æ“ä½œ
+	
+	// å›å¤æŠ¥æ–‡
+
+
+	free(pr);
+	pthread_exit(NULL);
+DATA_ERR:
+	free(pr);
+	xyprintf(0, "** O(âˆ© _âˆ© )O ~~ Portal process thread is end!!!");
+	pthread_exit(NULL);
+}
+
+/** 
+ *@brief  radiusæœåŠ¡å™¨ç›‘å¬çº¿ç¨‹
+ *@param  fdç±»å‹ void*	çº¿ç¨‹å¯åŠ¨å‚æ•°,æœªä½¿ç”¨
+ *@return nothing
+ */
+void* portal_conn_thread(void *fd)
+{
+	pthread_detach(pthread_self());
+	
+	xyprintf(0, "** O(âˆ© _âˆ© )O ~~ Portal connection thread is running!!!");
+	
+	pthread_mutex_init(&portal_recv_sockfd_lock, 0);
+	
+	pthread_t pt;
+	
+	while(1){
+		// åˆå§‹åŒ–socket
+		if((portal_recv_sockfd = socket(AF_INET, SOCK_DGRAM, 0)) == -1){
+			xyprintf(errno, "%s %s %d", __FILE__, __func__, __LINE__);
+			sleep(10);
+			break;
+		}
+		
+		// åˆ›å»ºç»‘å®šç«¯å£ä¿¡æ¯ å¹¶ç»‘å®šç«¯å£
+		struct sockaddr_in server;
+		bzero(&server,sizeof(server));
+		server.sin_family=AF_INET;
+		server.sin_port=htons( PORTAL_RECV_PORT );
+		server.sin_addr.s_addr= htonl (INADDR_ANY);
+		if(bind(portal_recv_sockfd, (struct sockaddr *)&server, sizeof(server)) == -1){
+			xyprintf(errno, "%s %s %d", __FILE__, __func__, __LINE__);
+			close(portal_recv_sockfd);
+			portal_recv_sockfd = 0;
+			sleep(10);
+			break;
+	    } 
+		
+		xyprintf(0, "UDP socket Ready!!! port is %d!", PORTAL_RECV_PORT);
+		
+		// å¾ªç¯æ¥æ”¶ä¿¡æ¯
+		while(1){
+
+			// å®¢æˆ·ç«¯ä¿¡æ¯
+			struct portal_recv *recv_temp = malloc( sizeof(struct portal_recv) );
+			memset(recv_temp, 0, sizeof( struct portal_recv ) );
+			recv_temp->addrlen = sizeof( recv_temp->client );
+			
+			// æ¥æ”¶ä¿¡æ¯
+			recv_temp->recv_ret = recvfrom(portal_recv_sockfd, recv_temp->buf, 1024, 0, (struct sockaddr*)&(recv_temp->client), &(recv_temp->addrlen) );
+			
+			// åˆ¤æ–­è¿”å›å€¼
+			if (recv_temp->recv_ret < 0){
+				xyprintf(errno, "%s %s %d", __FILE__, __func__, __LINE__);
+				free(recv_temp);
+				break;
+			}
+
+			xyprintf(0, "recv a portal msg set in %p, ret is %d", recv_temp, recv_temp->recv_ret);
+		
+			// åˆ›å»ºçº¿ç¨‹å¤„ç†
+			if( pthread_create(&pt, NULL, portal_pro_thread, (void*)recv_temp) != 0 ){
+				xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+				free(recv_temp);
+			}
+
+        }
+
+		// å…³é—­socket ç­‰å¾…é‡æ–°åˆ›å»º
+		close(portal_recv_sockfd);
+		portal_recv_sockfd = 0;
+	}
+
+	//åˆ°ä¸äº†çš„åœ°æ–¹ï½ï½ï½
+	pthread_mutex_destroy(&portal_recv_sockfd_lock);
+	xyprintf(0, "PLATFORM_ERROR:âœŸ âœŸ âœŸ âœŸ  -- %s %d:Portal pthread is unnatural deaths!!!", __FILE__, __LINE__);
 	pthread_exit(NULL);
 }

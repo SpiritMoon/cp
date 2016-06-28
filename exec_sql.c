@@ -22,6 +22,19 @@
 #define SQL_DELETE_tb_TmpUserDischarged_IP \
 	"DELETE tb_TmpUserDischarged WHERE userip = '%s' and acip = '%s'"
 
+#define SQL_SELECT_ApId_ShopId \
+	"SELECT ApId, ShopId FROM TB_ApDeploy WHERE ApId IN (SELECT id FROM TB_Ap WHERE mac = '%s')"
+
+#define SQL_INSERT_Aplogtemp \
+	"INSERT INTO Aplogtemp(apid,shopid,ApMac,MobileMac,RSSI,PackageTime,InsertTime) VALUES(%d, %d, '%s', '%s', %d, GETDATE(), GETDATE())"
+
+#define SQL_INSERT_TB_ApDeploy \
+	"INSERT INTO TB_ApDeploy(ShopId, ApId, PositionDesc, AgentId, CompanyId) VALUES(%d, %d, '%s', %d, %d)"
+
+#define SQL_INSERT_TB_Ap \
+	"INSERT INTO TB_Ap(Mac, DeviceType, Statas, AddTime, SsId, deviceNo) VALUES('%s', 61, 1, GETDATE(), 'ILINYI', '%s' )"
+
+
 // 插入记录到临时放行表
 int insert_discharged(char* userip, char* acip)
 {
@@ -32,6 +45,12 @@ int insert_discharged(char* userip, char* acip)
 	if( wt_sql_init(&handle, SQL_NAME, SQL_USER, SQL_PASSWD) ){
 		xyprintf(0, "SQL_INIT_ERROR:%s %s %d -- Datebase connect error!", __func__, __FILE__, __LINE__);
 		goto ERR;
+	}
+	
+	snprintf(handle.sql_str, 1024, SQL_DELETE_tb_TmpUserDischarged_IP, userip, acip);
+	if(wt_sql_exec(&handle)){
+		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+		goto SQLED_ERR;
 	}
 	
 	snprintf(handle.sql_str, 1024, SQL_INSERT_tb_TmpUserDischarged, userip, acip);
@@ -84,6 +103,61 @@ ERR:
 	return -1;
 }
 
+int user_online(char* apmac, char* acname, char* usermac)
+{
+	//数据库操作所需参数
+	wt_sql_handle	handle;
+	
+	//初始化数据库连接
+	if( wt_sql_init(&handle, SQL_NAME, SQL_USER, SQL_PASSWD) ){
+		xyprintf(0, "SQL_INIT_ERROR:%s %s %d -- Datebase connect error!", __func__, __FILE__, __LINE__);
+		goto ERR;
+	}
+	
+	// 先查询apid 和 shopid 有没有
+	unsigned int ap_id, shop_id;
+	SQLBindCol(handle.sqlstr_handle, 1, SQL_C_ULONG, &ap_id,		20, &handle.sql_err);
+	SQLBindCol(handle.sqlstr_handle, 1, SQL_C_ULONG, &shop_id,		20, &handle.sql_err);
+	snprintf(handle.sql_str, 1024, SQL_SELECT_ApId_ShopId, apmac);	//获取刚插入记录的主键id号
+	if( wt_sql_exec(&handle) ){
+		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+		goto SQLED_ERR;
+	}
+	handle.sql_ret = SQLFetch(handle.sqlstr_handle);
+	if( handle.sql_ret == SQL_NO_DATA ){
+		// 没有ap数据 插入数据
+		snprintf(handle.sql_str, 1024, SQL_INSERT_TB_Ap, apmac, acname);
+		if( wt_sql_exec(&handle) ){
+			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+			goto SQLED_ERR;
+		}
+		
+		//获取刚插入记录的主键id号
+		snprintf(handle.sql_str, 1024, "SELECT SCOPE_IDENTITY()");
+		if( wt_sql_exec(&handle) ){
+			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+			goto SQLED_ERR;
+		}
+		handle.sql_ret = SQLFetch(handle.sqlstr_handle);
+		SQLFreeStmt(handle.sqlstr_handle, SQL_CLOSE);
+		xyprintf(0, "Insert a ap record, get id is %u", ap_id);
+		
+		// 给shop_id一个默认值 然后关联ap
+		shop_id = 851; // 临沂移动 agentid 94, companyid 275, shopid 851
+		snprintf(handle.sql_str, 1024, SQL_INSERT_TB_ApDeploy, shop_id, ap_id, acname, 94, 275);
+		if( wt_sql_exec(&handle) ){
+			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+			goto SQLED_ERR;
+		}
+	}
+	// 
+	wt_sql_destroy(&handle);
+	return 0;
+SQLED_ERR:
+	wt_sql_destroy(&handle);
+ERR:
+	return -1;
+}
 
 
 #if 0
@@ -219,3 +293,79 @@ ERR:
 	xyprintf(0, "LOGLASTTOLOG:✟ ✟ ✟ ✟ -- %s %d:Loglast to log pthread is unnatural deaths!!!", __FILE__, __LINE__);
 	pthread_exit(NULL);
 }
+
+void* sql_test_thread(void *fd)
+{
+	pthread_detach(pthread_self());
+	xyprintf(0, "** O(∩ _∩ )O ~~ Sql test thread is running!!!");
+
+	// 数据库访问资源
+	wt_sql_handle *handle = malloc(sizeof(wt_sql_handle));		//SELECT用
+	memset(handle, 0, sizeof(wt_sql_handle));
+	
+		
+	while( wt_sql_init(handle, SQL_NAME, SQL_USER, SQL_PASSWD) ){			// 数据库初始化
+		xyprintf(0, "SQL_INIT_ERROR:%s %s %d -- Datebase connect error!", __func__, __FILE__, __LINE__);
+		sleep( 10 );
+	}
+		
+	// 用户上网记录表 参数
+	unsigned int id;
+	char userip[32], acip[32];
+		
+	SQLBindCol(handle->sqlstr_handle, 1,	SQL_C_ULONG,	&id,		32, &handle->sql_err);
+	SQLBindCol(handle->sqlstr_handle, 2,	SQL_C_CHAR,		&userip,	32, &handle->sql_err);
+	SQLBindCol(handle->sqlstr_handle, 3,	SQL_C_CHAR,		&acip,		32, &handle->sql_err);
+		
+	//查出来
+	sprintf(handle->sql_str, "exec usp_insert_probedata @mobilemac = '%s', @apmac = '%s', @rssi = %d", "b4:0b:44:1a:63:12", "b4:0b:44:1a:63:12", 88);
+	if(wt_sql_exec_stored_procedure(handle)){
+		xyprintf(0, "SQL_ERROR:%s %d -- handle->sql_str: %s", __FILE__, __LINE__, handle->sql_str);
+		goto STR_ERR;
+	}
+
+	//获取第一条记录
+	handle->sql_ret = SQLFetch(handle->sqlstr_handle);
+	
+	// 循环遍历查询出的信息
+	while( handle->sql_ret != SQL_NO_DATA && handle->sql_ret != SQL_ERROR){
+		xyprintf(0, "Get a recond, id %u, userip: %s, acip: %s", id, userip, acip);
+		
+		handle->sql_ret = SQLFetch(handle->sqlstr_handle);	
+	}// end while
+
+	xyprintf(0, "Sql test over!!");
+
+	//获得当前时间 并组装log字符串(时间 设备ip 是否需要错误描述)
+	time_t tt = time(0);
+	struct tm *ttm = localtime(&tt);
+	char buf[256] = { 0 };
+	sprintf(buf,"%d-%02d-%02d %02d:%02d:%02d",
+			ttm->tm_year + 1900, ttm->tm_mon + 1, ttm->tm_mday,
+			ttm->tm_hour, ttm->tm_min, ttm->tm_sec);
+	xyprintf(0, "%s",buf);	//在屏幕上打印log
+
+STR_ERR:
+	wt_sql_destroy(handle);
+	free(handle);
+ERR:
+	pthread_exit(NULL);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+

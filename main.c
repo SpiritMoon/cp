@@ -6,7 +6,9 @@
 #include "header.h"
 
 #define IS_DAEMON_EXIST			0					// 精灵线程
-#define PORTAL_OFFLINE_TEST		0
+#define PORTAL_TEST_THREAD		0
+#define SQL_TEST_THREAD			1
+#define UTILS_TEST_THREAD		1
 
 /** 
  *@brief  程序主体函数 由子进程运行
@@ -62,7 +64,17 @@ void run()
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 	}
 	/**********************************************************************************/
-#if PORTAL_OFFLINE_TEST
+#if UTILS_TEST_THREAD
+	if( pthread_create(&pt, NULL, utils_test_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
+#endif
+#if SQL_TEST_TEST_THREAD
+	if( pthread_create(&pt, NULL, sql_test_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
+#endif
+#if PORTAL_TEST_THREAD
 	if( pthread_create(&pt, NULL, portal_test_thread, NULL) != 0 ){
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 	}

@@ -123,7 +123,11 @@ int get_plat_para(cJSON *json, struct plat_para *para)
 		return -1;
 	}
 	para->wlanacip = temp->valuestring;
-
+	
+	if(!strlen(para->wlanacip)){
+		para->wlanacip = "223.99.130.172";
+	}
+	
 	// get apmac
 	temp = cJSON_GetObjectItem(json,"apmac");
 	if (!temp){
@@ -198,60 +202,68 @@ void* platform_process(void *fd)
 #endif
 
 	char res[128] = {0};
+	snprintf(res, 127, "{\"stat\":\"failed\"}");
 
-	if(!strcmp(para.type, "auth-tel") || !strcmp(para.type, "auth-temp")){
+	if(!strcmp(para.type, "auth-tel") ){
 		unsigned int id;
-		if(!strcmp(para.type, "auth-temp")){
-			//根据wlanparameter查找是否存在对应用户 插入临时放行表 获取临时表id
-			int ret = insert_discharged(para.wlanuserip, para.wlanacip);
-			if(ret > 0){
-				id = ret;
-				xyprintf(0, "Get temp id is %u", id);
-			}
-			else {
-				xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
-				goto JSON_ERR;
-			}
+		//TODO sql 查询数据库对应id值
+		id = ((unsigned int)time(0)) % 10000000;
+		xyprintf(0, "Create a id is %u", id);
+		// 准备发送数据到ac
+		char username[128] = {0};
+		snprintf(username, 127, "%s-%u@ilinyi", &para.type[5], id);
+		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
+			snprintf(res, 127, "{\"stat\":\"ok\"}");
+		}
+	}
+	else if(!strcmp(para.type, "auth-white")) {
+		unsigned int id;
+		//TODO sql 查询数据库对应id值
+		id = ((unsigned int)time(0)) % 10000000 + 10000000;
+		xyprintf(0, "Create a id is %u", id);
+		// 准备发送数据到ac
+		char username[128] = {0};
+		snprintf(username, 127, "%s-%u@ilinyi", &para.type[5], id);
+		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
+			snprintf(res, 127, "{\"stat\":\"ok\"}");
+		}
+	}
+	else if(!strcmp(para.type, "auth-temp") ){
+		unsigned int id;
+		//根据wlanparameter查找是否存在对应用户 插入临时放行表 获取临时表id
+		int ret = insert_discharged(para.wlanuserip, para.wlanacip);
+		if(ret > 0){
+			id = ret;
+			xyprintf(0, "Get temp id is %u", id);
 		}
 		else {
-			//TODO sql 查询数据库对应id值
-			id = ((unsigned int)time(0)) % 10000000;
-			xyprintf(0, "Create a id is %u", id);
+			xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
+			goto JSON_ERR;
 		}
 		
 		// 准备发送数据到ac
 		char username[128] = {0};
-		snprintf(username, 127, "%s-%u", &para.type[5], id);
+		snprintf(username, 127, "%s-%u@ilinyi", &para.type[5], id);
 	
+		//if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
 		if( SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
-			snprintf(res, 127, "{\"stat\":\"failed\"}");
-		}
-		else {
-			// 如果是临时放行 获取mac地址
-			if(!strcmp(para.type, "auth-temp")){
-				int i = 0;
-				int find_flag = -1;
-				char usermac[64] = {0};
-				
-				for(; i < 10; i++){
-					if(!user_mp_list_find_and_del(id, usermac)){
-						xyprintf(0, "get mac success -- %s", usermac);
-						snprintf(res, 63, "{\"stat\":\"%s\"}", usermac);
-						find_flag = 0;
-						break;
-					}
-					usleep(100);
-					xyprintf(0, "Can not find usermac, sleep 100 us continue!");
+			// 获取radius获取到的mac地址
+			int i = 0;
+			int find_flag = -1;
+			char usermac[64] = {0};
+			//test			
+			snprintf(res, 127, "{\"stat\":\"ok\"}");
+			snprintf(res, 127, "{\"stat\":\"b4:0b:44:1a:63:12\"}");
+			
+			for(; i < 10; i++){
+				if(!user_mp_list_find_and_del(id, usermac)){
+					xyprintf(0, "get mac success -- %s", usermac);
+					snprintf(res, 127, "{\"stat\":\"%s\"}", usermac);
+					find_flag = 0;
+					break;
 				}
-
-				// 没有找到的话
-				if(find_flag){
-					snprintf(res, 127, "{\"stat\":\"failed\"}");
-				}
-			}
-			else {
-				// 手机的 就是ok啦
-				snprintf(res, 127, "{\"stat\":\"ok\"}");
+				usleep(100);
+				xyprintf(0, "Can not find usermac, sleep 100 us continue!");
 			}
 		}
 	}

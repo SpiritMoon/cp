@@ -82,8 +82,43 @@ int inline wt_sql_exec(wt_sql_handle *handle)
 {
 	//3.3执行SQL语句
 	handle->sql_ret=SQLExecDirect(handle->sqlstr_handle, handle->sql_str, SQL_NTS);//执行语句
+	//xyprintf(0, "SQL_SUCCESS %d, SQL_SUCCESS_WITH_INFO %d, SQL_NEED_DATA %d, SQL_STILL_EXECUTING %d, SQL_ERROR %d, SQL_NO_DATA %d, SQL_INVALID_HANDLE %d",
+	//		SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, SQL_NO_DATA, SQL_INVALID_HANDLE);
 	//if ((handle->sql_ret != SQL_SUCCESS) && (handle->sql_ret != SQL_SUCCESS_WITH_INFO)){
 	if (handle->sql_ret != SQL_SUCCESS){
+		SQLGetDiagRec(SQL_HANDLE_STMT, handle->sqlstr_handle, 1, handle->sql_stat, (SQLINTEGER*)&handle->sql_err, handle->err_msg, 100, &handle->sql_mlen);//获取错误信息
+		xyprintf(0, "SQL_EXEC_ERROR:SQL_HANDLE_STMT: sql_ret = %d, sql_stat = %s, sql_err = %d, sql_mlen = %d, err_msg : %s",
+				handle->sql_ret,
+				handle->sql_stat,
+				(int)(handle->sql_err),
+				handle->sql_mlen,
+				handle->err_msg );
+		SQLGetDiagRec(SQL_HANDLE_DBC, handle->conn_handle, 1, handle->sql_stat, (SQLINTEGER*)&handle->sql_err, handle->err_msg, 100, &handle->sql_mlen);//获取错误信息
+		xyprintf(0, "SQL_EXEC_ERROR:SQL_HANDLE_DBC: sql_ret = %d, sql_stat = %s, sql_err = %d, sql_mlen = %d, err_msg : %s",
+				handle->sql_ret,
+				handle->sql_stat,
+				(int)(handle->sql_err),
+				handle->sql_mlen,
+				handle->err_msg );
+		//xyprintf(0, "SQL_ERROR -- EXEC: sql_ret = %d, err_msg : %s, sql_err = %d", handle->sql_ret, handle->err_msg, (int)(handle->sql_err) );
+		return -1;
+	}
+	return 0;
+}
+
+/**
+ *@brief  数据库语句执行函数
+ *@param  handle		类型 wt_sql_handle*		数据库操作handle及其他资源集合
+ *@return success 0,failed -1
+ */
+int inline wt_sql_exec_stored_procedure(wt_sql_handle *handle)
+{
+	//3.3执行SQL语句
+	handle->sql_ret=SQLExecDirect(handle->sqlstr_handle, handle->sql_str, SQL_NTS);//执行语句
+	//xyprintf(0, "SQL_SUCCESS %d, SQL_SUCCESS_WITH_INFO %d, SQL_NEED_DATA %d, SQL_STILL_EXECUTING %d, SQL_ERROR %d, SQL_NO_DATA %d, SQL_INVALID_HANDLE %d",
+	//		SQL_SUCCESS, SQL_SUCCESS_WITH_INFO, SQL_NEED_DATA, SQL_STILL_EXECUTING, SQL_ERROR, SQL_NO_DATA, SQL_INVALID_HANDLE);
+	//if ((handle->sql_ret != SQL_SUCCESS) && (handle->sql_ret != SQL_SUCCESS_WITH_INFO)){
+	if (handle->sql_ret != SQL_SUCCESS && handle->sql_ret != SQL_NO_DATA){
 		SQLGetDiagRec(SQL_HANDLE_STMT, handle->sqlstr_handle, 1, handle->sql_stat, (SQLINTEGER*)&handle->sql_err, handle->err_msg, 100, &handle->sql_mlen);//获取错误信息
 		xyprintf(0, "SQL_EXEC_ERROR:SQL_HANDLE_STMT: sql_ret = %d, sql_stat = %s, sql_err = %d, sql_mlen = %d, err_msg : %s",
 				handle->sql_ret,

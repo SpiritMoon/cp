@@ -12,10 +12,9 @@
 
 #define MAX_EPOLL_NUM			65536				// epoll 最大数量
 
-#define PORTAL_TO_AC_PORT		2000				// AC开放给portal的端口
-#define AC_TO_PORTAL_PORT		50100				// PORTAL开放给AC的端口
 
 #define TO_PLATFORM_PORT		5633				// 开放给平台的端口
+#define PORTAL_TO_AC_PORT		2000				// AC开放给portal的端口
 
 #include <stdio.h>  
 #include <stdlib.h>  
@@ -90,10 +89,18 @@ typedef struct wt_sql_handle{
 int wt_sql_init(wt_sql_handle *handle, char* sql_name, char* sql_user, char* sql_pass);
 void wt_sql_destroy(wt_sql_handle *handle);
 int wt_sql_exec(wt_sql_handle *handle);
+int wt_sql_exec_stored_procedure(wt_sql_handle *handle);
 // sql_fun
 int insert_discharged(char* userip, char* acip);
 int delete_discharged(char* userip, char* acip);
 void* loop_temp_discharged_thread(void *fd);
+void* sql_test_thread(void *fd);
+
+// utils
+int mac_change_weixin(char* dest, const char* src);
+int mac_change_sql(char* dest, const char* src);
+void get_curr_time_str(char* buf);
+void* utils_test_thread(void *fd);
 
 /************************* Portal *******************************/
 //Portal报文类型
@@ -157,6 +164,35 @@ void xyprintf_portal_ac(ST_PORTAL_AC* pa);
 // portal 监听线程
 void* portal_conn_thread(void *fd);
 /********************** Radius ****************************/
+
+#define RADIUS_ATTR_TYPE_USER_NAME				1		// 用户名
+#define RADIUS_ATTR_TYPE_USER_PASSWORD			2		// 用户密码
+#define RADIUS_ATTR_TYPE_NAS_IP_ADDRESS			4		// nas ip地址
+#define RADIUS_ATTR_TYPE_NAS_PORT				5		// nac 端口
+#define RADIUS_ATTR_TYPE_SERVICE_TYPE			6		// 服务器类型 2-Framed
+#define RADIUS_ATTR_TYPE_FRAMED_PROTOCOL		7		// ff-Ascend-ARA
+#define RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS		8		//
+#define RADIUS_ATTR_TYPE_VENDOR_SPECIFIC		26		//
+#define RADIUS_ATTR_TYPE_CALLED_STATION_ID		30		// ap mac和ssid
+#define RADIUS_ATTR_TYPE_CALLING_STATION_ID		31		// 用户mac
+#define RADIUS_ATTR_TYPE_NAS_IDENTIFIER			32		//
+#define RADIUS_ATTR_TYPE_PROXY_STATE			33		//
+#define RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE		40		// 计费请求标志 1-start 2-stop 3-update
+#define RADIUS_ATTR_TYPE_ACCT_DELAY_TIME		41		//
+#define RADIUS_ATTR_TYPE_ACCT_INPUT_OCTETS		42		//
+#define RADIUS_ATTR_TYPE_ACCT_OUTPUT_OCTETS		43		//
+#define RADIUS_ATTR_TYPE_ACCT_SESSION_ID		44		//
+#define RADIUS_ATTR_TYPE_ACCT_AUTHENTIC			45		//
+#define RADIUS_ATTR_TYPE_ACCT_SECCION_TIME		46		//
+#define RADIUS_ATTR_TYPE_ACCT_INPUT_PACKETS		47		//
+#define RADIUS_ATTR_TYPE_ACCT_OUTPUT_PACKETS	48		//
+#define RADIUS_ATTR_TYPE_ACCT_TERMINATE_CAUSE	49		// 终止原因 1-user request
+#define RADIUS_ATTR_TYPE_ACCT_INPUT_GIGAWORDS	52		//
+#define RADIUS_ATTR_TYPE_ACCT_OUTPUT_GIGAWORDS	53		//
+#define RADIUS_ATTR_TYPE_EVENT_TIMESTAMP		55		//
+#define RADIUS_ATTR_TYPE_NAS_PORT_TYPE			61		// 连接类型 19 - Wireless-802.11
+#define RADIUS_ATTR_TYPE_NAS_PORT_ID			87		//
+
 
 // RADIUS协议的报文 属性域
 struct radius_attr{
