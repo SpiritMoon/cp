@@ -12,9 +12,12 @@
 
 #define MAX_EPOLL_NUM			65536				// epoll 最大数量
 
-
 #define TO_PLATFORM_PORT		5633				// 开放给平台的端口
 #define PORTAL_TO_AC_PORT		2000				// AC开放给portal的端口
+
+#define SQL_NAME				"xy"
+#define SQL_USER				"zxyl"
+#define SQL_PASSWD				"abcd@123"
 
 #include <stdio.h>  
 #include <stdlib.h>  

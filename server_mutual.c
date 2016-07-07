@@ -116,6 +116,7 @@ int get_plat_para(cJSON *json, struct plat_para *para)
 	}
 	para->ssid = temp->valuestring;
 
+
 	// get wlanacip 
 	temp = cJSON_GetObjectItem(json,"wlanacip");
 	if (!temp){
@@ -124,9 +125,6 @@ int get_plat_para(cJSON *json, struct plat_para *para)
 	}
 	para->wlanacip = temp->valuestring;
 	
-	if(!strlen(para->wlanacip)){
-		para->wlanacip = "223.99.130.172";
-	}
 	
 	// get apmac
 	temp = cJSON_GetObjectItem(json,"apmac");
@@ -190,11 +188,20 @@ void* platform_process(void *fd)
 	}
 
 	// 获取json内容
-	struct plat_para para;
+	struct plat_para para = {0};
 	memset(&para, 0, sizeof(para));
 	if( get_plat_para(json, &para) ){
 		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
 		goto DATA_ERR;
+	}
+
+	// 如果没有ACip 取查询数据库
+	char acip[64] = {0};
+	if( !strlen(para.wlanacip) ){
+		if( !get_wlanacip( para.wlanacname, acip, 64) ){
+			para.wlanacip = acip;
+		}
+		//para.wlanacip = "223.99.130.172";
 	}
 
 #if SERVER_MUTUAL_DEBUG
@@ -204,7 +211,10 @@ void* platform_process(void *fd)
 	char res[128] = {0};
 	snprintf(res, 127, "{\"stat\":\"failed\"}");
 
-	if(!strcmp(para.type, "auth-tel") ){
+	if( !strlen(para.wlanacip) ){
+		snprintf(res, 127, "{\"stat\":\"No Ac ip!\"}");
+	}
+	else if(!strcmp(para.type, "auth-tel") ){
 		unsigned int id;
 		//TODO sql 查询数据库对应id值
 		id = ((unsigned int)time(0)) % 10000000;
