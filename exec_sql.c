@@ -6,18 +6,6 @@
 
 #include "header.h"
 
-#define SQL_SELECT_ApId_ShopId \
-	"SELECT ApId, ShopId FROM TB_ApDeploy WHERE ApId IN (SELECT id FROM TB_Ap WHERE mac = '%s')"
-
-#define SQL_INSERT_Aplogtemp \
-	"INSERT INTO Aplogtemp(apid,shopid,ApMac,MobileMac,RSSI,PackageTime,InsertTime) VALUES(%d, %d, '%s', '%s', %d, GETDATE(), GETDATE())"
-
-#define SQL_INSERT_TB_ApDeploy \
-	"INSERT INTO TB_ApDeploy(ShopId, ApId, PositionDesc, AgentId, CompanyId) VALUES(%d, %d, '%s', %d, %d)"
-
-#define SQL_INSERT_TB_Ap \
-	"INSERT INTO TB_Ap(Mac, DeviceType, Statas, AddTime, SsId, deviceNo) VALUES('%s', 61, 1, GETDATE(), 'ILINYI', '%s' )"
-
 // 获取ac ip
 int get_wlanacip(char* acname, char* acip, int acip_len)
 {
@@ -50,6 +38,127 @@ ERR:
 	return -1;
 }
 
+int add_Man2EncMac(char* mac, char* encmac)
+{
+
+	//数据库操作所需参数
+	wt_sql_handle	handle;
+	
+	//初始化数据库连接
+	if( wt_sql_init(&handle, SQL_NAME, SQL_USER, SQL_PASSWD) ){
+		xyprintf(0, "SQL_INIT_ERROR:%s %s %d -- Datebase connect error!", __func__, __FILE__, __LINE__);
+		goto ERR;
+	}
+
+	// 查询数据存在不存在
+	int id;
+	SQLBindCol(handle.sqlstr_handle, 1, SQL_C_ULONG, &id,		4, &handle.sql_err);
+		// 使用加密后的mac去查找，加密前的mac可能会对应多个
+	snprintf(handle.sql_str, 1024,
+			"SELECT TOP 1 ID FROM Man2EncMac WHERE EncMac = '%s'", encmac);
+	if( wt_sql_exec(&handle) ){
+		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+		goto SQLED_ERR;
+	}
+	handle.sql_ret = SQLFetch(handle.sqlstr_handle);
+	if( handle.sql_ret == SQL_NO_DATA ){
+		// 不存在则插入
+		snprintf(handle.sql_str, 1024,
+				"INSERT INTO Man2EncMac(Mac, EncMac, CreateDate) VALUES ('%s', '%s', GETDATE())",
+				mac, encmac);
+		if( wt_sql_exec(&handle) ){
+			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+			goto SQLED_ERR;
+		}
+	}
+	wt_sql_destroy(&handle);
+	return 0;
+SQLED_ERR:
+	wt_sql_destroy(&handle);
+ERR:
+	return -1;
+}
+
+tb_UserDetail
+
+int add_user(char* mac, char* encmac)
+{
+
+	//数据库操作所需参数
+	wt_sql_handle	handle;
+	
+	//初始化数据库连接
+	if( wt_sql_init(&handle, SQL_NAME, SQL_USER, SQL_PASSWD) ){
+		xyprintf(0, "SQL_INIT_ERROR:%s %s %d -- Datebase connect error!", __func__, __FILE__, __LINE__);
+		goto ERR;
+	}
+
+	"SELECT id FROM tb_UserDetail WHERE parameter = '%s'"
+	"INSERT INTO tb_UserDetail(openid, )"
+
+
+
+
+
+
+
+	// 查询数据存在不存在
+	int id;
+	SQLBindCol(handle.sqlstr_handle, 1, SQL_C_ULONG, &id,		4, &handle.sql_err);
+		// 使用加密后的mac去查找，加密前的mac可能会对应多个
+	snprintf(handle.sql_str, 1024,
+			"SELECT TOP 1 ID FROM Man2EncMac WHERE EncMac = '%s'", encmac);
+	if( wt_sql_exec(&handle) ){
+		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+		goto SQLED_ERR;
+	}
+	handle.sql_ret = SQLFetch(handle.sqlstr_handle);
+	if( handle.sql_ret == SQL_NO_DATA ){
+		// 不存在则插入
+		snprintf(handle.sql_str, 1024,
+				"INSERT INTO Man2EncMac(Mac, EncMac, CreateDate) VALUES ('%s', '%s', GETDATE())",
+				mac, encmac);
+		if( wt_sql_exec(&handle) ){
+			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+			goto SQLED_ERR;
+		}
+	}
+	wt_sql_destroy(&handle);
+	return 0;
+SQLED_ERR:
+	wt_sql_destroy(&handle);
+ERR:
+	return -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // SQL 测试线程
 void* sql_test_thread(void *fd)
 {
@@ -57,20 +166,24 @@ void* sql_test_thread(void *fd)
 	xyprintf(0, "** O(∩ _∩ )O ~~ Sql test thread is running!!!");
 
 	
-	char *acname = "0298.0539.531.00";
-	char acip[64] = {0};
+	char* encmac = "12345678901234567890123456789012345678";
+	char* mac = "112233445566";
 	
-	int ret = get_wlanacip(acname, acip, 64);
+	char* encmac1 = "abc45678901234567890123456789012345678";
+	char* mac1 = "aa2233445566";
 
-	xyprintf(0, "ret = %d, acname:%s, acip:%s", ret, acname, acip);
 
-	acname = "123456";
+	int ret = add_Man2EncMac(mac, encmac);
+
+	xyprintf(0, "ret = %d", ret);
+
+	ret = add_Man2EncMac(mac1, encmac);
+
+	xyprintf(0, "ret = %d", ret);
 	
-	ret = get_wlanacip(acname, acip, 64);
+	ret = add_Man2EncMac(mac1, encmac1);
 
-	xyprintf(0, "ret = %d, acname:%s, acip:%s", ret, acname, acip);
-
-	
+	xyprintf(0, "ret = %d", ret);
 	
 	
 	
@@ -110,6 +223,18 @@ ERR:
 }
 
 /*
+#define SQL_SELECT_ApId_ShopId \
+	"SELECT ApId, ShopId FROM TB_ApDeploy WHERE ApId IN (SELECT id FROM TB_Ap WHERE mac = '%s')"
+
+#define SQL_INSERT_Aplogtemp \
+	"INSERT INTO Aplogtemp(apid,shopid,ApMac,MobileMac,RSSI,PackageTime,InsertTime) VALUES(%d, %d, '%s', '%s', %d, GETDATE(), GETDATE())"
+
+#define SQL_INSERT_TB_ApDeploy \
+	"INSERT INTO TB_ApDeploy(ShopId, ApId, PositionDesc, AgentId, CompanyId) VALUES(%d, %d, '%s', %d, %d)"
+
+#define SQL_INSERT_TB_Ap \
+	"INSERT INTO TB_Ap(Mac, DeviceType, Statas, AddTime, SsId, deviceNo) VALUES('%s', 61, 1, GETDATE(), 'ILINYI', '%s' )"
+
 int user_online(char* apmac, char* acname, char* usermac)
 {
 	//数据库操作所需参数
