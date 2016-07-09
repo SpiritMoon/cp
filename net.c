@@ -184,7 +184,6 @@ int wt_recv_block(int sock, unsigned char *buf, int len/*, int block_flag*/)
 		return -1;
 	}
 
-	//TODO
 /*
 	//设置阻塞
 	if(block_flag){

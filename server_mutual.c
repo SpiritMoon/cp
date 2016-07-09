@@ -215,10 +215,20 @@ void* platform_process(void *fd)
 		snprintf(res, 127, "{\"stat\":\"No Ac ip!\"}");
 	}
 	else if(!strcmp(para.type, "auth-tel") ){
-		unsigned int id;
-		//TODO sql 查询数据库对应id值
-		id = ((unsigned int)time(0)) % 10000000;
-		xyprintf(0, "Create a id is %u", id);
+		//sql 查询数据库对应id值
+		int id = add_user(para.wlanparameter, para.apmac, "mobilenum", para.usernum);
+		
+		if(id < 0){
+			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
+		}
+		else {
+			id = ((int)time(0)) % 10000000 + 10000000;
+			xyprintf(0, "Create a id is %d", id);
+		}
+
+#if SERVER_MUTUAL_DEBUG
+	xyprintf(0, "Get user id %d", id);
+#endif
 		// 准备发送数据到ac
 		char username[128] = {0};
 		snprintf(username, 127, "%s-%u@ilinyi", &para.type[5], id);
@@ -227,11 +237,8 @@ void* platform_process(void *fd)
 		}
 	}
 	else if(!strcmp(para.type, "auth-white")) {
-		unsigned int id;
-		//TODO sql 查询数据库对应id值
-		id = ((unsigned int)time(0)) % 10000000 + 10000000;
-		xyprintf(0, "Create a id is %u", id);
 		// 准备发送数据到ac
+		int id = ((int)time(0)) % 10000000 + 10000000;
 		char username[128] = {0};
 		snprintf(username, 127, "%s-%u@ilinyi", &para.type[5], id);
 		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
@@ -261,7 +268,7 @@ void* platform_process(void *fd)
 			int i = 0;
 			int find_flag = -1;
 			char usermac[64] = {0};
-			//test			
+		// TODO test			
 			snprintf(res, 127, "{\"stat\":\"ok\"}");
 			snprintf(res, 127, "{\"stat\":\"b4:0b:44:1a:63:12\"}");
 			
@@ -278,9 +285,9 @@ void* platform_process(void *fd)
 		}
 	}
 	else if(!strcmp(para.type, "auth-wx")){
-		//TODO sql
-		//删除临时放行表中的记录
-		xyprintf(0, "is weixin, delete temp record, userip is %s, acip is %s", para.wlanuserip, para.wlanacip);
+		//sql 查询数据库对应id值
+		add_user(para.wlanparameter, para.apmac, "openid", para.usernum);
+		
 		int ret = delete_discharged(para.wlanuserip, para.wlanacip);
 		if(ret < 0){
 			xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);

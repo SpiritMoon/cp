@@ -290,47 +290,64 @@ void* radius12_pro_thread(void *fd)
 	xyprintf_radius_bag(rb, rb_len);
 #endif
 
+	// 获取proxy
+	char proxy[128] = {0};
+	get_attr_info(rb, RADIUS_ATTR_TYPE_PROXY_STATE, proxy, rb_len);
+#if RADIUS_DEBUG
+	xyprintf(0, "proxy = %s", proxy);
+#endif
+
 	// 获取用户帐号
 	char username[128] = {0};
-	if( get_attr_info(rb, 1, username, rb_len) ){
+	if( get_attr_info(rb, RADIUS_ATTR_TYPE_USER_NAME, username, rb_len) ){
 		xyprintf(0, "RADIUS DATA ERROR:Get username error!");
 		goto DATA_ERR;
 	}
 #if RADIUS_DEBUG
 	xyprintf(0, "username = %s", username);
 #endif
+	
 	// 获取用户mac
 	char usermac[128] = {0};
-	if( get_attr_info(rb, 31, usermac, rb_len) ){
+	if( get_attr_info(rb, RADIUS_ATTR_TYPE_CALLING_STATION_ID, usermac, rb_len) ){
 		xyprintf(0, "RADIUS DATA ERROR:Get usermac error!");
 		goto DATA_ERR;
 	}
 #if RADIUS_DEBUG
 	xyprintf(0, "usermac = %s", usermac);
 #endif
-	// 获取proxy
-	char proxy[128] = {0};
-	get_attr_info(rb, 33, proxy, rb_len);
-#if RADIUS_DEBUG
-	xyprintf(0, "proxy = %s", proxy);
-#endif
-
-	// 处理是否是临时放行
-	if(!strncmp(username, "temp-", 5)){
-		unsigned int id = atoi(&username[5]);
-		if(id){
-			char mac[128] = {0};
-			if( mac_change_weixin(mac, usermac) ){
-				user_mp_list_add(id, mac);
-			}
-		}
+	
+	char mac[128] = {0};
+	if( mac_change(mac, usermac) ){
+		xyprintf(0, "RADIUS DATA ERROR:Mac change error!");
+		goto DATA_ERR;
 	}
 
-	//TODO 数据库操作
+	// 处理是否是临时放行
+	if(!strncmp(username, "temp-", strlen("temp-"))){
+		unsigned int id = atoi(&username[strlen("temp-")]);
+		if(id){
+			user_mp_list_add(id, mac);
+		}
+	}
 	
 	// 回复报文
 	radius12_pro_recv(rr, proxy);
 
+	// 如果是微信和tel操作 更新mac到数据库
+	if( !strncmp( username, "tel-", strlen("tel-") ) ){
+		unsigned int id = atoi(&username[strlen("tel-")]);
+		if(id){
+			update_mac(mac, id);
+		}
+	}
+
+	if( !strncmp( username, "wx-", strlen("wx-") ) ){
+		unsigned int id = atoi(&username[strlen("wx-")]);
+		if(id){
+			update_mac(mac, id);
+		}
+	}
 
 	free(rr);
 	pthread_exit(NULL);

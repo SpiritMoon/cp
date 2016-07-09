@@ -98,12 +98,11 @@ int insert_discharged(char* userip, char* acip);
 int delete_discharged(char* userip, char* acip);
 void* loop_temp_discharged_thread(void *fd);
 void* sql_test_thread(void *fd);
+int add_user(char* parameter, char* apmac, char* type, char* value);
 
 // utils
-int mac_change_weixin(char* dest, const char* src);
-int mac_change_sql(char* dest, const char* src);
+int mac_change(char* dest, const char* src);
 void get_curr_time_str(char* buf);
-void* utils_test_thread(void *fd);
 
 /************************* Portal *******************************/
 //Portal报文类型

@@ -79,11 +79,9 @@ ERR:
 	return -1;
 }
 
-tb_UserDetail
-
-int add_user(char* mac, char* encmac)
+// 添加用户的微信信息
+int add_user(char* parameter, char* apmac, char* type, char* value)
 {
-
 	//数据库操作所需参数
 	wt_sql_handle	handle;
 	
@@ -93,71 +91,104 @@ int add_user(char* mac, char* encmac)
 		goto ERR;
 	}
 
-	"SELECT id FROM tb_UserDetail WHERE parameter = '%s'"
-	"INSERT INTO tb_UserDetail(openid, )"
-
-
-
-
-
-
-
-	// 查询数据存在不存在
-	int id;
-	SQLBindCol(handle.sqlstr_handle, 1, SQL_C_ULONG, &id,		4, &handle.sql_err);
-		// 使用加密后的mac去查找，加密前的mac可能会对应多个
+	int id = -1;
+	char s_value[128] = {0};
+	SQLBindCol(handle.sqlstr_handle, 1, SQL_C_ULONG, &id,		128, &handle.sql_err);
+	SQLBindCol(handle.sqlstr_handle, 2, SQL_C_CHAR, &s_value,		128, &handle.sql_err);
+		// 使用加密后的用户mac和apmac去查询 openid 或者 mobilenum
 	snprintf(handle.sql_str, 1024,
-			"SELECT TOP 1 ID FROM Man2EncMac WHERE EncMac = '%s'", encmac);
+			"SELECT TOP 1 id, %s FROM tb_UserDetail WHERE parameter = '%s'",
+			type, parameter);
 	if( wt_sql_exec(&handle) ){
 		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
 		goto SQLED_ERR;
 	}
+	
 	handle.sql_ret = SQLFetch(handle.sqlstr_handle);
+	
 	if( handle.sql_ret == SQL_NO_DATA ){
 		// 不存在则插入
 		snprintf(handle.sql_str, 1024,
-				"INSERT INTO Man2EncMac(Mac, EncMac, CreateDate) VALUES ('%s', '%s', GETDATE())",
-				mac, encmac);
+				"INSERT INTO tb_UserDetail(%s, apmac, parameter, mobilemac, act, addtime)"
+				" VALUES('%s', '%s', '%s', '%s', 1, GETDATE())",
+				type, value, apmac, parameter, parameter);
+		if( wt_sql_exec(&handle) ){
+			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+			goto SQLED_ERR;
+		}
+		
+		snprintf(handle.sql_str, 1024, "SELECT SCOPE_IDENTITY()");	//获取刚插入记录的主键id号
+		if( wt_sql_exec(&handle) ){
+			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+			goto SQLED_ERR;
+		}
+		handle.sql_ret = SQLFetch(handle.sqlstr_handle);
+		SQLFreeStmt(handle.sqlstr_handle, SQL_CLOSE);
+	}
+	else if ( strcmp(value, s_value) ){
+		// 存在并不一样则修改
+		SQLFreeStmt(handle.sqlstr_handle, SQL_CLOSE);	//释放游标
+		snprintf(handle.sql_str, 1024,
+				"UPDATE tb_UserDetail SET %s = '%s' WHERE parameter = '%s'",
+				type, value, parameter);
 		if( wt_sql_exec(&handle) ){
 			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
 			goto SQLED_ERR;
 		}
 	}
+
 	wt_sql_destroy(&handle);
-	return 0;
+	return id;
 SQLED_ERR:
 	wt_sql_destroy(&handle);
 ERR:
 	return -1;
 }
 
+// 更新用户的mac信息
+int update_mac(char* mac, int id)
+{
+	//数据库操作所需参数
+	wt_sql_handle	handle;
+	
+	//初始化数据库连接
+	if( wt_sql_init(&handle, SQL_NAME, SQL_USER, SQL_PASSWD) ){
+		xyprintf(0, "SQL_INIT_ERROR:%s %s %d -- Datebase connect error!", __func__, __FILE__, __LINE__);
+		goto ERR;
+	}
 
+	int sid;
+	SQLBindCol(handle.sqlstr_handle, 1, SQL_C_ULONG, &sid,		128, &handle.sql_err);
+		// 查找对应id的mac是否需要更新 使用加密后的用户mac和apmac去查询 openid 或者 mobilenum
+	snprintf(handle.sql_str, 1024,
+			"SELECT TOP 1 id FROM tb_UserDetail WHERE id = %d AND parameter = mobilemac",
+			id);
+	if( wt_sql_exec(&handle) ){
+		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+		goto SQLED_ERR;
+	}
+	
+	handle.sql_ret = SQLFetch(handle.sqlstr_handle);
+	
+	if( handle.sql_ret != SQL_NO_DATA ){
+		// 存在则更新mac
+		SQLFreeStmt(handle.sqlstr_handle, SQL_CLOSE);	//释放游标
+		snprintf(handle.sql_str, 1024,
+				"UPDATE tb_UserDetail SET mobilemac = '%s' WHERE id = %d",
+				mac, id);
+		if( wt_sql_exec(&handle) ){
+			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+			goto SQLED_ERR;
+		}
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	wt_sql_destroy(&handle);
+	return id;
+SQLED_ERR:
+	wt_sql_destroy(&handle);
+ERR:
+	return -1;
+}
 
 // SQL 测试线程
 void* sql_test_thread(void *fd)
@@ -166,27 +197,13 @@ void* sql_test_thread(void *fd)
 	xyprintf(0, "** O(∩ _∩ )O ~~ Sql test thread is running!!!");
 
 	
-	char* encmac = "12345678901234567890123456789012345678";
-	char* mac = "112233445566";
+	char* p1 = "12345678901234567890123456789012345678";
+	char* a1 = "112233445566";
 	
-	char* encmac1 = "abc45678901234567890123456789012345678";
-	char* mac1 = "aa2233445566";
-
-
-	int ret = add_Man2EncMac(mac, encmac);
-
+	int ret = add_user(p1, a1, "openid", "openidabc1886120427");
 	xyprintf(0, "ret = %d", ret);
 
-	ret = add_Man2EncMac(mac1, encmac);
-
-	xyprintf(0, "ret = %d", ret);
-	
-	ret = add_Man2EncMac(mac1, encmac1);
-
-	xyprintf(0, "ret = %d", ret);
-	
-	
-	
+	ret = update_mac("aa:bb:cc:dd:ee:ff", ret);
 	
 	
 /*
