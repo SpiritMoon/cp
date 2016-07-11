@@ -308,17 +308,17 @@ void* radius12_pro_thread(void *fd)
 #endif
 	
 	// 获取用户mac
-	char usermac[128] = {0};
-	if( get_attr_info(rb, RADIUS_ATTR_TYPE_CALLING_STATION_ID, usermac, rb_len) ){
-		xyprintf(0, "RADIUS DATA ERROR:Get usermac error!");
+	char tempmac[128] = {0};
+	if( get_attr_info(rb, RADIUS_ATTR_TYPE_CALLING_STATION_ID, tempmac, rb_len) ){
+		xyprintf(0, "RADIUS DATA ERROR:Get tempmac error!");
 		goto DATA_ERR;
 	}
 #if RADIUS_DEBUG
-	xyprintf(0, "usermac = %s", usermac);
+	xyprintf(0, "tempmac = %s", tempmac);
 #endif
 	
 	char mac[128] = {0};
-	if( mac_change(mac, usermac) ){
+	if( mac_change(mac, tempmac) ){
 		xyprintf(0, "RADIUS DATA ERROR:Mac change error!");
 		goto DATA_ERR;
 	}
@@ -348,6 +348,24 @@ void* radius12_pro_thread(void *fd)
 			update_mac(mac, id);
 		}
 	}
+
+	// 获取apmac
+	if( get_attr_info(rb, RADIUS_ATTR_TYPE_CALLED_STATION_ID, tempmac, rb_len) ){
+		xyprintf(0, "RADIUS DATA ERROR:Get tempmac error!");
+		goto DATA_ERR;
+	}
+#if RADIUS_DEBUG
+	xyprintf(0, "tempmac = %s", tempmac);
+#endif
+	
+	char apmac[128] = {0};
+	if( mac_change(apmac, tempmac) ){
+		xyprintf(0, "RADIUS DATA ERROR:Mac change error!");
+		goto DATA_ERR;
+	}
+
+	// 用户上线记录
+	user_online(apmac, mac);
 
 	free(rr);
 	pthread_exit(NULL);

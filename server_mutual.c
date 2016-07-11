@@ -19,6 +19,9 @@ struct plat_para{
 	char* apmac;				// ap mac
 	char* wlanparameter;		// 加密的mac
 	char* wlanuserfirsturl;		// 访问的url
+	unsigned int acid;
+	unsigned int CompanyId;
+	unsigned int AgentId;
 };
 
 
@@ -38,7 +41,10 @@ void xyprintf_plat_para(struct plat_para *para)
 			->wlanacip = %s\n\
 			->apmac = %s\n\
 			->wlanparameter = %s\n\
-			->wlanuserfirsturl = %s\n",
+			->wlanuserfirsturl = %s\n\
+			->acid = %u\n\
+			->CompanyId = %u\n\
+			->AgentId = %u\n",
 			para->type,
 			para->usernum,
 			para->usercode,
@@ -48,7 +54,10 @@ void xyprintf_plat_para(struct plat_para *para)
 			para->wlanacip,
 			para->apmac,
 			para->wlanparameter,
-			para->wlanuserfirsturl
+			para->wlanuserfirsturl,
+			para->acid,
+			para->CompanyId,
+			para->AgentId
 			);
 }
 
@@ -192,15 +201,18 @@ void* platform_process(void *fd)
 	memset(&para, 0, sizeof(para));
 	if( get_plat_para(json, &para) ){
 		xyprintf(0,"PLATFORM_ERROR:JSON's data error -- %s -- %d!!!", __FILE__, __LINE__);
-		goto DATA_ERR;
+		goto JSON_ERR;
 	}
 
 	// 如果没有ACip 取查询数据库
 	char acip[64] = {0};
+	if( get_acinfo(para.wlanacname, &(para.acid), acip, 64, &(para.CompanyId), &(para.AgentId) ) ){
+		xyprintf(0,"PLATFORM_ERROR:Get acinfo error -- %s -- %d!!!", __FILE__, __LINE__);
+		goto JSON_ERR;
+	}
+	
 	if( !strlen(para.wlanacip) ){
-		if( !get_wlanacip( para.wlanacname, acip, 64) ){
-			para.wlanacip = acip;
-		}
+		para.wlanacip = acip;
 		//para.wlanacip = "223.99.130.172";
 	}
 
@@ -212,20 +224,15 @@ void* platform_process(void *fd)
 	snprintf(res, 127, "{\"stat\":\"failed\"}");
 
 	if( !strlen(para.wlanacip) ){
-		snprintf(res, 127, "{\"stat\":\"No Ac ip!\"}");
 	}
 	else if(!strcmp(para.type, "auth-tel") ){
 		//sql 查询数据库对应id值
-		int id = add_user(para.wlanparameter, para.apmac, "mobilenum", para.usernum);
-		
-		if(id < 0){
+		int id;
+		if( add_user(para.wlanparameter, para.apmac, "mobilenum", para.usernum, &id) ){
 			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
+			goto JSON_ERR;
 		}
-		else {
-			id = ((int)time(0)) % 10000000 + 10000000;
-			xyprintf(0, "Create a id is %d", id);
-		}
-
+		
 #if SERVER_MUTUAL_DEBUG
 	xyprintf(0, "Get user id %d", id);
 #endif
@@ -286,7 +293,8 @@ void* platform_process(void *fd)
 	}
 	else if(!strcmp(para.type, "auth-wx")){
 		//sql 查询数据库对应id值
-		add_user(para.wlanparameter, para.apmac, "openid", para.usernum);
+		int id;
+		add_user(para.wlanparameter, para.apmac, "openid", para.usernum, &id);
 		
 		int ret = delete_discharged(para.wlanuserip, para.wlanacip);
 		if(ret < 0){
@@ -298,7 +306,7 @@ void* platform_process(void *fd)
 	}
 	else {
 		xyprintf(0,"PLATFORM_ERROR:Type unknown(%s) -- %s -- %d!!!", para.type, __FILE__, __LINE__);
-		goto DATA_ERR;
+		goto JSON_ERR;
 	}
 
 	
@@ -308,6 +316,10 @@ void* platform_process(void *fd)
 		xyprintf(0, "PLATFORM_ERROR:%d %s %d -- Res platform's massage error!", sockfd, __FILE__, __LINE__);
 		goto JSON_ERR;
 	}
+
+	// 更新AP信息
+	add_apinfo(para.apmac, para.ssid, para.wlanacname, para.acid, para.CompanyId, para.AgentId);
+
 	
 	cJSON_Delete(json);
 	wt_close_sock( &sockfd );

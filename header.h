@@ -93,12 +93,19 @@ int wt_sql_init(wt_sql_handle *handle, char* sql_name, char* sql_user, char* sql
 void wt_sql_destroy(wt_sql_handle *handle);
 int wt_sql_exec(wt_sql_handle *handle);
 int wt_sql_exec_stored_procedure(wt_sql_handle *handle);
-// sql_fun
+
+// es_discharged.c
 int insert_discharged(char* userip, char* acip);
 int delete_discharged(char* userip, char* acip);
 void* loop_temp_discharged_thread(void *fd);
+
+// exec_sql
+int get_acinfo(char* acname,unsigned int *acid, char* acip, int acip_len, unsigned int *CompanyId, unsigned int *AgentId);
+int add_apinfo(char* apmac, char* ssid, char* acname, unsigned int acid, unsigned int CompanyId, unsigned int AgentId);
+int add_user(char* parameter, char* apmac, char* type, char* value, int *id);
+int update_mac(char* mac, int id);
+int user_online(char*apmac, char* mac);
 void* sql_test_thread(void *fd);
-int add_user(char* parameter, char* apmac, char* type, char* value);
 
 // utils
 int mac_change(char* dest, const char* src);
