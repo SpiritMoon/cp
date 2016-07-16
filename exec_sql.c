@@ -83,6 +83,7 @@ int add_apinfo(char* apmac, char* ssid, char* acname, unsigned int acid, unsigne
 		xyprintf(0, "Insert a ap record, get id is %u", apid);
 	
 		// 关联ap
+		// TODO ShopId 现在用850 需要修改一下
 		snprintf(handle.sql_str, 1024, 
 				"INSERT INTO TB_ApDeploy(ApId, ShopId, PositionDesc, AgentId, CompanyId, AcId) VALUES(%u, 850, '%s', %u, %u, %u)",
 				apid, acname, AgentId, CompanyId, acid);
@@ -263,6 +264,8 @@ int user_online(char*apmac, char* mac)
 	}
 	SQLFreeStmt(handle.sqlstr_handle, SQL_CLOSE);
 
+	xyprintf(0, "shopid = %u", shopid);
+
 	// 插入记录
 	snprintf(handle.sql_str, 1024,
 			"INSERT INTO Center_MobileVisitAp(ApId, ApMac, ShopId, MobileMac, RSSI, PackageTime, InsertTime)"
@@ -274,13 +277,41 @@ int user_online(char*apmac, char* mac)
 	}
 	
 	
-	
-	
-	sprintf(handle.sql_str, "exec usp_insert_probedata @mobilemac = '%s', @apmac = '%s', @rssi = 88", mac, apmac);
+	sprintf(handle.sql_str, "exec usp_http_insertCiscodata @ApMac = '%s', @MsisdnMac = '%s', @Rssi = 88, @PackageTime = '2016-07-14'", apmac, mac);
 	if(wt_sql_exec_stored_procedure(&handle)){
 		xyprintf(0, "SQL_ERROR:%s %d -- handle->sql_str: %s", __FILE__, __LINE__, handle.sql_str);
 		goto SQLED_ERR;
 	}
+
+
+/*
+	snprintf(handle.sql_str, 1024,
+			"INSERT INTO tb_VisitFre(shopid, tagmac, frequency, staytime, addtime) "
+			"VALUES(%u, '%s', 10, 1500, '2016-7-14')",
+			shopid, mac);
+	if( wt_sql_exec(&handle) ){
+		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+		goto SQLED_ERR;
+	}
+*/
+	snprintf(handle.sql_str, 1024,
+			"INSERT INTO tb_MobileInfo(MobileMac, msisdn, weixinID, openID) "
+			"VALUES('%s', '%u', '%s%u', '%s%u')",
+			mac, shopid, mac, shopid, mac, apid);
+	if( wt_sql_exec(&handle) ){
+		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+		goto SQLED_ERR;
+	}
+
+
+	snprintf(handle.sql_str, 1024,
+			"INSERT INTO tb_Visitlist(shopid, tagMac, Addtime) VALUES(%u, '%s', '%s')",
+			shopid, mac, "2016-07-14");
+	if( wt_sql_exec(&handle) ){
+		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+		goto SQLED_ERR;
+	}
+
 
 	wt_sql_destroy(&handle);
 	return 0;
@@ -289,8 +320,6 @@ SQLED_ERR:
 ERR:
 	return -1;
 }
-
-
 
 // SQL 测试线程
 void* sql_test_thread(void *fd)
@@ -381,15 +410,10 @@ void* sql_test_thread(void *fd)
 		xyprintf(0, "GET userid = %d", userid);
 
 		char mac[32] = {0};
-		for(i = 0; i < 17; i++){
-			if( i % 3 == 2 ){
-				mac[i] = ':';
-			}
-			else {
-				r = rand() % 255;
-				snprintf(mac + i, 3, "%02x", r);
-				i++;
-			}
+		for(i = 0; i < 12; i++){
+			r = rand() % 255;
+			snprintf(mac + i, 3, "%02x", r);
+			i++;
 		}
 		
 		xyprintf(0, "mac = %s", mac);

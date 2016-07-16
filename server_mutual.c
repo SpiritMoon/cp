@@ -204,13 +204,14 @@ void* platform_process(void *fd)
 		goto JSON_ERR;
 	}
 
-	// 如果没有ACip 取查询数据库
+	// 查询ac信息
 	char acip[64] = {0};
 	if( get_acinfo(para.wlanacname, &(para.acid), acip, 64, &(para.CompanyId), &(para.AgentId) ) ){
 		xyprintf(0,"PLATFORM_ERROR:Get acinfo error -- %s -- %d!!!", __FILE__, __LINE__);
 		goto JSON_ERR;
 	}
 	
+	// 如果没有ACip 用数据库里查出来的值
 	if( !strlen(para.wlanacip) ){
 		para.wlanacip = acip;
 		//para.wlanacip = "223.99.130.172";
@@ -223,9 +224,8 @@ void* platform_process(void *fd)
 	char res[128] = {0};
 	snprintf(res, 127, "{\"stat\":\"failed\"}");
 
-	if( !strlen(para.wlanacip) ){
-	}
-	else if(!strcmp(para.type, "auth-tel") ){
+	// 如果是手机号认证
+	if(!strcmp(para.type, "auth-tel") ){
 		//sql 查询数据库对应id值
 		int id;
 		if( add_user(para.wlanparameter, para.apmac, "mobilenum", para.usernum, &id) ){
@@ -243,6 +243,21 @@ void* platform_process(void *fd)
 			snprintf(res, 127, "{\"stat\":\"ok\"}");
 		}
 	}
+	// 微信认证
+	else if(!strcmp(para.type, "auth-wx")){
+		//sql 查询数据库对应id值
+		int id;
+		add_user(para.wlanparameter, para.apmac, "openid", para.usernum, &id);
+		
+		int ret = delete_discharged(para.wlanuserip, para.wlanacip);
+		if(ret < 0){
+			xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
+			goto JSON_ERR;
+		}
+		
+		snprintf(res, 127, "{\"stat\":\"ok\"}");
+	}
+	// 如果是白名单
 	else if(!strcmp(para.type, "auth-white")) {
 		// 准备发送数据到ac
 		int id = ((int)time(0)) % 10000000 + 10000000;
@@ -252,6 +267,7 @@ void* platform_process(void *fd)
 			snprintf(res, 127, "{\"stat\":\"ok\"}");
 		}
 	}
+	// 临时放行
 	else if(!strcmp(para.type, "auth-temp") ){
 		unsigned int id;
 		//根据wlanparameter查找是否存在对应用户 插入临时放行表 获取临时表id
@@ -290,19 +306,6 @@ void* platform_process(void *fd)
 				xyprintf(0, "Can not find usermac, sleep 100 us continue!");
 			}
 		}
-	}
-	else if(!strcmp(para.type, "auth-wx")){
-		//sql 查询数据库对应id值
-		int id;
-		add_user(para.wlanparameter, para.apmac, "openid", para.usernum, &id);
-		
-		int ret = delete_discharged(para.wlanuserip, para.wlanacip);
-		if(ret < 0){
-			xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
-			goto JSON_ERR;
-		}
-		
-		snprintf(res, 127, "{\"stat\":\"ok\"}");
 	}
 	else {
 		xyprintf(0,"PLATFORM_ERROR:Type unknown(%s) -- %s -- %d!!!", para.type, __FILE__, __LINE__);

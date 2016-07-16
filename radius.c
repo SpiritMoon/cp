@@ -334,16 +334,9 @@ void* radius12_pro_thread(void *fd)
 	// 回复报文
 	radius12_pro_recv(rr, proxy);
 
-	// 如果是微信和tel操作 更新mac到数据库
+	// 如果是手机认证 更新mac到数据库
 	if( !strncmp( username, "tel-", strlen("tel-") ) ){
 		unsigned int id = atoi(&username[strlen("tel-")]);
-		if(id){
-			update_mac(mac, id);
-		}
-	}
-
-	if( !strncmp( username, "wx-", strlen("wx-") ) ){
-		unsigned int id = atoi(&username[strlen("wx-")]);
 		if(id){
 			update_mac(mac, id);
 		}
