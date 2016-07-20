@@ -20,7 +20,7 @@ out:
 	@$(CC) $(DEPEND) -o $(TARGET) $(LIB)
 
 mv:
-#	@mv $(TARGET) ~/out/$(TARGET)
+	@mv $(TARGET) ~/out/$(TARGET)
 	-@rm -f *.o
 
 GDB:

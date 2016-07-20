@@ -5,7 +5,7 @@
  *****************************************************/
 #include "header.h"
 
-#define RADIUS_DEBUG 1
+#define RADIUS_DEBUG 0
 
 #define RADIUS12_UDP_PORT	1812
 #define RADIUS13_UDP_PORT	1813
@@ -252,9 +252,11 @@ int radius12_pro_recv(struct radius_recv *rr, char* proxy)
 		xyprintf(errno, "ERROR - %s - %s - %d", __FILE__, __func__, __LINE__);
 		return -1;
 	}
-*/	
+*/
+#if RADIUS_DEBUG
 	xyprintf(0, "1812: Send radius bag to client, ret = %d\n", ret);
-	
+#endif
+
 	return 0;
 }
 
@@ -313,21 +315,23 @@ void* radius12_pro_thread(void *fd)
 		xyprintf(0, "RADIUS DATA ERROR:Get tempmac error!");
 		goto DATA_ERR;
 	}
-#if RADIUS_DEBUG
-	xyprintf(0, "tempmac = %s", tempmac);
-#endif
 	
-	char mac[128] = {0};
-	if( mac_change(mac, tempmac) ){
+	char usermac[128] = {0};
+	if( mac_change(usermac, tempmac) ){
 		xyprintf(0, "RADIUS DATA ERROR:Mac change error!");
 		goto DATA_ERR;
 	}
+#if RADIUS_DEBUG
+	xyprintf(0, "usermac = %s", usermac);
+#endif
+
+	xyprintf(0, "1812: username %s, usermac %s", username, usermac);
 
 	// 处理是否是临时放行
 	if(!strncmp(username, "temp-", strlen("temp-"))){
 		unsigned int id = atoi(&username[strlen("temp-")]);
 		if(id){
-			user_mp_list_add(id, mac);
+			user_mp_list_add(id, usermac);
 		}
 	}
 	
@@ -338,27 +342,9 @@ void* radius12_pro_thread(void *fd)
 	if( !strncmp( username, "tel-", strlen("tel-") ) ){
 		unsigned int id = atoi(&username[strlen("tel-")]);
 		if(id){
-			update_mac(mac, id);
+			update_mac(usermac, id);
 		}
 	}
-
-	// 获取apmac
-	if( get_attr_info(rb, RADIUS_ATTR_TYPE_CALLED_STATION_ID, tempmac, rb_len) ){
-		xyprintf(0, "RADIUS DATA ERROR:Get tempmac error!");
-		goto DATA_ERR;
-	}
-#if RADIUS_DEBUG
-	xyprintf(0, "tempmac = %s", tempmac);
-#endif
-	
-	char apmac[128] = {0};
-	if( mac_change(apmac, tempmac) ){
-		xyprintf(0, "RADIUS DATA ERROR:Mac change error!");
-		goto DATA_ERR;
-	}
-
-	// 用户上线记录
-	user_online(apmac, mac);
 
 	free(rr);
 	pthread_exit(NULL);
@@ -424,9 +410,9 @@ void* radius12_conn_thread(void *fd)
 				free(recv_temp);
 				break;
 			}
-
+#if RADIUS_DEBUG
 			xyprintf(0, "1812: recv a msg set in %p, ret is %d", recv_temp, recv_temp->recv_ret);
-		
+#endif
 			// 创建线程处理
 			if( pthread_create(&pt, NULL, radius12_pro_thread, (void*)recv_temp) != 0 ){
 				xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
@@ -487,8 +473,10 @@ int radius13_pro_recv(struct radius_recv *rr)
 		return -1;
 	}
 	
+#if RADIUS_DEBUG	
 	xyprintf(0, "1813: Send radius13 bag to client, ret = %d\n", ret);
-	
+#endif
+
 	return 0;
 }
 
@@ -540,8 +528,34 @@ void* radius13_pro_thread(void *fd)
 	xyprintf(0, "usermac = %s", usermac);
 #endif
 	
-	//TODO 数据库操作
-	
+	// 获取用户mac
+	unsigned int acct_status_type;
+	if( get_attr_info(rb, RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE, (char*)&acct_status_type, rb_len) ){
+		xyprintf(0, "RADIUS DATA ERROR:Get RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE error!");
+		goto DATA_ERR;
+	}
+	acct_status_type = ntohl(acct_status_type);
+#if RADIUS_DEBUG
+	xyprintf(0, "acct_status_type = %u", acct_status_type);
+#endif
+
+	if( acct_status_type == 1 ){
+		// TODO 用户上线成功
+		xyprintf(0, "1813: username %s, usermac %s online!!", username, usermac);
+	}
+	else if ( acct_status_type == 2 ){
+		// TODO 用户下线
+		xyprintf(0, "1813: username %s, usermac %s offline!!", username, usermac);
+	}
+	else if ( acct_status_type == 3 ){
+		// TODO 用户状态更新
+		xyprintf(0, "1813: username %s, usermac %s update!!", username, usermac);
+	}
+	else {
+		// TODO 错误
+		xyprintf(0, "ERROR -- %s -- %d : acct_status_type(u%) is error", __FILE__, __LINE__, acct_status_type);
+	}
+
 	// 回复报文
 	radius13_pro_recv(rr);
 
@@ -610,9 +624,9 @@ void* radius13_conn_thread(void *fd)
 				free(recv_temp);
 				break;
 			}
-
+#if RADIUS_DEBUG
 			xyprintf(0, "1813: recv a msg set in %p, ret is %d", recv_temp, recv_temp->recv_ret);
-		
+#endif
 			// 创建线程处理
 			if( pthread_create(&pt, NULL, radius13_pro_thread, (void*)recv_temp) != 0 ){
 				xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);

@@ -9,6 +9,7 @@
 // 获取ac ip CompanyId AgentId
 int get_acinfo(char* acname,unsigned int *acid, char* acip, int acip_len, unsigned int *CompanyId, unsigned int *AgentId)
 {
+	xyprintf(0, "EXEC SQL -- get ac info");
 	//数据库操作所需参数
 	wt_sql_handle	handle;
 	
@@ -44,6 +45,7 @@ ERR:
 // 添加ap信息
 int add_apinfo(char* apmac, char* ssid, char* acname, unsigned int acid, unsigned int CompanyId, unsigned int AgentId)
 {
+	xyprintf(0, "EXEC SQL -- add ap info");
 	//数据库操作所需参数
 	wt_sql_handle	handle;
 	
@@ -113,6 +115,7 @@ ERR:
 // 添加用户信息
 int add_user(char* parameter, char* apmac, char* type, char* value, int *id)
 {
+	xyprintf(0, "EXEC SQL -- add user");
 	//数据库操作所需参数
 	wt_sql_handle	handle;
 	
@@ -178,6 +181,7 @@ ERR:
 // 更新用户的mac信息
 int update_mac(char* mac, int id)
 {
+	xyprintf(0, "EXEC SQL -- update mac");
 	//数据库操作所需参数
 	wt_sql_handle	handle;
 	
@@ -221,8 +225,9 @@ ERR:
 }
 
 // 用户上线
-int user_online(char*apmac, char* mac)
+int user_online(char*apmac, char* parameter)
 {
+	xyprintf(0, "EXEC SQL -- user online");
 	//数据库操作所需参数
 	wt_sql_handle	handle;
 	
@@ -266,18 +271,41 @@ int user_online(char*apmac, char* mac)
 
 	xyprintf(0, "shopid = %u", shopid);
 
-	// 插入记录
+	// 查找usermac
+	char usermac[32] = {0};
+	SQLBindCol(handle.sqlstr_handle, 1, SQL_C_CHAR, usermac,		32, &handle.sql_err);
 	snprintf(handle.sql_str, 1024,
-			"INSERT INTO Center_MobileVisitAp(ApId, ApMac, ShopId, MobileMac, RSSI, PackageTime, InsertTime)"
-			" VALUES(%u, '%s', %u, '%s', 88, GETDATE(), GETDATE())",
-			apid, apmac, shopid, mac);
+			"SELECT TOP 1 mobilemac FROM tb_UserDetail WHERE parameter = '%s'", parameter);
 	if( wt_sql_exec(&handle) ){
 		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
 		goto SQLED_ERR;
 	}
-	
-	
-	sprintf(handle.sql_str, "exec usp_http_insertCiscodata @ApMac = '%s', @MsisdnMac = '%s', @Rssi = 88, @PackageTime = '2016-07-14'", apmac, mac);
+	handle.sql_ret = SQLFetch(handle.sqlstr_handle);
+	if( handle.sql_ret == SQL_NO_DATA ){
+		xyprintf(0, "GET user mac error -- parameter is %s", parameter);
+		goto SQLED_ERR;
+	}
+	SQLFreeStmt(handle.sqlstr_handle, SQL_CLOSE);
+
+	xyprintf(0, "usermac = %s", usermac);
+
+	// 插入记录
+	snprintf(handle.sql_str, 1024,
+			"INSERT INTO Center_MobileVisitAp(ApId, ApMac, ShopId, MobileMac, RSSI, PackageTime, InsertTime)"
+			" VALUES(%u, '%s', %u, '%s', 88, GETDATE(), GETDATE())",
+			apid, apmac, shopid, usermac);
+	if( wt_sql_exec(&handle) ){
+		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
+		goto SQLED_ERR;
+	}
+
+	// 获取当前日期
+	char date[32] = {0};
+	get_curr_date_str(date);
+
+	sprintf(handle.sql_str,
+			"exec usp_http_insertCiscodata @ApMac = '%s', @MsisdnMac = '%s', @Rssi = 88, @PackageTime = '%s'",
+			apmac, usermac, date);
 	if(wt_sql_exec_stored_procedure(&handle)){
 		xyprintf(0, "SQL_ERROR:%s %d -- handle->sql_str: %s", __FILE__, __LINE__, handle.sql_str);
 		goto SQLED_ERR;
@@ -294,19 +322,23 @@ int user_online(char*apmac, char* mac)
 		goto SQLED_ERR;
 	}
 */
+	// TODO
+	char usermac_12[16] = {0};
+	mac_change_12(usermac_12, usermac);
+/*
 	snprintf(handle.sql_str, 1024,
 			"INSERT INTO tb_MobileInfo(MobileMac, msisdn, weixinID, openID) "
 			"VALUES('%s', '%u', '%s%u', '%s%u')",
-			mac, shopid, mac, shopid, mac, apid);
+			usermac_12, shopid, usermac_12, shopid, usermac_12, apid);
 	if( wt_sql_exec(&handle) ){
 		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
 		goto SQLED_ERR;
 	}
-
+*/
 
 	snprintf(handle.sql_str, 1024,
 			"INSERT INTO tb_Visitlist(shopid, tagMac, Addtime) VALUES(%u, '%s', '%s')",
-			shopid, mac, "2016-07-14");
+			shopid, usermac_12, date);
 	if( wt_sql_exec(&handle) ){
 		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
 		goto SQLED_ERR;

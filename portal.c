@@ -102,22 +102,20 @@ int SendReqAuthAndRecv(char* userip, char* usernum, char* usercode, char* ac_ip,
 	reqAuthAttr[0].len += strlen( (char*)usernum );
 	strncpy((char*)reqAuthAttr[0].attrVal, usernum, sizeof(reqAuthAttr[0].attrVal)-1);
 
-	//xyprintf(0, "UserName: %s ,len= %d", usernum, reqAuthAttr[0].len);
-
 	// 打包password
 	reqAuthAttr[1].type = PassWord;
 	reqAuthAttr[1].len  = 2; 
 	reqAuthAttr[1].len += strlen( usercode );
 	strncpy( (char*)reqAuthAttr[1].attrVal, usercode, sizeof(reqAuthAttr[1].attrVal)-1); 
 	
-	//xyprintf(0, "password: %s ,len = %d", usercode, reqAuthAttr[1].len);
 	// 10.REQ_AUTH 组大包 
 
 	memcpy(stReqAuth.ac_attr, reqAuthAttr, reqAuthAttr[0].len);
 	memcpy(stReqAuth.ac_attr + reqAuthAttr[0].len, &reqAuthAttr[1], reqAuthAttr[1].len);
 
-	xyprintf(0, "**** send portal auth bag!");
-	xyprintf_portal_ac(&stReqAuth);
+	xyprintf(0, "**** send portal auth bag to %s:%d!", ac_ip, port);
+	xyprintf(0, "UserName: %s, Password %s", usernum, usercode);
+	//xyprintf_portal_ac(&stReqAuth);
 
 	// 10.REQ_AUTH
 	if (UDP_send_block(sockfd, ac_ip, port, (unsigned char *)&stReqAuth, 16+reqAuthAttr[0].len+reqAuthAttr[1].len) < 0){
@@ -135,15 +133,30 @@ int SendReqAuthAndRecv(char* userip, char* usernum, char* usercode, char* ac_ip,
 		return -1;
 	}
 
-	xyprintf(0, "recv portal auth req bag!");
-	xyprintf_portal_ac(&stAckAuth);
+	xyprintf(0, "**** recv portal auth req bag, errCode = %d!", stReqAuth.errCode);
+//	xyprintf_portal_ac(&stAckAuth);
 
-	close(sockfd);
   
 	if(stAckAuth.errCode == 0){
+		// 中兴设备需要portal返回ac确认信息
+		stReqAuth.type = 0x07;
+		stReqAuth.attrNum = 0;
+		
+		xyprintf(0, "**** send  portal auth bag to %s:%d, type is 0x7!", ac_ip, port);
+		//xyprintf_portal_ac(&stReqAuth);
+
+		// 10.REQ_AUTH
+		if (UDP_send_block(sockfd, ac_ip, port, (unsigned char *)&stReqAuth, 16) < 0){
+			xyprintf(0, "ERROR - %s - %s - %d - send udp failed!", __FILE__, __func__, __LINE__);
+			close(sockfd);
+			return -1;
+		}
+	
+		close(sockfd);
 		return 0;
 	}
 	else {
+		close(sockfd);
 		return -1;
 	}
 }
@@ -177,15 +190,14 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 
 	xyprintf_portal_ac(&stReqLogout);
 
-	if (UDP_send_block(sockfd, ac_ip, port, (unsigned char *)&stReqLogout, sizeof (stReqLogout)) < 0){
+	if (UDP_send_block(sockfd, ac_ip, port, (unsigned char *)&stReqLogout, 16) < 0){
 		xyprintf(0, "ERROR - %s - %s - %d - send udp failed!", __FILE__, __func__, __LINE__);
 		close(sockfd);
 		return -1;
 	}
-	xyprintf(0, "send success, port:%d, ac_ip:%s\n",port, ac_ip);
-    
-	//11.12 AC向radius发起认证
-
+	xyprintf(0, "send logout to %s:%d success, userip is %s", ac_ip, port, userip);
+   /* 
+	// TODO 中兴设备不返回信息
     ST_PORTAL_AC stAckLogout;
 	// 5.ACK_LOGOUT
 	if( UDP_recv_block(sockfd, (unsigned char*)&stAckLogout, sizeof (stAckLogout)) < 0 ) {
@@ -195,15 +207,17 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 	}
 
 	xyprintf_portal_ac(&stAckLogout);
-
+*/
 	close(sockfd);
-    
+   /* 
 	if(stAckLogout.errCode == 0){
 		return 0;
 	}
 	else {
 		return -1;
 	}
+	*/
+	return 0;
 }
 
 
@@ -215,26 +229,22 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 void* portal_test_thread(void* fd)
 {
 	pthread_detach(pthread_self());
+	sleep(1);
 	xyprintf(0, "protal test thread is working!!");
-	while(1){
-		if( SendReqLogoutAndRecv("10.187.226.14", "111.17.237.28", PORTAL_TO_AC_PORT) ){
-			xyprintf(0, "stat: failed");
-		}
-		else{
-			xyprintf(0, "stat: ok");
-		}
-		
-		/*
-		if( SendReqAuthAndRecv("10.187.226.4", "18866120427", "123456", "111.17.237.28", PORTAL_TO_AC_PORT ) ){
-			xyprintf(0, "stat: failed");
-		}
-		else{
-			xyprintf(0, "stat: ok");
-		}
-		*/
-		
-		sleep(180);
+	
+	SendReqLogoutAndRecv("10.221.144.38", "223.99.130.172", 2000);
+	
+	/*
+	if( SendReqAuthAndRecv("10.187.226.4", "18866120427", "123456", "111.17.237.28", PORTAL_TO_AC_PORT ) ){
+		xyprintf(0, "stat: failed");
 	}
+	else{
+		xyprintf(0, "stat: ok");
+	}
+	*/
+		
+	sleep(180);
+	
 	pthread_exit(NULL);
 }
 
@@ -254,6 +264,21 @@ void* portal_pro_thread(void *fd)
 #if PORTAL_DEBUG
 	xyprintf(0, "pr = %p, pr->recv_ret = %d", pr, pr->recv_ret);
 	xyprintf_portal_ac(pa);
+	/*
+	2016-07-20 18:12:39 -- recv a portal msg set in 0x7fb5240008e0, ret is 16
+	2016-07-20 18:12:39 -- ** O(∩ _∩ )O ~~ Protal process thread is running!!!
+	2016-07-20 18:12:39 -- pr = 0x7fb5240008e0, pr->recv_ret = 16
+	2016-07-20 18:12:39 -- ST_PORTAL_AC->ver = 0x1
+									->type = 0x8
+									->pap_chap = 0x1
+									->rsv = 0x0
+									->serialNo = 0
+									->reqID = 0
+									->userIP = 647027978
+									->userPort = 0
+									->errCode = 0x00
+									->attrNum = 0x00
+	*/
 #endif
 	
 	//TODO 数据库操作

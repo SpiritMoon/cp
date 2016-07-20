@@ -178,6 +178,7 @@ free_fn	cJSON.h	/^      void (*free_fn)(void *ptr);$/;"	m	struct:cJSON_Hooks
 generateSerialNo	portal.c	/^unsigned short generateSerialNo()$/;"	f
 get_acinfo	exec_sql.c	/^int get_acinfo(char* acname,unsigned int *acid, char* acip, int acip_len, unsigned int *CompanyId, unsigned int *AgentId)$/;"	f
 get_attr_info	radius.c	/^int get_attr_info(struct radius_bag* rb, unsigned char type, char *buf, unsigned int rb_len)$/;"	f
+get_curr_date_str	utils.c	/^void get_curr_date_str(char* buf)$/;"	f
 get_curr_time_str	utils.c	/^void get_curr_time_str(char* buf)$/;"	f
 get_plat_para	server_mutual.c	/^int get_plat_para(cJSON *json, struct plat_para *para)$/;"	f
 identifier	header.h	/^	unsigned char identifier;$/;"	m	struct:radius_bag
@@ -207,6 +208,7 @@ logs_temp	logs.c	/^static char logs_temp[2048];		\/\/ log内容临时存放$/;"	
 logs_tm	logs.c	/^static time_t logs_tm;				\/\/ log时间$/;"	v	file:
 loop_temp_discharged_thread	es_discharged.c	/^void* loop_temp_discharged_thread(void *fd)$/;"	f
 mac_change	utils.c	/^int mac_change(char* dest, const char* src)$/;"	f
+mac_change_12	utils.c	/^int mac_change_12(char* dest, const char* src)$/;"	f
 main	main.c	/^int main(int argc, char** argv)$/;"	f
 malloc_fn	cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
 next	cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
@@ -283,7 +285,7 @@ user_mp_list_init	user_mp_list.c	/^void user_mp_list_init()$/;"	f
 user_mp_list_lock	user_mp_list.c	/^static pthread_mutex_t		user_mp_list_lock;$/;"	v	file:
 user_mp_list_node	user_mp_list.c	/^}user_mp_list_node;$/;"	t	typeref:struct:usermac_vs_wlanparameter	file:
 user_mp_list_node_size	user_mp_list.c	/^static unsigned int user_mp_list_node_size = sizeof(user_mp_list_node);$/;"	v	file:
-user_online	exec_sql.c	/^int user_online(char*apmac, char* mac)$/;"	f
+user_online	exec_sql.c	/^int user_online(char*apmac, char* parameter)$/;"	f
 usercode	server_mutual.c	/^	char* usercode;				\/\/ auth-tel：验证码，auth-wx：tid，auth-temp：空$/;"	m	struct:plat_para	file:
 userid	user_mp_list.c	/^	unsigned int		userid;$/;"	m	struct:usermac_vs_wlanparameter	file:
 usermac	user_mp_list.c	/^	char				usermac[20];$/;"	m	struct:usermac_vs_wlanparameter	file:

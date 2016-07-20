@@ -6,8 +6,8 @@
 #include "header.h"
 
 #define IS_DAEMON_EXIST			0					// 精灵线程
-#define PORTAL_TEST_THREAD		0
-#define SQL_TEST_THREAD			1
+#define PORTAL_TEST_THREAD		1
+#define SQL_TEST_THREAD			0
 
 /** 
  *@brief  程序主体函数 由子进程运行
@@ -38,30 +38,27 @@ void run()
 	RADIUS_SECRET_LEN = strlen(RADIUS_SECRET);
 	xyprintf(0, "RADIUS_SECRET is %s, len is %d", RADIUS_SECRET, RADIUS_SECRET_LEN);
 	
-	//初始化认证服务器list信息互斥锁 和 定时任务 互斥锁
-//	pthread_mutex_init(&gv_authenticate_list_lock, 0);
-
 	/****************平台连接监视线程**************************************************/
 	pthread_t pt;
-//	if( pthread_create(&pt, NULL, platform_conn_thread, NULL) != 0 ){
-//		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
-//	}
+	if( pthread_create(&pt, NULL, platform_conn_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
 	/****************1812端口**********************************************************/
-//	if( pthread_create(&pt, NULL, radius12_conn_thread, NULL) != 0 ){
-//		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
-//	}
+	if( pthread_create(&pt, NULL, radius12_conn_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
 	/****************1813端口**********************************************************/
-//	if( pthread_create(&pt, NULL, radius13_conn_thread, NULL) != 0 ){
-//		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
-//	}
+	if( pthread_create(&pt, NULL, radius13_conn_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
 	/****************portal连接********************************************************/
-//	if( pthread_create(&pt, NULL, portal_conn_thread, NULL) != 0 ){
-//		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
-//	}
+	if( pthread_create(&pt, NULL, portal_conn_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
 	/****************临时放行解除线程**************************************************/
-//	if( pthread_create(&pt, NULL, loop_temp_discharged_thread, NULL) != 0 ){
-//		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
-//	}
+	if( pthread_create(&pt, NULL, loop_temp_discharged_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
 	/**********************************************************************************/
 #if SQL_TEST_THREAD
 	if( pthread_create(&pt, NULL, sql_test_thread, NULL) != 0 ){

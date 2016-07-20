@@ -285,15 +285,13 @@ void* platform_process(void *fd)
 		char username[128] = {0};
 		snprintf(username, 127, "%s-%u@ilinyi", &para.type[5], id);
 	
-		//if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
-		if( SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
+		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
 			// 获取radius获取到的mac地址
 			int i = 0;
 			int find_flag = -1;
 			char usermac[64] = {0};
 		// TODO test			
-			snprintf(res, 127, "{\"stat\":\"ok\"}");
-			snprintf(res, 127, "{\"stat\":\"b4:0b:44:1a:63:12\"}");
+			snprintf(res, 127, "{\"stat\":\"NULL\"}");
 			
 			for(; i < 10; i++){
 				if(!user_mp_list_find_and_del(id, usermac)){
@@ -322,6 +320,9 @@ void* platform_process(void *fd)
 
 	// 更新AP信息
 	add_apinfo(para.apmac, para.ssid, para.wlanacname, para.acid, para.CompanyId, para.AgentId);
+	// 用户上线记录
+	user_online(para.apmac, para.wlanparameter);
+
 
 	
 	cJSON_Delete(json);

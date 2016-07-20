@@ -292,7 +292,7 @@ int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen)
 		slRead = recvfrom(socket, rcvBuf, slLen, MSG_DONTWAIT, (struct sockaddr *)&cli_addr, &addr_len);
 		if (slRead == -1){
 			if ((errno == EINTR) || (errno == EAGAIN) || (errno == EWOULDBLOCK)){
-				xyprintf(0,"no msg recv, sleep 1s continue!");
+				xyprintf(0,"no msg recv, sleep 1s continue, slLen = %d!", slLen);
 				sleep(1);
 				count++;
 				if(count >= 10){
