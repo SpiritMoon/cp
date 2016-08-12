@@ -232,7 +232,7 @@ void* portal_test_thread(void* fd)
 	sleep(1);
 	xyprintf(0, "protal test thread is working!!");
 	
-	SendReqLogoutAndRecv("10.221.144.38", "223.99.130.172", 2000);
+	SendReqLogoutAndRecv("10.221.144.42", "223.99.130.172", 2000);
 	
 	/*
 	if( SendReqAuthAndRecv("10.187.226.4", "18866120427", "123456", "111.17.237.28", PORTAL_TO_AC_PORT ) ){
