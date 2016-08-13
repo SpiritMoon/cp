@@ -206,11 +206,11 @@ void* platform_process(void *fd)
 
 	// 查询ac信息
 	char acip[64] = {0};
-	if( get_acinfo(para.wlanacname, &(para.acid), acip, 64, &(para.CompanyId), &(para.AgentId) ) ){
-		xyprintf(0,"PLATFORM_ERROR:Get acinfo error -- %s -- %d!!!", __FILE__, __LINE__);
-		goto JSON_ERR;
-	}
-	
+//	if( get_acinfo(para.wlanacname, &(para.acid), acip, 64, &(para.CompanyId), &(para.AgentId) ) ){
+//		xyprintf(0,"PLATFORM_ERROR:Get acinfo error -- %s -- %d!!!", __FILE__, __LINE__);
+//		goto JSON_ERR;
+//	}
+//TODO	
 	// 如果没有ACip 用数据库里查出来的值
 	if( !strlen(para.wlanacip) ){
 		para.wlanacip = acip;
@@ -228,10 +228,11 @@ void* platform_process(void *fd)
 	if(!strcmp(para.type, "auth-tel") ){
 		//sql 查询数据库对应id值
 		int id;
-		if( add_user(para.wlanparameter, para.apmac, "mobilenum", para.usernum, &id) ){
-			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
-			goto JSON_ERR;
-		}
+//TODO
+//		if( add_user(para.wlanparameter, para.apmac, "mobilenum", para.usernum, &id) ){
+//			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
+//			goto JSON_ERR;
+//		}
 		
 #if SERVER_MUTUAL_DEBUG
 	xyprintf(0, "Get user id %d", id);
@@ -247,13 +248,14 @@ void* platform_process(void *fd)
 	else if(!strcmp(para.type, "auth-wx")){
 		//sql 查询数据库对应id值
 		int id;
-		add_user(para.wlanparameter, para.apmac, "openid", para.usernum, &id);
-		
-		int ret = delete_discharged(para.wlanuserip, para.wlanacip);
-		if(ret < 0){
-			xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
-			goto JSON_ERR;
-		}
+		//TODO
+	//	add_user(para.wlanparameter, para.apmac, "openid", para.usernum, &id);
+	// TODO	
+	//	int ret = delete_discharged(para.wlanuserip, para.wlanacip);
+	//	if(ret < 0){
+	//		xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
+	//		goto JSON_ERR;
+	//	}
 		
 		snprintf(res, 127, "{\"stat\":\"ok\"}");
 	}
@@ -271,15 +273,16 @@ void* platform_process(void *fd)
 	else if(!strcmp(para.type, "auth-temp") ){
 		unsigned int id;
 		//根据wlanparameter查找是否存在对应用户 插入临时放行表 获取临时表id
-		int ret = insert_discharged(para.wlanuserip, para.wlanacip);
-		if(ret > 0){
-			id = ret;
-			xyprintf(0, "Get temp id is %u", id);
-		}
-		else {
-			xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
-			goto JSON_ERR;
-		}
+		// TODO
+		//int ret = insert_discharged(para.wlanuserip, para.wlanacip);
+		//if(ret > 0){
+		//	id = ret;
+		//	xyprintf(0, "Get temp id is %u", id);
+		//}
+		//else {
+		//	xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
+		//	goto JSON_ERR;
+		//}
 		
 		// 准备发送数据到ac
 		char username[128] = {0};
@@ -319,9 +322,11 @@ void* platform_process(void *fd)
 	}
 
 	// 更新AP信息
-	add_apinfo(para.apmac, para.ssid, para.wlanacname, para.acid, para.CompanyId, para.AgentId);
+	//TODO
+	//	add_apinfo(para.apmac, para.ssid, para.wlanacname, para.acid, para.CompanyId, para.AgentId);
 	// 用户上线记录
-	user_online(para.apmac, para.wlanparameter);
+	// TODO
+	//	user_online(para.apmac, para.wlanparameter);
 
 
 	

@@ -39,16 +39,15 @@
 #include <sys/epoll.h>
 #include <sys/wait.h>
 
+#include <ctype.h>
+
 #include <iconv.h>
 
 #include <pthread.h>  
 
 #include <openssl/md5.h>
 
-
-#include <sql.h>
-#include <sqlext.h>
-#include <sqltypes.h>
+#include <postgresql/libpq-fe.h>
 
 #include "cJSON.h"
 #include "list.h"
@@ -75,63 +74,33 @@ void user_mp_list_init();
 void user_mp_list_add(unsigned int userid, char* usermac);
 int user_mp_list_find_and_del(unsigned int userid, char* usermac);
 
-//数据库操作所需参数
-typedef struct wt_sql_handle{
-	SQLHENV		env_handle;						// Handle ODBC environment 环境句柄
-	SQLHDBC		conn_handle;					// Handle connection 连接句柄
-	SQLHSTMT	sqlstr_handle;					// 数据库执行语句句柄
-	SQLRETURN	sql_ret;
-	char		sql_stat[12];					// Status SQL
-	SQLLEN		sql_err;
-	SQLSMALLINT	sql_mlen;
-	char		err_msg[200];
-	char		sql_str[1024];
-}wt_sql_handle;
-
-// sql
-int wt_sql_init(wt_sql_handle *handle, char* sql_name, char* sql_user, char* sql_pass);
-void wt_sql_destroy(wt_sql_handle *handle);
-int wt_sql_exec(wt_sql_handle *handle);
-int wt_sql_exec_stored_procedure(wt_sql_handle *handle);
-
-// es_discharged.c
-int insert_discharged(char* userip, char* acip);
-int delete_discharged(char* userip, char* acip);
-void* loop_temp_discharged_thread(void *fd);
-
-// exec_sql
-int get_acinfo(char* acname,unsigned int *acid, char* acip, int acip_len, unsigned int *CompanyId, unsigned int *AgentId);
-int add_apinfo(char* apmac, char* ssid, char* acname, unsigned int acid, unsigned int CompanyId, unsigned int AgentId);
-int add_user(char* parameter, char* apmac, char* type, char* value, int *id);
-int update_mac(char* mac, int id);
-int user_online(char*apmac, char* mac);
-void* sql_test_thread(void *fd);
-
 // utils
 int mac_change(char* dest, const char* src);
 void get_curr_time_str(char* buf);
 
+// postgresql
+void sql_test();
+
 /************************* Portal *******************************/
 //Portal报文类型
 
-#define REQ_CHALLENGE 0x01;   //Client----->Server  Portal Server 向AC设备发送的请求Challeng报文
-#define ACK_CHALLENGE 0x02;   //Client<-----Server  Server AC设备对Portal Server请求Challeng报文的响应报文
-#define REQ_AUTH    0x03;   //Client----->Server  Server Portal Server向AC设备发送的请求认证报文
-#define ACK_AUTH       0x04;   //Client<-----Server  Server AC设备对Portal Server请求认证报文的响应报文
-#define REQ_LOGOUT     0x05;   //Client----->Server  Server  若ErrCode字段值为0x00，表示此报文是Portal Server向AC设备发送的请求用户下线报文；
+#define REQ_CHALLENGE	0x01;   //Client----->Server  Portal Server 向AC设备发送的请求Challeng报文
+#define ACK_CHALLENGE	0x02;   //Client<-----Server  Server AC设备对Portal Server请求Challeng报文的响应报文
+#define REQ_AUTH		0x03;   //Client----->Server  Server Portal Server向AC设备发送的请求认证报文
+#define ACK_AUTH		0x04;   //Client<-----Server  Server AC设备对Portal Server请求认证报文的响应报文
+#define REQ_LOGOUT		0x05;   //Client----->Server  Server  若ErrCode字段值为0x00，表示此报文是Portal Server向AC设备发送的请求用户下线报文；
                                     //若ErrCode字段值为0x01，表示该报文是Portal Server发送的超时报文，其原因是Portal Server发出的各种请求在规定时间内没有收到响应报文。  
-#define ACK_LOGOUT     0x06;   //Client<-----Server  Server AC设备对Portal Server请求下线报文的响应报文  
-#define AFF_ACK_AUTH   0x07;   //Client----->Server  Server  Portal Server对收到的认证成功响应报文的确认报文
-#define NTF_LOGOUT     0x08;   //Server --> Client   Client 用户被强制下线通知报文 
-#define REQ_INFO       0x09;   //Client --> Server   信息询问报文 
-#define ACK_INFO       0x0a;   //Server --> Client   信息询问的应答报文
-
+#define ACK_LOGOUT		0x06;   //Client<-----Server  Server AC设备对Portal Server请求下线报文的响应报文  
+#define AFF_ACK_AUTH	0x07;   //Client----->Server  Server  Portal Server对收到的认证成功响应报文的确认报文
+#define NTF_LOGOUT		0x08;   //Server --> Client   Client 用户被强制下线通知报文 
+#define REQ_INFO		0x09;   //Client --> Server   信息询问报文 
+#define ACK_INFO		0x0a;   //Server --> Client   信息询问的应答报文
 
 //属性类型
-#define UserName         0x01;        //<=253 （可变） 用 户 名
-#define PassWord         0x02;        //<=16（可变） 用户提交的明文密码
-#define Challenge        0x03;        //16（固定） Chap方式加密的魔术字
-#define ChapPassWord     0x04;        //16（固定）  经过Chap方式加密后的密码
+#define UserName		0x01;        //<=253 （可变） 用 户 名
+#define PassWord		0x02;        //<=16（可变） 用户提交的明文密码
+#define Challenge		0x03;        //16（固定） Chap方式加密的魔术字
+#define ChapPassWord	0x04;        //16（固定）  经过Chap方式加密后的密码
 
 typedef struct portal_ac_attr
 {

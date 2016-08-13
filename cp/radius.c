@@ -342,7 +342,8 @@ void* radius12_pro_thread(void *fd)
 	if( !strncmp( username, "tel-", strlen("tel-") ) ){
 		unsigned int id = atoi(&username[strlen("tel-")]);
 		if(id){
-			update_mac(usermac, id);
+			//TODO
+			//update_mac(usermac, id);
 		}
 	}
 
