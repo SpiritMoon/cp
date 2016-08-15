@@ -19,9 +19,6 @@ struct plat_para{
 	char* apmac;				// ap mac
 	char* wlanparameter;		// 加密的mac
 	char* wlanuserfirsturl;		// 访问的url
-	unsigned int acid;
-	unsigned int CompanyId;
-	unsigned int AgentId;
 };
 
 
@@ -41,10 +38,7 @@ void xyprintf_plat_para(struct plat_para *para)
 			->wlanacip = %s\n\
 			->apmac = %s\n\
 			->wlanparameter = %s\n\
-			->wlanuserfirsturl = %s\n\
-			->acid = %u\n\
-			->CompanyId = %u\n\
-			->AgentId = %u\n",
+			->wlanuserfirsturl = %s\n",
 			para->type,
 			para->usernum,
 			para->usercode,
@@ -54,10 +48,7 @@ void xyprintf_plat_para(struct plat_para *para)
 			para->wlanacip,
 			para->apmac,
 			para->wlanparameter,
-			para->wlanuserfirsturl,
-			para->acid,
-			para->CompanyId,
-			para->AgentId
+			para->wlanuserfirsturl
 			);
 }
 
@@ -204,13 +195,24 @@ void* platform_process(void *fd)
 		goto JSON_ERR;
 	}
 
+	// 查询ap信息
+	unsigned int apid, s_id;
+	char apdomain[256] = {0};
+	ret = get_apinfo(para.apmac, &apid, apdomain, &s_id);
+	if( ret ){
+		xyprintf(0,"PLATFORM_ERROR:%s -- %d Get apinfo error!", __FILE__, __LINE__);
+		goto JSON_ERR;
+	}
+	
+
 	// 查询ac信息
-	char acip[64] = {0};
-//	if( get_acinfo(para.wlanacname, &(para.acid), acip, 64, &(para.CompanyId), &(para.AgentId) ) ){
-//		xyprintf(0,"PLATFORM_ERROR:Get acinfo error -- %s -- %d!!!", __FILE__, __LINE__);
-//		goto JSON_ERR;
-//	}
-//TODO	
+	unsigned int acid;
+	char acip[256] = {0};
+	if( get_acinfo(para.wlanacname, &acid, acip) ){
+		xyprintf(0,"PLATFORM_ERROR:%s -- %d Get acinfo error!", __FILE__, __LINE__);
+		goto JSON_ERR;
+	}
+	
 	// 如果没有ACip 用数据库里查出来的值
 	if( !strlen(para.wlanacip) ){
 		para.wlanacip = acip;
@@ -273,16 +275,15 @@ void* platform_process(void *fd)
 	else if(!strcmp(para.type, "auth-temp") ){
 		unsigned int id;
 		//根据wlanparameter查找是否存在对应用户 插入临时放行表 获取临时表id
-		// TODO
-		//int ret = insert_discharged(para.wlanuserip, para.wlanacip);
-		//if(ret > 0){
-		//	id = ret;
-		//	xyprintf(0, "Get temp id is %u", id);
-		//}
-		//else {
-		//	xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
-		//	goto JSON_ERR;
-		//}
+		int ret = insert_discharged(para.wlanuserip, para.wlanacip);
+		if(ret > 0){
+			id = ret;
+			xyprintf(0, "Get temp id is %u", id);
+		}
+		else {
+			xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
+			goto JSON_ERR;
+		}
 		
 		// 准备发送数据到ac
 		char username[128] = {0};
@@ -293,7 +294,7 @@ void* platform_process(void *fd)
 			int i = 0;
 			int find_flag = -1;
 			char usermac[64] = {0};
-		// TODO test			
+		// TODO test
 			snprintf(res, 127, "{\"stat\":\"NULL\"}");
 			
 			for(; i < 10; i++){
@@ -321,15 +322,6 @@ void* platform_process(void *fd)
 		goto JSON_ERR;
 	}
 
-	// 更新AP信息
-	//TODO
-	//	add_apinfo(para.apmac, para.ssid, para.wlanacname, para.acid, para.CompanyId, para.AgentId);
-	// 用户上线记录
-	// TODO
-	//	user_online(para.apmac, para.wlanparameter);
-
-
-	
 	cJSON_Delete(json);
 	wt_close_sock( &sockfd );
 	pthread_exit(NULL);

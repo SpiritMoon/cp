@@ -6,18 +6,240 @@
 
 #include "header.h"
 
-// 获取ac ip CompanyId AgentId
-int get_acinfo(char* acname,unsigned int *acid, char* acip, int acip_len, unsigned int *CompanyId, unsigned int *AgentId)
+#define EXEC_SQL_DEBUG		1
+
+// 用apmac查询门店apid、ap域名、门店id
+int get_apinfo(char* apmac, unsigned int *apid, char* domain, unsigned int *s_id)
 {
-	xyprintf(0, "EXEC SQL -- get ac info");
-	//数据库操作所需参数
-	wt_sql_handle	handle;
-	
-	//初始化数据库连接
-	if( wt_sql_init(&handle, SQL_NAME, SQL_USER, SQL_PASSWD) ){
-		xyprintf(0, "SQL_INIT_ERROR:%s %s %d -- Datebase connect error!", __func__, __FILE__, __LINE__);
-		goto ERR;
+	// 建立数据库连接
+	PGconn* conn = sql_init();
+	if(!conn){
+		xyprintf(0, "ERROR:%s %d -- sql init failed!", __FILE__, __LINE__);
+		goto ERROR;
 	}
+
+	char sql_str[1024] = {0};
+	// 查询
+	snprintf(sql_str, 1023, "SELECT id, domain, s_id FROM ap WHERE mac = '%s'", apmac);
+	PGresult* sql_res;
+	if( sql_exec_select(conn, sql_str, &sql_res) ){
+		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
+		goto SQLED_ERROR;
+	}
+
+	// 判断是否查询到
+	int tuples = PQntuples(sql_res);
+	if( tuples < 1 ){
+		xyprintf(0, "ERROR:Not find recond of ap mac is %s", apmac);
+		goto RESULTED_ERROR;
+	}
+
+	// 取值
+	*apid = atoi(sql_getvalue_string(sql_res, 0, 0));
+	strcpy(domain, sql_getvalue_string(sql_res, 0, 1));
+	*s_id = atoi(sql_getvalue_string(sql_res, 0, 2));
+
+#if EXEC_SQL_DEBUG
+	xyprintf(0, "EXEC_SQL_DEBUG: SELECT id(%u), domain(%s), s_id(%u) FROM ap WHERE apmac = %s success!", *apid, domain, *s_id, apmac);
+#endif
+
+	PQclear(sql_res);
+	sql_destory(conn);
+	return 0;
+	
+RESULTED_ERROR:
+	PQclear(sql_res);
+SQLED_ERROR:
+	sql_destory(conn);
+ERROR:
+	return -1;
+}
+
+// 用acname查询门店acip
+int get_acinfo(char* acname, unsigned int *acid, char* acip)
+{
+	// 建立数据库连接
+	PGconn* conn = sql_init();
+	if(!conn){
+		xyprintf(0, "ERROR:%s %d -- sql init failed!", __FILE__, __LINE__);
+		goto ERROR;
+	}
+
+	char sql_str[1024] = {0};
+	// 查询
+	snprintf(sql_str, 1023, "SELECT id, ip FROM ac WHERE wlanacname = '%s'", acname);
+	PGresult* sql_res;
+	if( sql_exec_select(conn, sql_str, &sql_res) ){
+		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
+		goto SQLED_ERROR;
+	}
+
+	// 判断是否查询到
+	int tuples = PQntuples(sql_res);
+	if( tuples < 1 ){
+		xyprintf(0, "ERROR:Not find recond of ac name is %s", acname);
+		PQclear(sql_res);
+		goto SQLED_ERROR;
+	}
+
+	// 取值
+	*acid = atoi(sql_getvalue_string(sql_res, 0, 0));
+	strcpy(acip, sql_getvalue_string(sql_res, 0, 1));
+
+#if EXEC_SQL_DEBUG
+	xyprintf(0, "EXEC_SQL_DEBUG: SELECT id(%u), ip(%s) FROM ac WHERE wlanacname = %s success!", *acid, acip, acname);
+#endif
+
+	PQclear(sql_res);
+	sql_destory(conn);
+	return 0;
+	
+SQLED_ERROR:
+	sql_destory(conn);
+ERROR:
+	return -1;
+}
+
+// 查询wlanparameter是否存在于wifi_user_wlanparameter
+int get_usermac(PGconn* conn, char* sql_str, char* usermac, unsigned int acid, char* wlanparameter)
+{
+	// 查询
+	snprintf(sql_str, 1023, "SELECT mac FROM wifi_user_wlanparameter WHERE wlanparameter = '%s' AND acid = %u", wlanparameter, acid);
+	PGresult* sql_res;
+	if( sql_exec_select(conn, sql_str, &sql_res) ){
+		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
+		goto SQLED_ERROR;
+	}
+
+	// 判断是否查询到 没有查询到使用wlanparameter替代mac
+	int tuples = PQntuples(sql_res);
+	if( tuples < 1 ){
+		strcpy(usermac, wlanparameter);
+#if EXEC_SQL_DEBUG
+		xyprintf(0, "EXEC_SQL_DEBUG: %s failed, usermac use wlanparameter!", sql_str);
+#endif
+	}
+	else {
+		strcpy(usermac, sql_getvalue_string(sql_res, 0, 0));
+#if EXEC_SQL_DEBUG
+		xyprintf(0, "EXEC_SQL_DEBUG: %s success!\n\t\tusermac is %s", usermac);
+#endif
+	}
+	PQclear(sql_res);
+	return 0;
+
+SQLED_ERROR:
+	return -1;
+}
+
+// 用户手机登录信息
+int get_wuid_phone(unsigned int s_id, char* phonenum, unsigned int acid, char* wlanparameter, unsigned int *wu_id)
+{
+	// 建立数据库连接
+	PGconn* conn = sql_init();
+	if(!conn){
+		xyprintf(0, "ERROR:%s %d -- sql init failed!", __FILE__, __LINE__);
+		goto ERROR;
+	}
+
+	char sql_str[1024] = {0};
+
+	char usermac[256] = {0};
+	// 查询wlanparameter是否存在于wifi_user_wlanparameter
+	if( get_usermac(conn, sql_str, usermac, acid, wlanparameter) ){
+		xyprintf(0, "ERROR:%s %d -- get usermac failed!", __FILE__, __LINE__);
+		goto SQLED_ERROR;
+	}
+
+	// 查询mac是否存在
+	snprintf(sql_str, 1023, "SELECT id, phonenum FROM wifi_user WHERE s_id = %u AND mac = '%s'", s_id, usermac);
+	PGresult* sql_res;
+	if( sql_exec_select(conn, sql_str, &sql_res) ){
+		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
+		goto SQLED_ERROR;
+	}
+
+	// 判断是否查询到 没有查询到创建新的记录
+	int tuples = PQntuples(sql_res);
+	if( tuples < 1 ){
+		PQclear(sql_res);
+
+#if EXEC_SQL_DEBUG
+		xyprintf(0, "EXEC_SQL_DEBUG: %s failed!", sql_str);
+#endif
+		
+		// 没有查询到 添加新的记录
+		snprintf(sql_str, 1023, "INSERT INTO wifi_user(s_id, mac, phonenum, created_at, updated_at)"
+				" VALUES(%u, '%s', '%s', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
+				s_id, usermac, phonenum);
+		if( sql_exec(conn, sql_str) ){
+			xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
+			goto SQLED_ERROR;
+		}
+
+#if EXEC_SQL_DEBUG
+		xyprintf(0, "EXEC_SQL_DEBUG: %s success!", sql_str);
+#endif
+
+		// 获取插入的id值
+		snprintf(sql_str, 1023, "SELECT CURRVAL('user_wifi_user_id_seq')");	//获取刚插入记录的主键id号
+		if( sql_exec_select(conn, sql_str, &sql_res) ){
+			xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
+			goto SQLED_ERROR;
+		}
+	
+		*wu_id = atoi(sql_getvalue_string(sql_res, 0, 0));
+		PQclear(sql_res);
+#if EXEC_SQL_DEBUG
+		xyprintf(0, "EXEC_SQL_DEBUG: SELECT CURRVAL('user_wifi_user_id_seq')(%u) success!", *wu_id);
+#endif
+	}
+	else {
+		PQclear(sql_res);
+		*wu_id = atoi(sql_getvalue_string(sql_res, 0, 0));
+		// 比较手机号码是否变化，变化则修改
+		if( strcmp( phonenum, sql_getvalue_string(sql_res, 0, 1)) ){
+			snprintf(sql_str, 1023, "UPDATE wifi_user SET phonenum = '%s' WHERE id = %u",
+					phonenum, *wu_id);
+			if( sql_exec(conn, sql_str) ){
+				xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
+				goto SQLED_ERROR;
+			}
+		}
+	}
+
+	sql_destory(conn);
+	return 0;
+	
+SQLED_ERROR:
+	sql_destory(conn);
+ERROR:
+	return -1;
+}
+
+int exec_sql_test()
+{
+	char *apmac = "123456789012";
+	unsigned int apid, s_id;
+	char domain[256] = {0};
+	int ret;
+	ret = get_apinfo(apmac, &apid, domain, &s_id);
+	xyprintf(0, "ret = %d", ret);
+
+	char *wlanacname = "123.0539.0531.000";
+	unsigned int acid;
+	char acip[256] = {0};
+	ret = get_acinfo(wlanacname, &acid, acip);
+	xyprintf(0, "ret = %d", ret);
+
+	return 0;
+}
+#if 0
+// 获取ac ip
+int get_acinfo(char* acname,unsigned int *acid, char* acip, int acip_len)
+{
+	xyprintf(0, "EXEC SQL -- select ac info");
+	
 
 	SQLBindCol(handle.sqlstr_handle, 1, SQL_C_ULONG, acid,			20, &handle.sql_err);
 	SQLBindCol(handle.sqlstr_handle, 2, SQL_C_CHAR,	 acip,			acip_len, &handle.sql_err);
@@ -32,76 +254,6 @@ int get_acinfo(char* acname,unsigned int *acid, char* acip, int acip_len, unsign
 	handle.sql_ret = SQLFetch(handle.sqlstr_handle);
 	if( handle.sql_ret == SQL_NO_DATA ){
 		goto SQLED_ERR;
-	}
-
-	wt_sql_destroy(&handle);
-	return 0;
-SQLED_ERR:
-	wt_sql_destroy(&handle);
-ERR:
-	return -1;
-}
-
-// 添加ap信息
-int add_apinfo(char* apmac, char* ssid, char* acname, unsigned int acid, unsigned int CompanyId, unsigned int AgentId)
-{
-	xyprintf(0, "EXEC SQL -- add ap info");
-	//数据库操作所需参数
-	wt_sql_handle	handle;
-	
-	//初始化数据库连接
-	if( wt_sql_init(&handle, SQL_NAME, SQL_USER, SQL_PASSWD) ){
-		xyprintf(0, "SQL_INIT_ERROR:%s %s %d -- Datebase connect error!", __func__, __FILE__, __LINE__);
-		goto ERR;
-	}
-
-	// 先查询ap是否存在
-	unsigned int apid;
-	SQLBindCol(handle.sqlstr_handle, 1, SQL_C_ULONG, &apid,		20, &handle.sql_err);
-	snprintf(handle.sql_str, 1024, "SELECT TOP 1 id FROM TB_Ap WHERE Mac = '%s'", apmac);	//获取刚插入记录的主键id号
-	if( wt_sql_exec(&handle) ){
-		xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
-		goto SQLED_ERR;
-	}
-	handle.sql_ret = SQLFetch(handle.sqlstr_handle);
-	if( handle.sql_ret == SQL_NO_DATA ){
-		// 不存插入ap数据
-		snprintf(handle.sql_str, 1024, 
-				"INSERT INTO TB_Ap(Mac, DeviceType, Statas, AddTime, SsId, deviceNo) VALUES('%s', 0, 1, GETDATE(), '%s', '%s' )",
-				apmac, ssid, apmac);
-		if( wt_sql_exec(&handle) ){
-			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
-			goto SQLED_ERR;
-		}
-		
-		//获取刚插入记录的主键id号
-		snprintf(handle.sql_str, 1024, "SELECT SCOPE_IDENTITY()");
-		if( wt_sql_exec(&handle) ){
-			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
-			goto SQLED_ERR;
-		}
-		handle.sql_ret = SQLFetch(handle.sqlstr_handle);
-		SQLFreeStmt(handle.sqlstr_handle, SQL_CLOSE);
-		xyprintf(0, "Insert a ap record, get id is %u", apid);
-	
-		// 关联ap
-		// TODO ShopId 现在用850 需要修改一下
-		snprintf(handle.sql_str, 1024, 
-				"INSERT INTO TB_ApDeploy(ApId, ShopId, PositionDesc, AgentId, CompanyId, AcId) VALUES(%u, 850, '%s', %u, %u, %u)",
-				apid, acname, AgentId, CompanyId, acid);
-		if( wt_sql_exec(&handle) ){
-			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
-			goto SQLED_ERR;
-		}
-	}
-	else {
-		SQLFreeStmt(handle.sqlstr_handle, SQL_CLOSE);
-		// 存在更新
-		snprintf(handle.sql_str, 1024, "UPDATE TB_Ap SET SsId = '%s' WHERE id = %d", ssid, apid);
-		if( wt_sql_exec(&handle) ){
-			xyprintf(0, "SQL_ERROR:%s %s %d -- sql string is -- %s", __func__, __FILE__, __LINE__, handle.sql_str);
-			goto SQLED_ERR;
-		}		
 	}
 
 	wt_sql_destroy(&handle);
@@ -484,3 +636,4 @@ SLEEP:
 ERR:
 	pthread_exit(NULL);
 }
+#endif

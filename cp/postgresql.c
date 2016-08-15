@@ -3,7 +3,9 @@
 //初始化数据库
 PGconn* sql_init()
 {
-	const char *conninfo = "dbname=wifi user=postgres hostaddr=139.129.42.237";
+	char conninfo[128] = {0};
+	snprintf(conninfo, 127, "dbname=%s user=%s password=%s hostaddr=%s",
+			DB_NAME, DB_USERNAME, DB_PASSWORD, DB_HOSTADDR);
 	// 获取链接
 	PGconn* conn = PQconnectdb(conninfo);
 
@@ -28,6 +30,7 @@ int sql_exec(PGconn *conn, char *sql_str)
 		return -1;
 	}
 
+	PQclear(res);
 	return 0;
 }
 
@@ -68,7 +71,7 @@ void sql_test()
 	}
 	xyprintf(0, "sql init success!");
 
-	char *sql_str = "select * from users1;";
+	char *sql_str = "select * from users;";
 	
 	PGresult* sql_res;
 	if( sql_exec_select(conn, sql_str, &sql_res) ){

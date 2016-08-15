@@ -15,9 +15,10 @@
 #define TO_PLATFORM_PORT		5633				// 开放给平台的端口
 #define PORTAL_TO_AC_PORT		2000				// AC开放给portal的端口
 
-#define SQL_NAME				"xy"
-#define SQL_USER				"zxyl"
-#define SQL_PASSWD				"abcd@123"
+#define DB_NAME					"wifi"
+#define	DB_USERNAME				"postgres"
+#define DB_PASSWORD				"Zzwx13869121158"
+#define DB_HOSTADDR				"139.129.42.237"
 
 #include <stdio.h>  
 #include <stdlib.h>  
@@ -80,7 +81,21 @@ void get_curr_time_str(char* buf);
 
 // postgresql
 void sql_test();
+PGconn* sql_init();
+int sql_exec(PGconn *conn, char *sql_str);
+int sql_exec_select(PGconn *conn, char *sql_str, PGresult** res);
+char* sql_getvalue_string(PGresult *res, int h, int l);
+void sql_destory(PGconn *conn);
 
+// es_discharged.c
+int insert_discharged(char* userip, char* acip);
+int delete_discharged(char* userip, char* acip);
+void* loop_temp_discharged_thread(void *fd);
+
+// exec_sql.c
+int exec_sql_test();
+int get_apinfo(char* apmac, unsigned int *apid, char* domain, unsigned int *s_id);
+int get_acinfo(char* acname, unsigned int *acid, char* acip);
 /************************* Portal *******************************/
 //Portal报文类型
 

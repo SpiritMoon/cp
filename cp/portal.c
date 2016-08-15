@@ -249,7 +249,7 @@ void* portal_test_thread(void* fd)
 }
 
 /** 
- *@brief  radius数据包处理
+ *@brief  portal数据包处理
  *@param
  *@return
  */
@@ -280,8 +280,6 @@ void* portal_pro_thread(void *fd)
 									->attrNum = 0x00
 	*/
 #endif
-	
-	//TODO 数据库操作
 	
 	// 回复报文
 
