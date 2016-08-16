@@ -13,12 +13,20 @@
 #define MAX_EPOLL_NUM			65536				// epoll 最大数量
 
 #define TO_PLATFORM_PORT		5633				// 开放给平台的端口
-#define PORTAL_TO_AC_PORT		2000				// AC开放给portal的端口
 
 #define DB_NAME					"wifi"
 #define	DB_USERNAME				"postgres"
 #define DB_PASSWORD				"Zzwx13869121158"
 #define DB_HOSTADDR				"139.129.42.237"
+
+#define LOOP_DEADLINE_INTERVAL	10
+
+#define WX_TEMP_DISCHARGED					300
+
+#define LOGIN_TYPE_PHONE		1
+#define LOGIN_TYPE_WX			2
+#define LOGIN_TYPE_WHITE		3
+#define LOGIN_TYPE_TEMP			4
 
 #include <stdio.h>  
 #include <stdlib.h>  
@@ -78,6 +86,7 @@ int user_mp_list_find_and_del(unsigned int userid, char* usermac);
 // utils
 int mac_change(char* dest, const char* src);
 void get_curr_time_str(char* buf);
+int res_username(char* username, int* wu_id, int* login_type);
 
 // postgresql
 void sql_test();
@@ -87,15 +96,21 @@ int sql_exec_select(PGconn *conn, char *sql_str, PGresult** res);
 char* sql_getvalue_string(PGresult *res, int h, int l);
 void sql_destory(PGconn *conn);
 
-// es_discharged.c
-int insert_discharged(char* userip, char* acip);
-int delete_discharged(char* userip, char* acip);
-void* loop_temp_discharged_thread(void *fd);
-
 // exec_sql.c
-int exec_sql_test();
 int get_apinfo(char* apmac, unsigned int *apid, char* domain, unsigned int *s_id);
-int get_acinfo(char* acname, unsigned int *acid, char* acip);
+int get_acinfo(char* acname, unsigned int *acid, char* acip, int* acport);
+int get_wuid(unsigned int s_id, char* type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id);
+int update_wifi_user(char* username, char* acip, char* usermac);
+int user_online(char* username, char* userip, char* acip, char* apmac);
+int user_offline(char* username, char* userip, char* acip, char* apmac);
+int insert_deadline(char* userip, char* acip, int acport, int discharged_time);
+void* loop_deadline_thread(void *fd);
+int exec_sql_test();
+
+	
+	
+	
+	
 /************************* Portal *******************************/
 //Portal报文类型
 

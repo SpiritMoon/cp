@@ -206,9 +206,9 @@ void* platform_process(void *fd)
 	
 
 	// 查询ac信息
-	unsigned int acid;
+	unsigned int acid, acport;
 	char acip[256] = {0};
-	if( get_acinfo(para.wlanacname, &acid, acip) ){
+	if( get_acinfo(para.wlanacname, &acid, acip, &acport) ){
 		xyprintf(0,"PLATFORM_ERROR:%s -- %d Get acinfo error!", __FILE__, __LINE__);
 		goto JSON_ERR;
 	}
@@ -218,6 +218,13 @@ void* platform_process(void *fd)
 		para.wlanacip = acip;
 		//para.wlanacip = "223.99.130.172";
 	}
+	
+	unsigned int apid, s_id;
+	char domain[256] = {0};
+	if( get_apinfo(para.apmac, &apid, domain, &s_id) ){
+		xyprintf(0,"PLATFORM_ERROR:%s -- %d Get apinfo error!", __FILE__, __LINE__);
+		goto JSON_ERR;
+	}
 
 #if SERVER_MUTUAL_DEBUG
 	xyprintf_plat_para(&para);
@@ -225,86 +232,75 @@ void* platform_process(void *fd)
 
 	char res[128] = {0};
 	snprintf(res, 127, "{\"stat\":\"failed\"}");
+	unsigned int wu_id;
+	char username[128] = {0};
 
 	// 如果是手机号认证
 	if(!strcmp(para.type, "auth-tel") ){
-		//sql 查询数据库对应id值
-		int id;
-//TODO
-//		if( add_user(para.wlanparameter, para.apmac, "mobilenum", para.usernum, &id) ){
-//			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
-//			goto JSON_ERR;
-//		}
+		if( get_wuid(s_id, "phone", para.username, NULL, acid, para.wlanparameter, &wu_id) ){
+			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
+			goto JSON_ERR;
+		}
 		
-#if SERVER_MUTUAL_DEBUG
-	xyprintf(0, "Get user id %d", id);
-#endif
 		// 准备发送数据到ac
-		char username[128] = {0};
-		snprintf(username, 127, "%s-%u@ilinyi", &para.type[5], id);
-		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
+		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_PHONE, domain);
+		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, acport ) ){
 			snprintf(res, 127, "{\"stat\":\"ok\"}");
 		}
 	}
 	// 微信认证
 	else if(!strcmp(para.type, "auth-wx")){
-		//sql 查询数据库对应id值
-		int id;
-		//TODO
-	//	add_user(para.wlanparameter, para.apmac, "openid", para.usernum, &id);
-	// TODO	
-	//	int ret = delete_discharged(para.wlanuserip, para.wlanacip);
-	//	if(ret < 0){
-	//		xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
-	//		goto JSON_ERR;
-	//	}
-		
+		if( get_wuid(s_id, "weixin", para.username, para.usercode, acid, para.wlanparameter, &wu_id) ){
+			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
+			goto JSON_ERR;
+		}
+
+		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_WX, domain);
+		if( user_online(username, para.wlanuserip, para,wlanacip, para.apmac) ){
+			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
+			goto JSON_ERR;
+		}
+
 		snprintf(res, 127, "{\"stat\":\"ok\"}");
 	}
 	// 如果是白名单
 	else if(!strcmp(para.type, "auth-white")) {
+		if( get_wuid(s_id, "white", NULL, NULL, acid, para.wlanparameter, &wu_id) ){
+			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
+			goto JSON_ERR;
+		}
 		// 准备发送数据到ac
-		int id = ((int)time(0)) % 10000000 + 10000000;
-		char username[128] = {0};
-		snprintf(username, 127, "%s-%u@ilinyi", &para.type[5], id);
-		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
+		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_WHITE, domain);
+		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, acport ) ){
 			snprintf(res, 127, "{\"stat\":\"ok\"}");
 		}
 	}
 	// 临时放行
 	else if(!strcmp(para.type, "auth-temp") ){
-		unsigned int id;
-		//根据wlanparameter查找是否存在对应用户 插入临时放行表 获取临时表id
-		int ret = insert_discharged(para.wlanuserip, para.wlanacip);
-		if(ret > 0){
-			id = ret;
-			xyprintf(0, "Get temp id is %u", id);
+		if( get_wuid(s_id, "temp", NULL, NULL, acid, para.wlanparameter, &wu_id) ){
+			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
+			goto JSON_ERR;
 		}
-		else {
-			xyprintf(0, "%s - %s - %d ERROR!", __FILE__, __func__, __LINE__);
+		if( insert_deadline(para.wlanuserip, para.wlanacip, acport, WX_TEMP_DISCHARGED) ){
+			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
 			goto JSON_ERR;
 		}
 		
 		// 准备发送数据到ac
-		char username[128] = {0};
-		snprintf(username, 127, "%s-%u@ilinyi", &para.type[5], id);
+		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_TEMP, domain);
 	
-		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, PORTAL_TO_AC_PORT ) ){
+		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, acport ) ){
 			// 获取radius获取到的mac地址
 			int i = 0;
-			int find_flag = -1;
 			char usermac[64] = {0};
-		// TODO test
-			snprintf(res, 127, "{\"stat\":\"NULL\"}");
 			
 			for(; i < 10; i++){
-				if(!user_mp_list_find_and_del(id, usermac)){
+				if(!user_mp_list_find_and_del(wu_id, usermac)){
 					xyprintf(0, "get mac success -- %s", usermac);
 					snprintf(res, 127, "{\"stat\":\"%s\"}", usermac);
-					find_flag = 0;
 					break;
 				}
-				usleep(100);
+				usleep(300);
 				xyprintf(0, "Can not find usermac, sleep 100 us continue!");
 			}
 		}

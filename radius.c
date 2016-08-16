@@ -538,7 +538,35 @@ void* radius13_pro_thread(void *fd)
 #if RADIUS_DEBUG
 	xyprintf(0, "acct_status_type = %u", acct_status_type);
 #endif
+	
+	// 获取acip
+	char acip[32] = {0};
+	strcpy(acip, inet_ntoa(rr->client.sin_addr.s_addr));
+#if RADIUS_DEBUG
+	xyprintf(0, "acip = %s", acip);
+#endif
 
+	// 获取apmac
+	char apmac[128] = {0};
+	if( get_attr_info(rb, RADIUS_ATTR_TYPE_CALLED_STATION_ID, apmac, rb_len) ){
+		xyprintf(0, "RADIUS DATA ERROR:Get usermac error!");
+		goto DATA_ERR;
+	}
+#if RADIUS_DEBUG
+	xyprintf(0, "apmac = %s", apmac);
+#endif
+	
+	// 获取userip
+	unsigned int userip;
+	if( get_attr_info(rb, RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS, (char*)&userip, rb_len) ){
+		xyprintf(0, "RADIUS DATA ERROR:Get usermac error!");
+		goto DATA_ERR;
+	}
+#if RADIUS_DEBUG
+	unsigned char *temp = &userip;
+	xyprintf(0, "userip = %u.%u.%u.%u", temp[0], temp[1], temp[2], temp[3]);
+#endif
+	
 	if( acct_status_type == 1 ){
 		// TODO 用户上线成功
 		xyprintf(0, "1813: username %s, usermac %s online!!", username, usermac);

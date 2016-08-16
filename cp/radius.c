@@ -327,24 +327,27 @@ void* radius12_pro_thread(void *fd)
 
 	xyprintf(0, "1812: username %s, usermac %s", username, usermac);
 
+
+
+	int wu_id, login_type;
+	if( res_username(username, &wu_id, &login_type) ){
+		xyprintf(0, "ERROR:%s %d", __FILE__, __LINE__);
+		goto DATA_ERR;
+	}
+	
 	// 处理是否是临时放行
-	if(!strncmp(username, "temp-", strlen("temp-"))){
-		unsigned int id = atoi(&username[strlen("temp-")]);
-		if(id){
-			user_mp_list_add(id, usermac);
-		}
+	if( login_type == LOGIN_TYPE_TEMP ){
+		user_mp_list_add(wu_id, usermac);
 	}
 	
 	// 回复报文
 	radius12_pro_recv(rr, proxy);
 
-	// 如果是手机认证 更新mac到数据库
-	if( !strncmp( username, "tel-", strlen("tel-") ) ){
-		unsigned int id = atoi(&username[strlen("tel-")]);
-		if(id){
-			//TODO
-			//update_mac(usermac, id);
-		}
+	char acip[32] = {0};
+	strcpy(acip, inet_ntoa(rr->client.sin_addr.s_addr));
+
+	if( update_wifi_user(username, acip, usermac) ){
+		xyprintf(0, "ERROR:%s %d", __FILE__, __LINE__);
 	}
 
 	free(rr);
@@ -519,17 +522,8 @@ void* radius13_pro_thread(void *fd)
 #if RADIUS_DEBUG
 	xyprintf(0, "username = %s", username);
 #endif
-	// 获取用户mac
-	char usermac[128] = {0};
-	if( get_attr_info(rb, 31, usermac, rb_len) ){
-		xyprintf(0, "RADIUS DATA ERROR:Get usermac error!");
-		goto DATA_ERR;
-	}
-#if RADIUS_DEBUG
-	xyprintf(0, "usermac = %s", usermac);
-#endif
 	
-	// 获取用户mac
+	// 获取操作状态
 	unsigned int acct_status_type;
 	if( get_attr_info(rb, RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE, (char*)&acct_status_type, rb_len) ){
 		xyprintf(0, "RADIUS DATA ERROR:Get RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE error!");
@@ -540,8 +534,13 @@ void* radius13_pro_thread(void *fd)
 	xyprintf(0, "acct_status_type = %u", acct_status_type);
 #endif
 
+	// 获取apmac
+	// 获取userip
+
 	if( acct_status_type == 1 ){
 		// TODO 用户上线成功
+int user_online(char* username, char* userip, char* acip, char* apmac);
+int user_offline(char* username, char* userip, char* acip, char* apmac);
 		xyprintf(0, "1813: username %s, usermac %s online!!", username, usermac);
 	}
 	else if ( acct_status_type == 2 ){
