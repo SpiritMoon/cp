@@ -188,7 +188,7 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 	stReqLogout.errCode = 0;
 	stReqLogout.attrNum = 0;
 
-	xyprintf_portal_ac(&stReqLogout);
+	//xyprintf_portal_ac(&stReqLogout);
 
 	if (UDP_send_block(sockfd, ac_ip, port, (unsigned char *)&stReqLogout, 16) < 0){
 		xyprintf(0, "ERROR - %s - %s - %d - send udp failed!", __FILE__, __func__, __LINE__);
@@ -249,7 +249,7 @@ void* portal_test_thread(void* fd)
 }
 
 /** 
- *@brief  radius数据包处理
+ *@brief  portal数据包处理
  *@param
  *@return
  */
@@ -280,8 +280,6 @@ void* portal_pro_thread(void *fd)
 									->attrNum = 0x00
 	*/
 #endif
-	
-	//TODO 数据库操作
 	
 	// 回复报文
 

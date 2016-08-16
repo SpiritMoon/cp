@@ -4,618 +4,618 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-ACK_AUTH	cp/header.h	121;"	d
-ACK_AUTH	header.h	120;"	d
-ACK_CHALLENGE	cp/header.h	119;"	d
-ACK_CHALLENGE	header.h	118;"	d
-ACK_INFO	cp/header.h	128;"	d
-ACK_INFO	header.h	127;"	d
-ACK_LOGOUT	cp/header.h	124;"	d
-ACK_LOGOUT	header.h	123;"	d
-AFF_ACK_AUTH	cp/header.h	125;"	d
-AFF_ACK_AUTH	header.h	124;"	d
-AgentId	server_mutual.c	/^	unsigned int AgentId;$/;"	m	struct:plat_para	file:
+ACK_AUTH	backup_old_cp/header.h	120;"	d
+ACK_AUTH	header.h	121;"	d
+ACK_CHALLENGE	backup_old_cp/header.h	118;"	d
+ACK_CHALLENGE	header.h	119;"	d
+ACK_INFO	backup_old_cp/header.h	127;"	d
+ACK_INFO	header.h	128;"	d
+ACK_LOGOUT	backup_old_cp/header.h	123;"	d
+ACK_LOGOUT	header.h	124;"	d
+AFF_ACK_AUTH	backup_old_cp/header.h	124;"	d
+AFF_ACK_AUTH	header.h	125;"	d
+AgentId	backup_old_cp/server_mutual.c	/^	unsigned int AgentId;$/;"	m	struct:plat_para	file:
 CC	Makefile	/^CC=gcc$/;"	m
-CC	cp/Makefile	/^CC=gcc$/;"	m
-Challenge	cp/header.h	133;"	d
+CC	backup_old_cp/Makefile	/^CC=gcc$/;"	m
+Challenge	backup_old_cp/header.h	133;"	d
 Challenge	header.h	133;"	d
-ChapPassWord	cp/header.h	134;"	d
+ChapPassWord	backup_old_cp/header.h	134;"	d
 ChapPassWord	header.h	134;"	d
-CompanyId	server_mutual.c	/^	unsigned int CompanyId;$/;"	m	struct:plat_para	file:
-DB_HOSTADDR	cp/header.h	20;"	d
-DB_NAME	cp/header.h	17;"	d
-DB_PASSWORD	cp/header.h	19;"	d
-DB_USERNAME	cp/header.h	18;"	d
-DEPEND	Makefile	/^DEPEND=es_discharged.o main.o utils.o user_mp_list.o sql.o exec_sql.o logs.o net.o server_mutual.o radius.o portal.o cJSON.o$/;"	m
-DEPEND	cp/Makefile	/^DEPEND=exec_sql.o postgresql.o main.o utils.o user_mp_list.o logs.o net.o server_mutual.o radius.o portal.o cJSON.o$/;"	m
-EXEC_SQL_DEBUG	cp/exec_sql.c	9;"	d	file:
-INIT_LIST_HEAD	cp/list.h	/^static inline void INIT_LIST_HEAD(struct list_head *list)$/;"	f
+CompanyId	backup_old_cp/server_mutual.c	/^	unsigned int CompanyId;$/;"	m	struct:plat_para	file:
+DB_HOSTADDR	header.h	20;"	d
+DB_NAME	header.h	17;"	d
+DB_PASSWORD	header.h	19;"	d
+DB_USERNAME	header.h	18;"	d
+DEPEND	Makefile	/^DEPEND=exec_sql.o postgresql.o main.o utils.o user_mp_list.o logs.o net.o server_mutual.o radius.o portal.o cJSON.o$/;"	m
+DEPEND	backup_old_cp/Makefile	/^DEPEND=es_discharged.o main.o utils.o user_mp_list.o sql.o exec_sql.o logs.o net.o server_mutual.o radius.o portal.o cJSON.o$/;"	m
+EXEC_SQL_DEBUG	exec_sql.c	9;"	d	file:
+INIT_LIST_HEAD	backup_old_cp/list.h	/^static inline void INIT_LIST_HEAD(struct list_head *list)$/;"	f
 INIT_LIST_HEAD	list.h	/^static inline void INIT_LIST_HEAD(struct list_head *list)$/;"	f
-IS_DAEMON_EXIST	cp/main.c	8;"	d	file:
+IS_DAEMON_EXIST	backup_old_cp/main.c	8;"	d	file:
 IS_DAEMON_EXIST	main.c	8;"	d	file:
-LIB	Makefile	/^LIB=-lpthread -lm -lodbc -lcrypto$/;"	m
-LIB	cp/Makefile	/^LIB=-lpthread -lm -lpq -lcrypto$/;"	m
-LIST_HEAD	cp/list.h	22;"	d
+LIB	Makefile	/^LIB=-lpthread -lm -lpq -lcrypto$/;"	m
+LIB	backup_old_cp/Makefile	/^LIB=-lpthread -lm -lodbc -lcrypto$/;"	m
+LIST_HEAD	backup_old_cp/list.h	22;"	d
 LIST_HEAD	list.h	22;"	d
-LIST_HEAD_INIT	cp/list.h	20;"	d
+LIST_HEAD_INIT	backup_old_cp/list.h	20;"	d
 LIST_HEAD_INIT	list.h	20;"	d
-LOGIN_TYPE_PHONE	cp/header.h	26;"	d
-LOGIN_TYPE_TEMP	cp/header.h	29;"	d
-LOGIN_TYPE_WHITE	cp/header.h	28;"	d
-LOGIN_TYPE_WX	cp/header.h	27;"	d
-LOGS_MAX_SIZE	cp/header.h	10;"	d
+LOGIN_TYPE_PHONE	header.h	26;"	d
+LOGIN_TYPE_TEMP	header.h	29;"	d
+LOGIN_TYPE_WHITE	header.h	28;"	d
+LOGIN_TYPE_WX	header.h	27;"	d
+LOGS_MAX_SIZE	backup_old_cp/header.h	10;"	d
 LOGS_MAX_SIZE	header.h	10;"	d
-LOOP_DEADLINE_INTERVAL	cp/header.h	22;"	d
-LOOP_TEMP_DISCHARGED_INTERVAL	es_discharged.c	91;"	d	file:
+LOOP_DEADLINE_INTERVAL	header.h	22;"	d
+LOOP_TEMP_DISCHARGED_INTERVAL	backup_old_cp/es_discharged.c	91;"	d	file:
 MAKE	Makefile	/^MAKE=make$/;"	m
-MAKE	cp/Makefile	/^MAKE=make$/;"	m
-MAX_EPOLL_NUM	cp/header.h	13;"	d
+MAKE	backup_old_cp/Makefile	/^MAKE=make$/;"	m
+MAX_EPOLL_NUM	backup_old_cp/header.h	13;"	d
 MAX_EPOLL_NUM	header.h	13;"	d
-NTF_LOGOUT	cp/header.h	126;"	d
-NTF_LOGOUT	header.h	125;"	d
-PORTAL_DEBUG	cp/portal.c	8;"	d	file:
+NTF_LOGOUT	backup_old_cp/header.h	125;"	d
+NTF_LOGOUT	header.h	126;"	d
+PORTAL_DEBUG	backup_old_cp/portal.c	8;"	d	file:
 PORTAL_DEBUG	portal.c	8;"	d	file:
-PORTAL_RECV_PORT	cp/portal.c	9;"	d	file:
+PORTAL_RECV_PORT	backup_old_cp/portal.c	9;"	d	file:
 PORTAL_RECV_PORT	portal.c	9;"	d	file:
-PORTAL_TEST_THREAD	cp/main.c	9;"	d	file:
+PORTAL_TEST_THREAD	backup_old_cp/main.c	9;"	d	file:
 PORTAL_TEST_THREAD	main.c	9;"	d	file:
-PORTAL_TO_AC_PORT	header.h	16;"	d
-PUBLIC_DEPEND	Makefile	/^PUBLIC_DEPEND=$(PUBDIR)\/*.o$/;"	m
-PassWord	cp/header.h	132;"	d
+PORTAL_TO_AC_PORT	backup_old_cp/header.h	16;"	d
+PUBLIC_DEPEND	backup_old_cp/Makefile	/^PUBLIC_DEPEND=$(PUBDIR)\/*.o$/;"	m
+PassWord	backup_old_cp/header.h	132;"	d
 PassWord	header.h	132;"	d
-RADIUS12_UDP_PORT	cp/radius.c	10;"	d	file:
+RADIUS12_UDP_PORT	backup_old_cp/radius.c	10;"	d	file:
 RADIUS12_UDP_PORT	radius.c	10;"	d	file:
-RADIUS13_UDP_PORT	cp/radius.c	11;"	d	file:
+RADIUS13_UDP_PORT	backup_old_cp/radius.c	11;"	d	file:
 RADIUS13_UDP_PORT	radius.c	11;"	d	file:
-RADIUS_ATTR_TYPE_ACCT_AUTHENTIC	cp/header.h	194;"	d
+RADIUS_ATTR_TYPE_ACCT_AUTHENTIC	backup_old_cp/header.h	194;"	d
 RADIUS_ATTR_TYPE_ACCT_AUTHENTIC	header.h	194;"	d
-RADIUS_ATTR_TYPE_ACCT_DELAY_TIME	cp/header.h	190;"	d
+RADIUS_ATTR_TYPE_ACCT_DELAY_TIME	backup_old_cp/header.h	190;"	d
 RADIUS_ATTR_TYPE_ACCT_DELAY_TIME	header.h	190;"	d
-RADIUS_ATTR_TYPE_ACCT_INPUT_GIGAWORDS	cp/header.h	199;"	d
+RADIUS_ATTR_TYPE_ACCT_INPUT_GIGAWORDS	backup_old_cp/header.h	199;"	d
 RADIUS_ATTR_TYPE_ACCT_INPUT_GIGAWORDS	header.h	199;"	d
-RADIUS_ATTR_TYPE_ACCT_INPUT_OCTETS	cp/header.h	191;"	d
+RADIUS_ATTR_TYPE_ACCT_INPUT_OCTETS	backup_old_cp/header.h	191;"	d
 RADIUS_ATTR_TYPE_ACCT_INPUT_OCTETS	header.h	191;"	d
-RADIUS_ATTR_TYPE_ACCT_INPUT_PACKETS	cp/header.h	196;"	d
+RADIUS_ATTR_TYPE_ACCT_INPUT_PACKETS	backup_old_cp/header.h	196;"	d
 RADIUS_ATTR_TYPE_ACCT_INPUT_PACKETS	header.h	196;"	d
-RADIUS_ATTR_TYPE_ACCT_OUTPUT_GIGAWORDS	cp/header.h	200;"	d
+RADIUS_ATTR_TYPE_ACCT_OUTPUT_GIGAWORDS	backup_old_cp/header.h	200;"	d
 RADIUS_ATTR_TYPE_ACCT_OUTPUT_GIGAWORDS	header.h	200;"	d
-RADIUS_ATTR_TYPE_ACCT_OUTPUT_OCTETS	cp/header.h	192;"	d
+RADIUS_ATTR_TYPE_ACCT_OUTPUT_OCTETS	backup_old_cp/header.h	192;"	d
 RADIUS_ATTR_TYPE_ACCT_OUTPUT_OCTETS	header.h	192;"	d
-RADIUS_ATTR_TYPE_ACCT_OUTPUT_PACKETS	cp/header.h	197;"	d
+RADIUS_ATTR_TYPE_ACCT_OUTPUT_PACKETS	backup_old_cp/header.h	197;"	d
 RADIUS_ATTR_TYPE_ACCT_OUTPUT_PACKETS	header.h	197;"	d
-RADIUS_ATTR_TYPE_ACCT_SECCION_TIME	cp/header.h	195;"	d
+RADIUS_ATTR_TYPE_ACCT_SECCION_TIME	backup_old_cp/header.h	195;"	d
 RADIUS_ATTR_TYPE_ACCT_SECCION_TIME	header.h	195;"	d
-RADIUS_ATTR_TYPE_ACCT_SESSION_ID	cp/header.h	193;"	d
+RADIUS_ATTR_TYPE_ACCT_SESSION_ID	backup_old_cp/header.h	193;"	d
 RADIUS_ATTR_TYPE_ACCT_SESSION_ID	header.h	193;"	d
-RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE	cp/header.h	189;"	d
+RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE	backup_old_cp/header.h	189;"	d
 RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE	header.h	189;"	d
-RADIUS_ATTR_TYPE_ACCT_TERMINATE_CAUSE	cp/header.h	198;"	d
+RADIUS_ATTR_TYPE_ACCT_TERMINATE_CAUSE	backup_old_cp/header.h	198;"	d
 RADIUS_ATTR_TYPE_ACCT_TERMINATE_CAUSE	header.h	198;"	d
-RADIUS_ATTR_TYPE_CALLED_STATION_ID	cp/header.h	185;"	d
+RADIUS_ATTR_TYPE_CALLED_STATION_ID	backup_old_cp/header.h	185;"	d
 RADIUS_ATTR_TYPE_CALLED_STATION_ID	header.h	185;"	d
-RADIUS_ATTR_TYPE_CALLING_STATION_ID	cp/header.h	186;"	d
+RADIUS_ATTR_TYPE_CALLING_STATION_ID	backup_old_cp/header.h	186;"	d
 RADIUS_ATTR_TYPE_CALLING_STATION_ID	header.h	186;"	d
-RADIUS_ATTR_TYPE_EVENT_TIMESTAMP	cp/header.h	201;"	d
+RADIUS_ATTR_TYPE_EVENT_TIMESTAMP	backup_old_cp/header.h	201;"	d
 RADIUS_ATTR_TYPE_EVENT_TIMESTAMP	header.h	201;"	d
-RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS	cp/header.h	183;"	d
+RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS	backup_old_cp/header.h	183;"	d
 RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS	header.h	183;"	d
-RADIUS_ATTR_TYPE_FRAMED_PROTOCOL	cp/header.h	182;"	d
+RADIUS_ATTR_TYPE_FRAMED_PROTOCOL	backup_old_cp/header.h	182;"	d
 RADIUS_ATTR_TYPE_FRAMED_PROTOCOL	header.h	182;"	d
-RADIUS_ATTR_TYPE_NAS_IDENTIFIER	cp/header.h	187;"	d
+RADIUS_ATTR_TYPE_NAS_IDENTIFIER	backup_old_cp/header.h	187;"	d
 RADIUS_ATTR_TYPE_NAS_IDENTIFIER	header.h	187;"	d
-RADIUS_ATTR_TYPE_NAS_IP_ADDRESS	cp/header.h	179;"	d
+RADIUS_ATTR_TYPE_NAS_IP_ADDRESS	backup_old_cp/header.h	179;"	d
 RADIUS_ATTR_TYPE_NAS_IP_ADDRESS	header.h	179;"	d
-RADIUS_ATTR_TYPE_NAS_PORT	cp/header.h	180;"	d
+RADIUS_ATTR_TYPE_NAS_PORT	backup_old_cp/header.h	180;"	d
 RADIUS_ATTR_TYPE_NAS_PORT	header.h	180;"	d
-RADIUS_ATTR_TYPE_NAS_PORT_ID	cp/header.h	203;"	d
+RADIUS_ATTR_TYPE_NAS_PORT_ID	backup_old_cp/header.h	203;"	d
 RADIUS_ATTR_TYPE_NAS_PORT_ID	header.h	203;"	d
-RADIUS_ATTR_TYPE_NAS_PORT_TYPE	cp/header.h	202;"	d
+RADIUS_ATTR_TYPE_NAS_PORT_TYPE	backup_old_cp/header.h	202;"	d
 RADIUS_ATTR_TYPE_NAS_PORT_TYPE	header.h	202;"	d
-RADIUS_ATTR_TYPE_PROXY_STATE	cp/header.h	188;"	d
+RADIUS_ATTR_TYPE_PROXY_STATE	backup_old_cp/header.h	188;"	d
 RADIUS_ATTR_TYPE_PROXY_STATE	header.h	188;"	d
-RADIUS_ATTR_TYPE_SERVICE_TYPE	cp/header.h	181;"	d
+RADIUS_ATTR_TYPE_SERVICE_TYPE	backup_old_cp/header.h	181;"	d
 RADIUS_ATTR_TYPE_SERVICE_TYPE	header.h	181;"	d
-RADIUS_ATTR_TYPE_USER_NAME	cp/header.h	177;"	d
+RADIUS_ATTR_TYPE_USER_NAME	backup_old_cp/header.h	177;"	d
 RADIUS_ATTR_TYPE_USER_NAME	header.h	177;"	d
-RADIUS_ATTR_TYPE_USER_PASSWORD	cp/header.h	178;"	d
+RADIUS_ATTR_TYPE_USER_PASSWORD	backup_old_cp/header.h	178;"	d
 RADIUS_ATTR_TYPE_USER_PASSWORD	header.h	178;"	d
-RADIUS_ATTR_TYPE_VENDOR_SPECIFIC	cp/header.h	184;"	d
+RADIUS_ATTR_TYPE_VENDOR_SPECIFIC	backup_old_cp/header.h	184;"	d
 RADIUS_ATTR_TYPE_VENDOR_SPECIFIC	header.h	184;"	d
-RADIUS_BASIC_LEN	cp/radius.c	/^unsigned int RADIUS_BASIC_LEN$/;"	v
+RADIUS_BASIC_LEN	backup_old_cp/radius.c	/^unsigned int RADIUS_BASIC_LEN$/;"	v
 RADIUS_BASIC_LEN	radius.c	/^unsigned int RADIUS_BASIC_LEN$/;"	v
-RADIUS_DEBUG	cp/radius.c	8;"	d	file:
+RADIUS_DEBUG	backup_old_cp/radius.c	8;"	d	file:
 RADIUS_DEBUG	radius.c	8;"	d	file:
-RADIUS_SECRET	cp/header.h	289;"	d
+RADIUS_SECRET	backup_old_cp/header.h	289;"	d
 RADIUS_SECRET	header.h	289;"	d
-RADIUS_SECRET_LEN	cp/radius.c	/^unsigned int RADIUS_SECRET_LEN	= 0;	\/\/ radius密钥长度$/;"	v
+RADIUS_SECRET_LEN	backup_old_cp/radius.c	/^unsigned int RADIUS_SECRET_LEN	= 0;	\/\/ radius密钥长度$/;"	v
 RADIUS_SECRET_LEN	radius.c	/^unsigned int RADIUS_SECRET_LEN	= 0;	\/\/ radius密钥长度$/;"	v
-REQ_AUTH	cp/header.h	120;"	d
-REQ_AUTH	header.h	119;"	d
-REQ_CHALLENGE	cp/header.h	118;"	d
-REQ_CHALLENGE	header.h	117;"	d
-REQ_INFO	cp/header.h	127;"	d
-REQ_INFO	header.h	126;"	d
-REQ_LOGOUT	cp/header.h	122;"	d
-REQ_LOGOUT	header.h	121;"	d
-SERVER_MUTUAL_DEBUG	cp/server_mutual.c	8;"	d	file:
+REQ_AUTH	backup_old_cp/header.h	119;"	d
+REQ_AUTH	header.h	120;"	d
+REQ_CHALLENGE	backup_old_cp/header.h	117;"	d
+REQ_CHALLENGE	header.h	118;"	d
+REQ_INFO	backup_old_cp/header.h	126;"	d
+REQ_INFO	header.h	127;"	d
+REQ_LOGOUT	backup_old_cp/header.h	121;"	d
+REQ_LOGOUT	header.h	122;"	d
+SERVER_MUTUAL_DEBUG	backup_old_cp/server_mutual.c	8;"	d	file:
 SERVER_MUTUAL_DEBUG	server_mutual.c	8;"	d	file:
-SOURCE	Makefile	/^SOURCE=es_discharged.c main.c utils.c user_mp_list.c sql.c exec_sql.c logs.c net.c server_mutual.c radius.c portal.c cJSON.c$/;"	m
-SOURCE	cp/Makefile	/^SOURCE=exec_sql.c postgresql.c main.c utils.c user_mp_list.c logs.c net.c server_mutual.c radius.c portal.c cJSON.c$/;"	m
-SQL_DELETE_tb_TmpUserDischarged_ID	es_discharged.c	17;"	d	file:
-SQL_DELETE_tb_TmpUserDischarged_IP	es_discharged.c	20;"	d	file:
-SQL_INSERT_tb_TmpUserDischarged	es_discharged.c	11;"	d	file:
-SQL_NAME	header.h	18;"	d
-SQL_PASSWD	header.h	20;"	d
-SQL_SELECT_tb_TmpUserDischarged	es_discharged.c	14;"	d	file:
-SQL_TEST_THREAD	cp/main.c	10;"	d	file:
+SOURCE	Makefile	/^SOURCE=exec_sql.c postgresql.c main.c utils.c user_mp_list.c logs.c net.c server_mutual.c radius.c portal.c cJSON.c$/;"	m
+SOURCE	backup_old_cp/Makefile	/^SOURCE=es_discharged.c main.c utils.c user_mp_list.c sql.c exec_sql.c logs.c net.c server_mutual.c radius.c portal.c cJSON.c$/;"	m
+SQL_DELETE_tb_TmpUserDischarged_ID	backup_old_cp/es_discharged.c	17;"	d	file:
+SQL_DELETE_tb_TmpUserDischarged_IP	backup_old_cp/es_discharged.c	20;"	d	file:
+SQL_INSERT_tb_TmpUserDischarged	backup_old_cp/es_discharged.c	11;"	d	file:
+SQL_NAME	backup_old_cp/header.h	18;"	d
+SQL_PASSWD	backup_old_cp/header.h	20;"	d
+SQL_SELECT_tb_TmpUserDischarged	backup_old_cp/es_discharged.c	14;"	d	file:
+SQL_TEST_THREAD	backup_old_cp/main.c	10;"	d	file:
 SQL_TEST_THREAD	main.c	10;"	d	file:
-SQL_USER	header.h	19;"	d
-ST_PORTAL_AC	cp/header.h	/^}ST_PORTAL_AC;$/;"	t	typeref:struct:portal_ac
+SQL_USER	backup_old_cp/header.h	19;"	d
+ST_PORTAL_AC	backup_old_cp/header.h	/^}ST_PORTAL_AC;$/;"	t	typeref:struct:portal_ac
 ST_PORTAL_AC	header.h	/^}ST_PORTAL_AC;$/;"	t	typeref:struct:portal_ac
-ST_PORTAL_AC_ATTR	cp/header.h	/^}ST_PORTAL_AC_ATTR;$/;"	t	typeref:struct:portal_ac_attr
+ST_PORTAL_AC_ATTR	backup_old_cp/header.h	/^}ST_PORTAL_AC_ATTR;$/;"	t	typeref:struct:portal_ac_attr
 ST_PORTAL_AC_ATTR	header.h	/^}ST_PORTAL_AC_ATTR;$/;"	t	typeref:struct:portal_ac_attr
-SendReqAuthAndRecv	cp/portal.c	/^int SendReqAuthAndRecv(char* userip, char* usernum, char* usercode, char* ac_ip, int port)$/;"	f
+SendReqAuthAndRecv	backup_old_cp/portal.c	/^int SendReqAuthAndRecv(char* userip, char* usernum, char* usercode, char* ac_ip, int port)$/;"	f
 SendReqAuthAndRecv	portal.c	/^int SendReqAuthAndRecv(char* userip, char* usernum, char* usercode, char* ac_ip, int port)$/;"	f
-SendReqLogoutAndRecv	cp/portal.c	/^int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)$/;"	f
+SendReqLogoutAndRecv	backup_old_cp/portal.c	/^int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)$/;"	f
 SendReqLogoutAndRecv	portal.c	/^int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)$/;"	f
 TARGET	Makefile	/^TARGET=cp.out$/;"	m
-TARGET	cp/Makefile	/^TARGET=cp.out$/;"	m
-TEMP_DISCHARGED	es_discharged.c	92;"	d	file:
-TO_PLATFORM_PORT	cp/header.h	15;"	d
+TARGET	backup_old_cp/Makefile	/^TARGET=cp.out$/;"	m
+TEMP_DISCHARGED	backup_old_cp/es_discharged.c	92;"	d	file:
+TO_PLATFORM_PORT	backup_old_cp/header.h	15;"	d
 TO_PLATFORM_PORT	header.h	15;"	d
-UDP_create	cp/net.c	/^int UDP_create(int *sockfd)$/;"	f
+UDP_create	backup_old_cp/net.c	/^int UDP_create(int *sockfd)$/;"	f
 UDP_create	net.c	/^int UDP_create(int *sockfd)$/;"	f
-UDP_recv_block	cp/net.c	/^int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen)$/;"	f
+UDP_recv_block	backup_old_cp/net.c	/^int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen)$/;"	f
 UDP_recv_block	net.c	/^int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen)$/;"	f
-UDP_send_block	cp/net.c	/^int UDP_send_block(int socket, char* ip, int port, unsigned char *buf, int len)$/;"	f
+UDP_send_block	backup_old_cp/net.c	/^int UDP_send_block(int socket, char* ip, int port, unsigned char *buf, int len)$/;"	f
 UDP_send_block	net.c	/^int UDP_send_block(int socket, char* ip, int port, unsigned char *buf, int len)$/;"	f
-USER_MP_LIST_DEBUG	cp/user_mp_list.c	9;"	d	file:
+USER_MP_LIST_DEBUG	backup_old_cp/user_mp_list.c	9;"	d	file:
 USER_MP_LIST_DEBUG	user_mp_list.c	9;"	d	file:
-UserName	cp/header.h	131;"	d
+UserName	backup_old_cp/header.h	131;"	d
 UserName	header.h	131;"	d
-WRITE_LOG	cp/header.h	11;"	d
+WRITE_LOG	backup_old_cp/header.h	11;"	d
 WRITE_LOG	header.h	11;"	d
-WT_HEADER_H	cp/header.h	7;"	d
+WT_HEADER_H	backup_old_cp/header.h	7;"	d
 WT_HEADER_H	header.h	7;"	d
-WX_TEMP_DISCHARGED	cp/header.h	24;"	d
-_LINUX_LIST_H	cp/list.h	2;"	d
+WX_TEMP_DISCHARGED	header.h	24;"	d
+_LINUX_LIST_H	backup_old_cp/list.h	2;"	d
 _LINUX_LIST_H	list.h	2;"	d
-__list_add	cp/list.h	/^static inline void __list_add(struct list_head *new,$/;"	f
+__list_add	backup_old_cp/list.h	/^static inline void __list_add(struct list_head *new,$/;"	f
 __list_add	list.h	/^static inline void __list_add(struct list_head *new,$/;"	f
-__list_del	cp/list.h	/^static inline void __list_del(struct list_head * prev, struct list_head * next)$/;"	f
+__list_del	backup_old_cp/list.h	/^static inline void __list_del(struct list_head * prev, struct list_head * next)$/;"	f
 __list_del	list.h	/^static inline void __list_del(struct list_head * prev, struct list_head * next)$/;"	f
-ac_attr	cp/header.h	/^	char ac_attr[512];$/;"	m	struct:portal_ac
+ac_attr	backup_old_cp/header.h	/^	char ac_attr[512];$/;"	m	struct:portal_ac
 ac_attr	header.h	/^	char ac_attr[512];$/;"	m	struct:portal_ac
-acid	server_mutual.c	/^	unsigned int acid;$/;"	m	struct:plat_para	file:
-add_apinfo	exec_sql.c	/^int add_apinfo(char* apmac, char* ssid, char* acname, unsigned int acid, unsigned int CompanyId, unsigned int AgentId)$/;"	f
-add_user	exec_sql.c	/^int add_user(char* parameter, char* apmac, char* type, char* value, int *id)$/;"	f
-addrlen	cp/header.h	/^	socklen_t addrlen;				\/\/ 客户端地址长度$/;"	m	struct:portal_recv
-addrlen	cp/header.h	/^	socklen_t addrlen;				\/\/ 客户端地址长度$/;"	m	struct:radius_recv
+acid	backup_old_cp/server_mutual.c	/^	unsigned int acid;$/;"	m	struct:plat_para	file:
+add_apinfo	backup_old_cp/exec_sql.c	/^int add_apinfo(char* apmac, char* ssid, char* acname, unsigned int acid, unsigned int CompanyId, unsigned int AgentId)$/;"	f
+add_user	backup_old_cp/exec_sql.c	/^int add_user(char* parameter, char* apmac, char* type, char* value, int *id)$/;"	f
+addrlen	backup_old_cp/header.h	/^	socklen_t addrlen;				\/\/ 客户端地址长度$/;"	m	struct:portal_recv
+addrlen	backup_old_cp/header.h	/^	socklen_t addrlen;				\/\/ 客户端地址长度$/;"	m	struct:radius_recv
 addrlen	header.h	/^	socklen_t addrlen;				\/\/ 客户端地址长度$/;"	m	struct:portal_recv
 addrlen	header.h	/^	socklen_t addrlen;				\/\/ 客户端地址长度$/;"	m	struct:radius_recv
-apmac	cp/server_mutual.c	/^	char* apmac;				\/\/ ap mac$/;"	m	struct:plat_para	file:
+apmac	backup_old_cp/server_mutual.c	/^	char* apmac;				\/\/ ap mac$/;"	m	struct:plat_para	file:
 apmac	server_mutual.c	/^	char* apmac;				\/\/ ap mac$/;"	m	struct:plat_para	file:
-attrNum	cp/header.h	/^	unsigned char attrNum;		\/\/ 表示其后边可变长度的属性字段属性的个数，长度为 1 字节$/;"	m	struct:portal_ac
+attrNum	backup_old_cp/header.h	/^	unsigned char attrNum;		\/\/ 表示其后边可变长度的属性字段属性的个数，长度为 1 字节$/;"	m	struct:portal_ac
 attrNum	header.h	/^	unsigned char attrNum;		\/\/ 表示其后边可变长度的属性字段属性的个数，长度为 1 字节$/;"	m	struct:portal_ac
-attrVal	cp/header.h	/^	unsigned char attrVal[253];$/;"	m	struct:portal_ac_attr
+attrVal	backup_old_cp/header.h	/^	unsigned char attrVal[253];$/;"	m	struct:portal_ac_attr
 attrVal	header.h	/^	unsigned char attrVal[253];$/;"	m	struct:portal_ac_attr
-attributes	cp/header.h	/^	struct radius_attr attributes[0];$/;"	m	struct:radius_bag	typeref:struct:radius_bag::radius_attr
+attributes	backup_old_cp/header.h	/^	struct radius_attr attributes[0];$/;"	m	struct:radius_bag	typeref:struct:radius_bag::radius_attr
 attributes	header.h	/^	struct radius_attr attributes[0];$/;"	m	struct:radius_bag	typeref:struct:radius_bag::radius_attr
-authenticator	cp/header.h	/^	unsigned char authenticator[16];$/;"	m	struct:radius_bag
+authenticator	backup_old_cp/header.h	/^	unsigned char authenticator[16];$/;"	m	struct:radius_bag
 authenticator	header.h	/^	unsigned char authenticator[16];$/;"	m	struct:radius_bag
-buf	cp/header.h	/^	char buf[1024];					\/\/ radius数据包信息$/;"	m	struct:portal_recv
-buf	cp/header.h	/^	char buf[1024];					\/\/ radius数据包信息$/;"	m	struct:radius_recv
+buf	backup_old_cp/header.h	/^	char buf[1024];					\/\/ radius数据包信息$/;"	m	struct:portal_recv
+buf	backup_old_cp/header.h	/^	char buf[1024];					\/\/ radius数据包信息$/;"	m	struct:radius_recv
 buf	header.h	/^	char buf[1024];					\/\/ radius数据包信息$/;"	m	struct:portal_recv
 buf	header.h	/^	char buf[1024];					\/\/ radius数据包信息$/;"	m	struct:radius_recv
+cJSON	backup_old_cp/cJSON.h	/^typedef struct cJSON {$/;"	s
+cJSON	backup_old_cp/cJSON.h	/^} cJSON;$/;"	t	typeref:struct:cJSON
 cJSON	cJSON.h	/^typedef struct cJSON {$/;"	s
 cJSON	cJSON.h	/^} cJSON;$/;"	t	typeref:struct:cJSON
-cJSON	cp/cJSON.h	/^typedef struct cJSON {$/;"	s
-cJSON	cp/cJSON.h	/^} cJSON;$/;"	t	typeref:struct:cJSON
+cJSON_AddFalseToObject	backup_old_cp/cJSON.h	121;"	d
 cJSON_AddFalseToObject	cJSON.h	121;"	d
-cJSON_AddFalseToObject	cp/cJSON.h	121;"	d
+cJSON_AddItemReferenceToArray	backup_old_cp/cJSON.c	/^void	cJSON_AddItemReferenceToArray(cJSON *array, cJSON *item)						{cJSON_AddItemToArray(array,create_reference(item));}$/;"	f
 cJSON_AddItemReferenceToArray	cJSON.c	/^void	cJSON_AddItemReferenceToArray(cJSON *array, cJSON *item)						{cJSON_AddItemToArray(array,create_reference(item));}$/;"	f
-cJSON_AddItemReferenceToArray	cp/cJSON.c	/^void	cJSON_AddItemReferenceToArray(cJSON *array, cJSON *item)						{cJSON_AddItemToArray(array,create_reference(item));}$/;"	f
+cJSON_AddItemReferenceToObject	backup_old_cp/cJSON.c	/^void	cJSON_AddItemReferenceToObject(cJSON *object,const char *string,cJSON *item)	{cJSON_AddItemToObject(object,string,create_reference(item));}$/;"	f
 cJSON_AddItemReferenceToObject	cJSON.c	/^void	cJSON_AddItemReferenceToObject(cJSON *object,const char *string,cJSON *item)	{cJSON_AddItemToObject(object,string,create_reference(item));}$/;"	f
-cJSON_AddItemReferenceToObject	cp/cJSON.c	/^void	cJSON_AddItemReferenceToObject(cJSON *object,const char *string,cJSON *item)	{cJSON_AddItemToObject(object,string,create_reference(item));}$/;"	f
+cJSON_AddItemToArray	backup_old_cp/cJSON.c	/^void   cJSON_AddItemToArray(cJSON *array, cJSON *item)						{cJSON *c=array->child;if (!item) return; if (!c) {array->child=item;} else {while (c && c->next) c=c->next; suffix_object(c,item);}}$/;"	f
 cJSON_AddItemToArray	cJSON.c	/^void   cJSON_AddItemToArray(cJSON *array, cJSON *item)						{cJSON *c=array->child;if (!item) return; if (!c) {array->child=item;} else {while (c && c->next) c=c->next; suffix_object(c,item);}}$/;"	f
-cJSON_AddItemToArray	cp/cJSON.c	/^void   cJSON_AddItemToArray(cJSON *array, cJSON *item)						{cJSON *c=array->child;if (!item) return; if (!c) {array->child=item;} else {while (c && c->next) c=c->next; suffix_object(c,item);}}$/;"	f
+cJSON_AddItemToObject	backup_old_cp/cJSON.c	/^void   cJSON_AddItemToObject(cJSON *object,const char *string,cJSON *item)	{if (!item) return; if (item->string) cJSON_free(item->string);item->string=cJSON_strdup(string);cJSON_AddItemToArray(object,item);}$/;"	f
 cJSON_AddItemToObject	cJSON.c	/^void   cJSON_AddItemToObject(cJSON *object,const char *string,cJSON *item)	{if (!item) return; if (item->string) cJSON_free(item->string);item->string=cJSON_strdup(string);cJSON_AddItemToArray(object,item);}$/;"	f
-cJSON_AddItemToObject	cp/cJSON.c	/^void   cJSON_AddItemToObject(cJSON *object,const char *string,cJSON *item)	{if (!item) return; if (item->string) cJSON_free(item->string);item->string=cJSON_strdup(string);cJSON_AddItemToArray(object,item);}$/;"	f
+cJSON_AddNullToObject	backup_old_cp/cJSON.h	119;"	d
 cJSON_AddNullToObject	cJSON.h	119;"	d
-cJSON_AddNullToObject	cp/cJSON.h	119;"	d
+cJSON_AddNumberToObject	backup_old_cp/cJSON.h	122;"	d
 cJSON_AddNumberToObject	cJSON.h	122;"	d
-cJSON_AddNumberToObject	cp/cJSON.h	122;"	d
+cJSON_AddStringToObject	backup_old_cp/cJSON.h	123;"	d
 cJSON_AddStringToObject	cJSON.h	123;"	d
-cJSON_AddStringToObject	cp/cJSON.h	123;"	d
+cJSON_AddTrueToObject	backup_old_cp/cJSON.h	120;"	d
 cJSON_AddTrueToObject	cJSON.h	120;"	d
-cJSON_AddTrueToObject	cp/cJSON.h	120;"	d
+cJSON_Array	backup_old_cp/cJSON.h	39;"	d
 cJSON_Array	cJSON.h	39;"	d
-cJSON_Array	cp/cJSON.h	39;"	d
+cJSON_CreateArray	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateArray()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_Array;return item;}$/;"	f
 cJSON_CreateArray	cJSON.c	/^cJSON *cJSON_CreateArray()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_Array;return item;}$/;"	f
-cJSON_CreateArray	cp/cJSON.c	/^cJSON *cJSON_CreateArray()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_Array;return item;}$/;"	f
+cJSON_CreateBool	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateBool(int b)					{cJSON *item=cJSON_New_Item();if(item)item->type=b?cJSON_True:cJSON_False;return item;}$/;"	f
 cJSON_CreateBool	cJSON.c	/^cJSON *cJSON_CreateBool(int b)					{cJSON *item=cJSON_New_Item();if(item)item->type=b?cJSON_True:cJSON_False;return item;}$/;"	f
-cJSON_CreateBool	cp/cJSON.c	/^cJSON *cJSON_CreateBool(int b)					{cJSON *item=cJSON_New_Item();if(item)item->type=b?cJSON_True:cJSON_False;return item;}$/;"	f
+cJSON_CreateDoubleArray	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateDoubleArray(double *numbers,int count)		{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
 cJSON_CreateDoubleArray	cJSON.c	/^cJSON *cJSON_CreateDoubleArray(double *numbers,int count)		{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
-cJSON_CreateDoubleArray	cp/cJSON.c	/^cJSON *cJSON_CreateDoubleArray(double *numbers,int count)		{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
+cJSON_CreateFalse	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateFalse()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_False;return item;}$/;"	f
 cJSON_CreateFalse	cJSON.c	/^cJSON *cJSON_CreateFalse()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_False;return item;}$/;"	f
-cJSON_CreateFalse	cp/cJSON.c	/^cJSON *cJSON_CreateFalse()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_False;return item;}$/;"	f
+cJSON_CreateFloatArray	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateFloatArray(float *numbers,int count)			{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
 cJSON_CreateFloatArray	cJSON.c	/^cJSON *cJSON_CreateFloatArray(float *numbers,int count)			{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
-cJSON_CreateFloatArray	cp/cJSON.c	/^cJSON *cJSON_CreateFloatArray(float *numbers,int count)			{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
+cJSON_CreateIntArray	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateIntArray(int *numbers,int count)				{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
 cJSON_CreateIntArray	cJSON.c	/^cJSON *cJSON_CreateIntArray(int *numbers,int count)				{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
-cJSON_CreateIntArray	cp/cJSON.c	/^cJSON *cJSON_CreateIntArray(int *numbers,int count)				{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
+cJSON_CreateNull	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateNull()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_NULL;return item;}$/;"	f
 cJSON_CreateNull	cJSON.c	/^cJSON *cJSON_CreateNull()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_NULL;return item;}$/;"	f
-cJSON_CreateNull	cp/cJSON.c	/^cJSON *cJSON_CreateNull()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_NULL;return item;}$/;"	f
+cJSON_CreateNumber	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateNumber(double num)			{cJSON *item=cJSON_New_Item();if(item){item->type=cJSON_Number;item->valuedouble=num;item->valueint=(int)num;}return item;}$/;"	f
 cJSON_CreateNumber	cJSON.c	/^cJSON *cJSON_CreateNumber(double num)			{cJSON *item=cJSON_New_Item();if(item){item->type=cJSON_Number;item->valuedouble=num;item->valueint=(int)num;}return item;}$/;"	f
-cJSON_CreateNumber	cp/cJSON.c	/^cJSON *cJSON_CreateNumber(double num)			{cJSON *item=cJSON_New_Item();if(item){item->type=cJSON_Number;item->valuedouble=num;item->valueint=(int)num;}return item;}$/;"	f
+cJSON_CreateObject	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateObject()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_Object;return item;}$/;"	f
 cJSON_CreateObject	cJSON.c	/^cJSON *cJSON_CreateObject()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_Object;return item;}$/;"	f
-cJSON_CreateObject	cp/cJSON.c	/^cJSON *cJSON_CreateObject()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_Object;return item;}$/;"	f
+cJSON_CreateString	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateString(const char *string)	{cJSON *item=cJSON_New_Item();if(item){item->type=cJSON_String;item->valuestring=cJSON_strdup(string);}return item;}$/;"	f
 cJSON_CreateString	cJSON.c	/^cJSON *cJSON_CreateString(const char *string)	{cJSON *item=cJSON_New_Item();if(item){item->type=cJSON_String;item->valuestring=cJSON_strdup(string);}return item;}$/;"	f
-cJSON_CreateString	cp/cJSON.c	/^cJSON *cJSON_CreateString(const char *string)	{cJSON *item=cJSON_New_Item();if(item){item->type=cJSON_String;item->valuestring=cJSON_strdup(string);}return item;}$/;"	f
+cJSON_CreateStringArray	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateStringArray(const char **strings,int count)	{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateString(strings[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
 cJSON_CreateStringArray	cJSON.c	/^cJSON *cJSON_CreateStringArray(const char **strings,int count)	{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateString(strings[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
-cJSON_CreateStringArray	cp/cJSON.c	/^cJSON *cJSON_CreateStringArray(const char **strings,int count)	{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateString(strings[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
+cJSON_CreateTrue	backup_old_cp/cJSON.c	/^cJSON *cJSON_CreateTrue()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_True;return item;}$/;"	f
 cJSON_CreateTrue	cJSON.c	/^cJSON *cJSON_CreateTrue()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_True;return item;}$/;"	f
-cJSON_CreateTrue	cp/cJSON.c	/^cJSON *cJSON_CreateTrue()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_True;return item;}$/;"	f
+cJSON_Delete	backup_old_cp/cJSON.c	/^void cJSON_Delete(cJSON *c)$/;"	f
 cJSON_Delete	cJSON.c	/^void cJSON_Delete(cJSON *c)$/;"	f
-cJSON_Delete	cp/cJSON.c	/^void cJSON_Delete(cJSON *c)$/;"	f
+cJSON_DeleteItemFromArray	backup_old_cp/cJSON.c	/^void   cJSON_DeleteItemFromArray(cJSON *array,int which)			{cJSON_Delete(cJSON_DetachItemFromArray(array,which));}$/;"	f
 cJSON_DeleteItemFromArray	cJSON.c	/^void   cJSON_DeleteItemFromArray(cJSON *array,int which)			{cJSON_Delete(cJSON_DetachItemFromArray(array,which));}$/;"	f
-cJSON_DeleteItemFromArray	cp/cJSON.c	/^void   cJSON_DeleteItemFromArray(cJSON *array,int which)			{cJSON_Delete(cJSON_DetachItemFromArray(array,which));}$/;"	f
+cJSON_DeleteItemFromObject	backup_old_cp/cJSON.c	/^void   cJSON_DeleteItemFromObject(cJSON *object,const char *string) {cJSON_Delete(cJSON_DetachItemFromObject(object,string));}$/;"	f
 cJSON_DeleteItemFromObject	cJSON.c	/^void   cJSON_DeleteItemFromObject(cJSON *object,const char *string) {cJSON_Delete(cJSON_DetachItemFromObject(object,string));}$/;"	f
-cJSON_DeleteItemFromObject	cp/cJSON.c	/^void   cJSON_DeleteItemFromObject(cJSON *object,const char *string) {cJSON_Delete(cJSON_DetachItemFromObject(object,string));}$/;"	f
+cJSON_DetachItemFromArray	backup_old_cp/cJSON.c	/^cJSON *cJSON_DetachItemFromArray(cJSON *array,int which)			{cJSON *c=array->child;while (c && which>0) c=c->next,which--;if (!c) return 0;$/;"	f
 cJSON_DetachItemFromArray	cJSON.c	/^cJSON *cJSON_DetachItemFromArray(cJSON *array,int which)			{cJSON *c=array->child;while (c && which>0) c=c->next,which--;if (!c) return 0;$/;"	f
-cJSON_DetachItemFromArray	cp/cJSON.c	/^cJSON *cJSON_DetachItemFromArray(cJSON *array,int which)			{cJSON *c=array->child;while (c && which>0) c=c->next,which--;if (!c) return 0;$/;"	f
+cJSON_DetachItemFromObject	backup_old_cp/cJSON.c	/^cJSON *cJSON_DetachItemFromObject(cJSON *object,const char *string) {int i=0;cJSON *c=object->child;while (c && cJSON_strcasecmp(c->string,string)) i++,c=c->next;if (c) return cJSON_DetachItemFromArray(object,i);return 0;}$/;"	f
 cJSON_DetachItemFromObject	cJSON.c	/^cJSON *cJSON_DetachItemFromObject(cJSON *object,const char *string) {int i=0;cJSON *c=object->child;while (c && cJSON_strcasecmp(c->string,string)) i++,c=c->next;if (c) return cJSON_DetachItemFromArray(object,i);return 0;}$/;"	f
-cJSON_DetachItemFromObject	cp/cJSON.c	/^cJSON *cJSON_DetachItemFromObject(cJSON *object,const char *string) {int i=0;cJSON *c=object->child;while (c && cJSON_strcasecmp(c->string,string)) i++,c=c->next;if (c) return cJSON_DetachItemFromArray(object,i);return 0;}$/;"	f
+cJSON_False	backup_old_cp/cJSON.h	34;"	d
 cJSON_False	cJSON.h	34;"	d
-cJSON_False	cp/cJSON.h	34;"	d
+cJSON_GetArrayItem	backup_old_cp/cJSON.c	/^cJSON *cJSON_GetArrayItem(cJSON *array,int item)				{cJSON *c=array->child;  while (c && item>0) item--,c=c->next; return c;}$/;"	f
 cJSON_GetArrayItem	cJSON.c	/^cJSON *cJSON_GetArrayItem(cJSON *array,int item)				{cJSON *c=array->child;  while (c && item>0) item--,c=c->next; return c;}$/;"	f
-cJSON_GetArrayItem	cp/cJSON.c	/^cJSON *cJSON_GetArrayItem(cJSON *array,int item)				{cJSON *c=array->child;  while (c && item>0) item--,c=c->next; return c;}$/;"	f
+cJSON_GetArraySize	backup_old_cp/cJSON.c	/^int    cJSON_GetArraySize(cJSON *array)							{cJSON *c=array->child;int i=0;while(c)i++,c=c->next;return i;}$/;"	f
 cJSON_GetArraySize	cJSON.c	/^int    cJSON_GetArraySize(cJSON *array)							{cJSON *c=array->child;int i=0;while(c)i++,c=c->next;return i;}$/;"	f
-cJSON_GetArraySize	cp/cJSON.c	/^int    cJSON_GetArraySize(cJSON *array)							{cJSON *c=array->child;int i=0;while(c)i++,c=c->next;return i;}$/;"	f
+cJSON_GetErrorPtr	backup_old_cp/cJSON.c	/^const char *cJSON_GetErrorPtr() {return ep;}$/;"	f
 cJSON_GetErrorPtr	cJSON.c	/^const char *cJSON_GetErrorPtr() {return ep;}$/;"	f
-cJSON_GetErrorPtr	cp/cJSON.c	/^const char *cJSON_GetErrorPtr() {return ep;}$/;"	f
+cJSON_GetObjectItem	backup_old_cp/cJSON.c	/^cJSON *cJSON_GetObjectItem(cJSON *object,const char *string)	{cJSON *c=object->child; while (c && cJSON_strcasecmp(c->string,string)) c=c->next; return c;}$/;"	f
 cJSON_GetObjectItem	cJSON.c	/^cJSON *cJSON_GetObjectItem(cJSON *object,const char *string)	{cJSON *c=object->child; while (c && cJSON_strcasecmp(c->string,string)) c=c->next; return c;}$/;"	f
-cJSON_GetObjectItem	cp/cJSON.c	/^cJSON *cJSON_GetObjectItem(cJSON *object,const char *string)	{cJSON *c=object->child; while (c && cJSON_strcasecmp(c->string,string)) c=c->next; return c;}$/;"	f
+cJSON_Hooks	backup_old_cp/cJSON.h	/^typedef struct cJSON_Hooks {$/;"	s
+cJSON_Hooks	backup_old_cp/cJSON.h	/^} cJSON_Hooks;$/;"	t	typeref:struct:cJSON_Hooks
 cJSON_Hooks	cJSON.h	/^typedef struct cJSON_Hooks {$/;"	s
 cJSON_Hooks	cJSON.h	/^} cJSON_Hooks;$/;"	t	typeref:struct:cJSON_Hooks
-cJSON_Hooks	cp/cJSON.h	/^typedef struct cJSON_Hooks {$/;"	s
-cJSON_Hooks	cp/cJSON.h	/^} cJSON_Hooks;$/;"	t	typeref:struct:cJSON_Hooks
+cJSON_InitHooks	backup_old_cp/cJSON.c	/^void cJSON_InitHooks(cJSON_Hooks* hooks)$/;"	f
 cJSON_InitHooks	cJSON.c	/^void cJSON_InitHooks(cJSON_Hooks* hooks)$/;"	f
-cJSON_InitHooks	cp/cJSON.c	/^void cJSON_InitHooks(cJSON_Hooks* hooks)$/;"	f
+cJSON_IsReference	backup_old_cp/cJSON.h	42;"	d
 cJSON_IsReference	cJSON.h	42;"	d
-cJSON_IsReference	cp/cJSON.h	42;"	d
+cJSON_NULL	backup_old_cp/cJSON.h	36;"	d
 cJSON_NULL	cJSON.h	36;"	d
-cJSON_NULL	cp/cJSON.h	36;"	d
+cJSON_New_Item	backup_old_cp/cJSON.c	/^static cJSON *cJSON_New_Item()$/;"	f	file:
 cJSON_New_Item	cJSON.c	/^static cJSON *cJSON_New_Item()$/;"	f	file:
-cJSON_New_Item	cp/cJSON.c	/^static cJSON *cJSON_New_Item()$/;"	f	file:
+cJSON_Number	backup_old_cp/cJSON.h	37;"	d
 cJSON_Number	cJSON.h	37;"	d
-cJSON_Number	cp/cJSON.h	37;"	d
+cJSON_Object	backup_old_cp/cJSON.h	40;"	d
 cJSON_Object	cJSON.h	40;"	d
-cJSON_Object	cp/cJSON.h	40;"	d
+cJSON_Parse	backup_old_cp/cJSON.c	/^cJSON *cJSON_Parse(const char *value)$/;"	f
 cJSON_Parse	cJSON.c	/^cJSON *cJSON_Parse(const char *value)$/;"	f
-cJSON_Parse	cp/cJSON.c	/^cJSON *cJSON_Parse(const char *value)$/;"	f
+cJSON_Print	backup_old_cp/cJSON.c	/^char *cJSON_Print(cJSON *item)				{return print_value(item,0,1);}$/;"	f
 cJSON_Print	cJSON.c	/^char *cJSON_Print(cJSON *item)				{return print_value(item,0,1);}$/;"	f
-cJSON_Print	cp/cJSON.c	/^char *cJSON_Print(cJSON *item)				{return print_value(item,0,1);}$/;"	f
+cJSON_PrintUnformatted	backup_old_cp/cJSON.c	/^char *cJSON_PrintUnformatted(cJSON *item)	{return print_value(item,0,0);}$/;"	f
 cJSON_PrintUnformatted	cJSON.c	/^char *cJSON_PrintUnformatted(cJSON *item)	{return print_value(item,0,0);}$/;"	f
-cJSON_PrintUnformatted	cp/cJSON.c	/^char *cJSON_PrintUnformatted(cJSON *item)	{return print_value(item,0,0);}$/;"	f
+cJSON_ReplaceItemInArray	backup_old_cp/cJSON.c	/^void   cJSON_ReplaceItemInArray(cJSON *array,int which,cJSON *newitem)		{cJSON *c=array->child;while (c && which>0) c=c->next,which--;if (!c) return;$/;"	f
 cJSON_ReplaceItemInArray	cJSON.c	/^void   cJSON_ReplaceItemInArray(cJSON *array,int which,cJSON *newitem)		{cJSON *c=array->child;while (c && which>0) c=c->next,which--;if (!c) return;$/;"	f
-cJSON_ReplaceItemInArray	cp/cJSON.c	/^void   cJSON_ReplaceItemInArray(cJSON *array,int which,cJSON *newitem)		{cJSON *c=array->child;while (c && which>0) c=c->next,which--;if (!c) return;$/;"	f
+cJSON_ReplaceItemInObject	backup_old_cp/cJSON.c	/^void   cJSON_ReplaceItemInObject(cJSON *object,const char *string,cJSON *newitem){int i=0;cJSON *c=object->child;while(c && cJSON_strcasecmp(c->string,string))i++,c=c->next;if(c){newitem->string=cJSON_strdup(string);cJSON_ReplaceItemInArray(object,i,newitem);}}$/;"	f
 cJSON_ReplaceItemInObject	cJSON.c	/^void   cJSON_ReplaceItemInObject(cJSON *object,const char *string,cJSON *newitem){int i=0;cJSON *c=object->child;while(c && cJSON_strcasecmp(c->string,string))i++,c=c->next;if(c){newitem->string=cJSON_strdup(string);cJSON_ReplaceItemInArray(object,i,newitem);}}$/;"	f
-cJSON_ReplaceItemInObject	cp/cJSON.c	/^void   cJSON_ReplaceItemInObject(cJSON *object,const char *string,cJSON *newitem){int i=0;cJSON *c=object->child;while(c && cJSON_strcasecmp(c->string,string))i++,c=c->next;if(c){newitem->string=cJSON_strdup(string);cJSON_ReplaceItemInArray(object,i,newitem);}}$/;"	f
+cJSON_String	backup_old_cp/cJSON.h	38;"	d
 cJSON_String	cJSON.h	38;"	d
-cJSON_String	cp/cJSON.h	38;"	d
+cJSON_True	backup_old_cp/cJSON.h	35;"	d
 cJSON_True	cJSON.h	35;"	d
-cJSON_True	cp/cJSON.h	35;"	d
+cJSON__h	backup_old_cp/cJSON.h	24;"	d
 cJSON__h	cJSON.h	24;"	d
-cJSON__h	cp/cJSON.h	24;"	d
+cJSON_free	backup_old_cp/cJSON.c	/^static void (*cJSON_free)(void *ptr) = free;$/;"	v	file:
 cJSON_free	cJSON.c	/^static void (*cJSON_free)(void *ptr) = free;$/;"	v	file:
-cJSON_free	cp/cJSON.c	/^static void (*cJSON_free)(void *ptr) = free;$/;"	v	file:
+cJSON_malloc	backup_old_cp/cJSON.c	/^static void *(*cJSON_malloc)(size_t sz) = malloc;$/;"	v	file:
 cJSON_malloc	cJSON.c	/^static void *(*cJSON_malloc)(size_t sz) = malloc;$/;"	v	file:
-cJSON_malloc	cp/cJSON.c	/^static void *(*cJSON_malloc)(size_t sz) = malloc;$/;"	v	file:
+cJSON_strcasecmp	backup_old_cp/cJSON.c	/^static int cJSON_strcasecmp(const char *s1,const char *s2)$/;"	f	file:
 cJSON_strcasecmp	cJSON.c	/^static int cJSON_strcasecmp(const char *s1,const char *s2)$/;"	f	file:
-cJSON_strcasecmp	cp/cJSON.c	/^static int cJSON_strcasecmp(const char *s1,const char *s2)$/;"	f	file:
+cJSON_strdup	backup_old_cp/cJSON.c	/^static char* cJSON_strdup(const char* str)$/;"	f	file:
 cJSON_strdup	cJSON.c	/^static char* cJSON_strdup(const char* str)$/;"	f	file:
-cJSON_strdup	cp/cJSON.c	/^static char* cJSON_strdup(const char* str)$/;"	f	file:
+child	backup_old_cp/cJSON.h	/^	struct cJSON *child;		\/* An array or object item will have a child pointer pointing to a chain of the items in the array\/object. *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
 child	cJSON.h	/^	struct cJSON *child;		\/* An array or object item will have a child pointer pointing to a chain of the items in the array\/object. *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
-child	cp/cJSON.h	/^	struct cJSON *child;		\/* An array or object item will have a child pointer pointing to a chain of the items in the array\/object. *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
-client	cp/header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:portal_recv	typeref:struct:portal_recv::sockaddr_in
-client	cp/header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:radius_recv	typeref:struct:radius_recv::sockaddr_in
+client	backup_old_cp/header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:portal_recv	typeref:struct:portal_recv::sockaddr_in
+client	backup_old_cp/header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:radius_recv	typeref:struct:radius_recv::sockaddr_in
 client	header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:portal_recv	typeref:struct:portal_recv::sockaddr_in
 client	header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:radius_recv	typeref:struct:radius_recv::sockaddr_in
-code	cp/header.h	/^	unsigned char code;$/;"	m	struct:radius_bag
+code	backup_old_cp/header.h	/^	unsigned char code;$/;"	m	struct:radius_bag
 code	header.h	/^	unsigned char code;$/;"	m	struct:radius_bag
-conn_handle	header.h	/^	SQLHDBC		conn_handle;					\/\/ Handle connection 连接句柄$/;"	m	struct:wt_sql_handle
+conn_handle	backup_old_cp/header.h	/^	SQLHDBC		conn_handle;					\/\/ Handle connection 连接句柄$/;"	m	struct:wt_sql_handle
+create_reference	backup_old_cp/cJSON.c	/^static cJSON *create_reference(cJSON *item) {cJSON *ref=cJSON_New_Item();if (!ref) return 0;memcpy(ref,item,sizeof(cJSON));ref->string=0;ref->type|=cJSON_IsReference;ref->next=ref->prev=0;return ref;}$/;"	f	file:
 create_reference	cJSON.c	/^static cJSON *create_reference(cJSON *item) {cJSON *ref=cJSON_New_Item();if (!ref) return 0;memcpy(ref,item,sizeof(cJSON));ref->string=0;ref->type|=cJSON_IsReference;ref->next=ref->prev=0;return ref;}$/;"	f	file:
-create_reference	cp/cJSON.c	/^static cJSON *create_reference(cJSON *item) {cJSON *ref=cJSON_New_Item();if (!ref) return 0;memcpy(ref,item,sizeof(cJSON));ref->string=0;ref->type|=cJSON_IsReference;ref->next=ref->prev=0;return ref;}$/;"	f	file:
-delete_discharged	es_discharged.c	/^int delete_discharged(char* userip, char* acip)$/;"	f
-env_handle	header.h	/^	SQLHENV		env_handle;						\/\/ Handle ODBC environment 环境句柄$/;"	m	struct:wt_sql_handle
+delete_discharged	backup_old_cp/es_discharged.c	/^int delete_discharged(char* userip, char* acip)$/;"	f
+env_handle	backup_old_cp/header.h	/^	SQLHENV		env_handle;						\/\/ Handle ODBC environment 环境句柄$/;"	m	struct:wt_sql_handle
+ep	backup_old_cp/cJSON.c	/^static const char *ep;$/;"	v	file:
 ep	cJSON.c	/^static const char *ep;$/;"	v	file:
-ep	cp/cJSON.c	/^static const char *ep;$/;"	v	file:
-errCode	cp/header.h	/^	unsigned char errCode;		\/\/ ErrCode字段和Type字段一起表示一定的意义，长度为 1字节$/;"	m	struct:portal_ac
+errCode	backup_old_cp/header.h	/^	unsigned char errCode;		\/\/ ErrCode字段和Type字段一起表示一定的意义，长度为 1字节$/;"	m	struct:portal_ac
 errCode	header.h	/^	unsigned char errCode;		\/\/ ErrCode字段和Type字段一起表示一定的意义，长度为 1字节$/;"	m	struct:portal_ac
-err_msg	header.h	/^	char		err_msg[200];$/;"	m	struct:wt_sql_handle
-exec_sql_test	cp/exec_sql.c	/^int exec_sql_test()$/;"	f
+err_msg	backup_old_cp/header.h	/^	char		err_msg[200];$/;"	m	struct:wt_sql_handle
+exec_sql_test	exec_sql.c	/^int exec_sql_test()$/;"	f
+firstByteMark	backup_old_cp/cJSON.c	/^static const unsigned char firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC };$/;"	v	file:
 firstByteMark	cJSON.c	/^static const unsigned char firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC };$/;"	v	file:
-firstByteMark	cp/cJSON.c	/^static const unsigned char firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC };$/;"	v	file:
+free_fn	backup_old_cp/cJSON.h	/^      void (*free_fn)(void *ptr);$/;"	m	struct:cJSON_Hooks
 free_fn	cJSON.h	/^      void (*free_fn)(void *ptr);$/;"	m	struct:cJSON_Hooks
-free_fn	cp/cJSON.h	/^      void (*free_fn)(void *ptr);$/;"	m	struct:cJSON_Hooks
-generateSerialNo	cp/portal.c	/^unsigned short generateSerialNo()$/;"	f
+generateSerialNo	backup_old_cp/portal.c	/^unsigned short generateSerialNo()$/;"	f
 generateSerialNo	portal.c	/^unsigned short generateSerialNo()$/;"	f
-get_acinfo	cp/exec_sql.c	/^int get_acinfo(char* acname, unsigned int *acid, char* acip, int* acport)$/;"	f
-get_acinfo	exec_sql.c	/^int get_acinfo(char* acname,unsigned int *acid, char* acip, int acip_len, unsigned int *CompanyId, unsigned int *AgentId)$/;"	f
-get_apinfo	cp/exec_sql.c	/^int get_apinfo(char* apmac, unsigned int *apid, char* domain, unsigned int *s_id)$/;"	f
-get_attr_info	cp/radius.c	/^int get_attr_info(struct radius_bag* rb, unsigned char type, char *buf, unsigned int rb_len)$/;"	f
+get_acinfo	backup_old_cp/exec_sql.c	/^int get_acinfo(char* acname,unsigned int *acid, char* acip, int acip_len, unsigned int *CompanyId, unsigned int *AgentId)$/;"	f
+get_acinfo	exec_sql.c	/^int get_acinfo(char* acname, unsigned int *acid, char* acip, int* acport)$/;"	f
+get_apinfo	exec_sql.c	/^int get_apinfo(char* apmac, unsigned int *apid, char* domain, unsigned int *s_id)$/;"	f
+get_attr_info	backup_old_cp/radius.c	/^int get_attr_info(struct radius_bag* rb, unsigned char type, char *buf, unsigned int rb_len)$/;"	f
 get_attr_info	radius.c	/^int get_attr_info(struct radius_bag* rb, unsigned char type, char *buf, unsigned int rb_len)$/;"	f
-get_curr_date_str	cp/utils.c	/^void get_curr_date_str(char* buf)$/;"	f
+get_curr_date_str	backup_old_cp/utils.c	/^void get_curr_date_str(char* buf)$/;"	f
 get_curr_date_str	utils.c	/^void get_curr_date_str(char* buf)$/;"	f
-get_curr_time_str	cp/utils.c	/^void get_curr_time_str(char* buf)$/;"	f
+get_curr_time_str	backup_old_cp/utils.c	/^void get_curr_time_str(char* buf)$/;"	f
 get_curr_time_str	utils.c	/^void get_curr_time_str(char* buf)$/;"	f
-get_plat_para	cp/server_mutual.c	/^int get_plat_para(cJSON *json, struct plat_para *para)$/;"	f
+get_plat_para	backup_old_cp/server_mutual.c	/^int get_plat_para(cJSON *json, struct plat_para *para)$/;"	f
 get_plat_para	server_mutual.c	/^int get_plat_para(cJSON *json, struct plat_para *para)$/;"	f
-get_wuid	cp/exec_sql.c	/^int get_wuid(unsigned int s_id, char* type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id)$/;"	f
-identifier	cp/header.h	/^	unsigned char identifier;$/;"	m	struct:radius_bag
+get_wuid	exec_sql.c	/^int get_wuid(unsigned int s_id, char* type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id)$/;"	f
+identifier	backup_old_cp/header.h	/^	unsigned char identifier;$/;"	m	struct:radius_bag
 identifier	header.h	/^	unsigned char identifier;$/;"	m	struct:radius_bag
-insert_deadline	cp/exec_sql.c	/^int insert_deadline(char* userip, char* acip, int acport, int discharged_time)$/;"	f
-insert_discharged	es_discharged.c	/^int insert_discharged(char* userip, char* acip)$/;"	f
-len	cp/header.h	/^	unsigned char len;$/;"	m	struct:portal_ac_attr
+insert_deadline	exec_sql.c	/^int insert_deadline(char* userip, char* acip, int acport, int discharged_time)$/;"	f
+insert_discharged	backup_old_cp/es_discharged.c	/^int insert_discharged(char* userip, char* acip)$/;"	f
+len	backup_old_cp/header.h	/^	unsigned char len;$/;"	m	struct:portal_ac_attr
 len	header.h	/^	unsigned char len;$/;"	m	struct:portal_ac_attr
-length	cp/header.h	/^	unsigned char length;$/;"	m	struct:radius_attr
-length	cp/header.h	/^	unsigned short length;$/;"	m	struct:radius_bag
+length	backup_old_cp/header.h	/^	unsigned char length;$/;"	m	struct:radius_attr
+length	backup_old_cp/header.h	/^	unsigned short length;$/;"	m	struct:radius_bag
 length	header.h	/^	unsigned char length;$/;"	m	struct:radius_attr
 length	header.h	/^	unsigned short length;$/;"	m	struct:radius_bag
-list_add	cp/list.h	/^static inline void list_add(struct list_head *new, struct list_head *head)$/;"	f
+list_add	backup_old_cp/list.h	/^static inline void list_add(struct list_head *new, struct list_head *head)$/;"	f
 list_add	list.h	/^static inline void list_add(struct list_head *new, struct list_head *head)$/;"	f
-list_add_tail	cp/list.h	/^static inline void list_add_tail(struct list_head *new, struct list_head *head)$/;"	f
+list_add_tail	backup_old_cp/list.h	/^static inline void list_add_tail(struct list_head *new, struct list_head *head)$/;"	f
 list_add_tail	list.h	/^static inline void list_add_tail(struct list_head *new, struct list_head *head)$/;"	f
-list_del	cp/list.h	/^static inline void list_del(struct list_head *entry)$/;"	f
+list_del	backup_old_cp/list.h	/^static inline void list_del(struct list_head *entry)$/;"	f
 list_del	list.h	/^static inline void list_del(struct list_head *entry)$/;"	f
-list_empty	cp/list.h	/^static inline int list_empty(const struct list_head *head)$/;"	f
+list_empty	backup_old_cp/list.h	/^static inline int list_empty(const struct list_head *head)$/;"	f
 list_empty	list.h	/^static inline int list_empty(const struct list_head *head)$/;"	f
-list_for_each	cp/list.h	112;"	d
+list_for_each	backup_old_cp/list.h	112;"	d
 list_for_each	list.h	112;"	d
-list_for_each_prev	cp/list.h	120;"	d
+list_for_each_prev	backup_old_cp/list.h	120;"	d
 list_for_each_prev	list.h	120;"	d
-list_head	cp/list.h	/^struct list_head {$/;"	s
+list_head	backup_old_cp/list.h	/^struct list_head {$/;"	s
 list_head	list.h	/^struct list_head {$/;"	s
-log_day	cp/logs.c	/^int				log_day;			\/\/ 当前log文件对应的日期-天$/;"	v
+log_day	backup_old_cp/logs.c	/^int				log_day;			\/\/ 当前log文件对应的日期-天$/;"	v
 log_day	logs.c	/^int				log_day;			\/\/ 当前log文件对应的日期-天$/;"	v
-log_name	cp/logs.c	/^char			log_name[32];		\/\/ log文件前缀名$/;"	v
+log_name	backup_old_cp/logs.c	/^char			log_name[32];		\/\/ log文件前缀名$/;"	v
 log_name	logs.c	/^char			log_name[32];		\/\/ log文件前缀名$/;"	v
-logs_buf	cp/logs.c	/^static char logs_buf[2048];			\/\/ log内容$/;"	v	file:
+logs_buf	backup_old_cp/logs.c	/^static char logs_buf[2048];			\/\/ log内容$/;"	v	file:
 logs_buf	logs.c	/^static char logs_buf[2048];			\/\/ log内容$/;"	v	file:
-logs_create	cp/logs.c	/^int logs_create()$/;"	f
+logs_create	backup_old_cp/logs.c	/^int logs_create()$/;"	f
 logs_create	logs.c	/^int logs_create()$/;"	f
-logs_destroy	cp/logs.c	/^void logs_destroy()$/;"	f
+logs_destroy	backup_old_cp/logs.c	/^void logs_destroy()$/;"	f
 logs_destroy	logs.c	/^void logs_destroy()$/;"	f
-logs_fd	cp/logs.c	/^int				logs_fd		= 0;	\/\/ 文件描述符$/;"	v
+logs_fd	backup_old_cp/logs.c	/^int				logs_fd		= 0;	\/\/ 文件描述符$/;"	v
 logs_fd	logs.c	/^int				logs_fd		= 0;	\/\/ 文件描述符$/;"	v
-logs_init	cp/logs.c	/^int logs_init(char* prefix)$/;"	f
+logs_init	backup_old_cp/logs.c	/^int logs_init(char* prefix)$/;"	f
 logs_init	logs.c	/^int logs_init(char* prefix)$/;"	f
-logs_lock	cp/logs.c	/^pthread_mutex_t logs_lock;			\/\/ log写入全局互斥锁$/;"	v
+logs_lock	backup_old_cp/logs.c	/^pthread_mutex_t logs_lock;			\/\/ log写入全局互斥锁$/;"	v
 logs_lock	logs.c	/^pthread_mutex_t logs_lock;			\/\/ log写入全局互斥锁$/;"	v
-logs_mytime	cp/logs.c	/^static struct tm *logs_mytime;		\/\/ log时间$/;"	v	typeref:struct:tm	file:
+logs_mytime	backup_old_cp/logs.c	/^static struct tm *logs_mytime;		\/\/ log时间$/;"	v	typeref:struct:tm	file:
 logs_mytime	logs.c	/^static struct tm *logs_mytime;		\/\/ log时间$/;"	v	typeref:struct:tm	file:
-logs_ret	cp/logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
+logs_ret	backup_old_cp/logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
 logs_ret	logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
-logs_strlen	cp/logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
+logs_strlen	backup_old_cp/logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
 logs_strlen	logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
-logs_temp	cp/logs.c	/^static char logs_temp[2048];		\/\/ log内容临时存放$/;"	v	file:
+logs_temp	backup_old_cp/logs.c	/^static char logs_temp[2048];		\/\/ log内容临时存放$/;"	v	file:
 logs_temp	logs.c	/^static char logs_temp[2048];		\/\/ log内容临时存放$/;"	v	file:
-logs_tm	cp/logs.c	/^static time_t logs_tm;				\/\/ log时间$/;"	v	file:
+logs_tm	backup_old_cp/logs.c	/^static time_t logs_tm;				\/\/ log时间$/;"	v	file:
 logs_tm	logs.c	/^static time_t logs_tm;				\/\/ log时间$/;"	v	file:
-loop_deadline_thread	cp/exec_sql.c	/^void* loop_deadline_thread(void *fd)$/;"	f
-loop_temp_discharged_thread	es_discharged.c	/^void* loop_temp_discharged_thread(void *fd)$/;"	f
-mac_change	cp/utils.c	/^int mac_change(char* dest, const char* src)$/;"	f
+loop_deadline_thread	exec_sql.c	/^void* loop_deadline_thread(void *fd)$/;"	f
+loop_temp_discharged_thread	backup_old_cp/es_discharged.c	/^void* loop_temp_discharged_thread(void *fd)$/;"	f
+mac_change	backup_old_cp/utils.c	/^int mac_change(char* dest, const char* src)$/;"	f
 mac_change	utils.c	/^int mac_change(char* dest, const char* src)$/;"	f
-mac_change_12	cp/utils.c	/^int mac_change_12(char* dest, char* src)$/;"	f
-mac_change_12	utils.c	/^int mac_change_12(char* dest, const char* src)$/;"	f
-main	cp/main.c	/^int main(int argc, char** argv)$/;"	f
+mac_change_12	backup_old_cp/utils.c	/^int mac_change_12(char* dest, const char* src)$/;"	f
+mac_change_12	utils.c	/^int mac_change_12(char* dest, char* src)$/;"	f
+main	backup_old_cp/main.c	/^int main(int argc, char** argv)$/;"	f
 main	main.c	/^int main(int argc, char** argv)$/;"	f
+malloc_fn	backup_old_cp/cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
 malloc_fn	cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
-malloc_fn	cp/cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
+next	backup_old_cp/cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
+next	backup_old_cp/list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::list_head
 next	cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
-next	cp/cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
-next	cp/list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::list_head
 next	list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::list_head
-node	cp/user_mp_list.c	/^	struct list_head	node;$/;"	m	struct:usermac_vs_wlanparameter	typeref:struct:usermac_vs_wlanparameter::list_head	file:
+node	backup_old_cp/user_mp_list.c	/^	struct list_head	node;$/;"	m	struct:usermac_vs_wlanparameter	typeref:struct:usermac_vs_wlanparameter::list_head	file:
 node	user_mp_list.c	/^	struct list_head	node;$/;"	m	struct:usermac_vs_wlanparameter	typeref:struct:usermac_vs_wlanparameter::list_head	file:
-pap_chap	cp/header.h	/^	unsigned char pap_chap;		\/\/ 认证方式，长度为 1 字节$/;"	m	struct:portal_ac
+pap_chap	backup_old_cp/header.h	/^	unsigned char pap_chap;		\/\/ 认证方式，长度为 1 字节$/;"	m	struct:portal_ac
 pap_chap	header.h	/^	unsigned char pap_chap;		\/\/ 认证方式，长度为 1 字节$/;"	m	struct:portal_ac
+parse_array	backup_old_cp/cJSON.c	/^static const char *parse_array(cJSON *item,const char *value)$/;"	f	file:
 parse_array	cJSON.c	/^static const char *parse_array(cJSON *item,const char *value)$/;"	f	file:
-parse_array	cp/cJSON.c	/^static const char *parse_array(cJSON *item,const char *value)$/;"	f	file:
+parse_number	backup_old_cp/cJSON.c	/^static const char *parse_number(cJSON *item,const char *num)$/;"	f	file:
 parse_number	cJSON.c	/^static const char *parse_number(cJSON *item,const char *num)$/;"	f	file:
-parse_number	cp/cJSON.c	/^static const char *parse_number(cJSON *item,const char *num)$/;"	f	file:
+parse_object	backup_old_cp/cJSON.c	/^static const char *parse_object(cJSON *item,const char *value)$/;"	f	file:
 parse_object	cJSON.c	/^static const char *parse_object(cJSON *item,const char *value)$/;"	f	file:
-parse_object	cp/cJSON.c	/^static const char *parse_object(cJSON *item,const char *value)$/;"	f	file:
+parse_string	backup_old_cp/cJSON.c	/^static const char *parse_string(cJSON *item,const char *str)$/;"	f	file:
 parse_string	cJSON.c	/^static const char *parse_string(cJSON *item,const char *str)$/;"	f	file:
-parse_string	cp/cJSON.c	/^static const char *parse_string(cJSON *item,const char *str)$/;"	f	file:
+parse_value	backup_old_cp/cJSON.c	/^static const char *parse_value(cJSON *item,const char *value)$/;"	f	file:
 parse_value	cJSON.c	/^static const char *parse_value(cJSON *item,const char *value)$/;"	f	file:
-parse_value	cp/cJSON.c	/^static const char *parse_value(cJSON *item,const char *value)$/;"	f	file:
-plat_para	cp/server_mutual.c	/^struct plat_para{$/;"	s	file:
+plat_para	backup_old_cp/server_mutual.c	/^struct plat_para{$/;"	s	file:
 plat_para	server_mutual.c	/^struct plat_para{$/;"	s	file:
-platform_conn_thread	cp/server_mutual.c	/^void* platform_conn_thread(void *fd)$/;"	f
+platform_conn_thread	backup_old_cp/server_mutual.c	/^void* platform_conn_thread(void *fd)$/;"	f
 platform_conn_thread	server_mutual.c	/^void* platform_conn_thread(void *fd)$/;"	f
-platform_process	cp/server_mutual.c	/^void* platform_process(void *fd)$/;"	f
+platform_process	backup_old_cp/server_mutual.c	/^void* platform_process(void *fd)$/;"	f
 platform_process	server_mutual.c	/^void* platform_process(void *fd)$/;"	f
-portal_ac	cp/header.h	/^typedef struct portal_ac$/;"	s
+portal_ac	backup_old_cp/header.h	/^typedef struct portal_ac$/;"	s
 portal_ac	header.h	/^typedef struct portal_ac$/;"	s
-portal_ac_attr	cp/header.h	/^typedef struct portal_ac_attr$/;"	s
+portal_ac_attr	backup_old_cp/header.h	/^typedef struct portal_ac_attr$/;"	s
 portal_ac_attr	header.h	/^typedef struct portal_ac_attr$/;"	s
-portal_conn_thread	cp/portal.c	/^void* portal_conn_thread(void *fd)$/;"	f
+portal_conn_thread	backup_old_cp/portal.c	/^void* portal_conn_thread(void *fd)$/;"	f
 portal_conn_thread	portal.c	/^void* portal_conn_thread(void *fd)$/;"	f
-portal_pro_thread	cp/portal.c	/^void* portal_pro_thread(void *fd)$/;"	f
+portal_pro_thread	backup_old_cp/portal.c	/^void* portal_pro_thread(void *fd)$/;"	f
 portal_pro_thread	portal.c	/^void* portal_pro_thread(void *fd)$/;"	f
-portal_recv	cp/header.h	/^struct portal_recv{$/;"	s
+portal_recv	backup_old_cp/header.h	/^struct portal_recv{$/;"	s
 portal_recv	header.h	/^struct portal_recv{$/;"	s
-portal_recv_sockfd	cp/portal.c	/^static int				portal_recv_sockfd		= 0;	\/\/ portal recv socket$/;"	v	file:
+portal_recv_sockfd	backup_old_cp/portal.c	/^static int				portal_recv_sockfd		= 0;	\/\/ portal recv socket$/;"	v	file:
 portal_recv_sockfd	portal.c	/^static int				portal_recv_sockfd		= 0;	\/\/ portal recv socket$/;"	v	file:
-portal_recv_sockfd_lock	cp/portal.c	/^static pthread_mutex_t	portal_recv_sockfd_lock;		\/\/ radius socket 互斥锁$/;"	v	file:
+portal_recv_sockfd_lock	backup_old_cp/portal.c	/^static pthread_mutex_t	portal_recv_sockfd_lock;		\/\/ radius socket 互斥锁$/;"	v	file:
 portal_recv_sockfd_lock	portal.c	/^static pthread_mutex_t	portal_recv_sockfd_lock;		\/\/ radius socket 互斥锁$/;"	v	file:
-portal_test_thread	cp/portal.c	/^void* portal_test_thread(void* fd)$/;"	f
+portal_test_thread	backup_old_cp/portal.c	/^void* portal_test_thread(void* fd)$/;"	f
 portal_test_thread	portal.c	/^void* portal_test_thread(void* fd)$/;"	f
+prev	backup_old_cp/cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::
+prev	backup_old_cp/list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::
 prev	cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::
-prev	cp/cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::
-prev	cp/list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::
 prev	list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::
+print_array	backup_old_cp/cJSON.c	/^static char *print_array(cJSON *item,int depth,int fmt)$/;"	f	file:
 print_array	cJSON.c	/^static char *print_array(cJSON *item,int depth,int fmt)$/;"	f	file:
-print_array	cp/cJSON.c	/^static char *print_array(cJSON *item,int depth,int fmt)$/;"	f	file:
+print_number	backup_old_cp/cJSON.c	/^static char *print_number(cJSON *item)$/;"	f	file:
 print_number	cJSON.c	/^static char *print_number(cJSON *item)$/;"	f	file:
-print_number	cp/cJSON.c	/^static char *print_number(cJSON *item)$/;"	f	file:
+print_object	backup_old_cp/cJSON.c	/^static char *print_object(cJSON *item,int depth,int fmt)$/;"	f	file:
 print_object	cJSON.c	/^static char *print_object(cJSON *item,int depth,int fmt)$/;"	f	file:
-print_object	cp/cJSON.c	/^static char *print_object(cJSON *item,int depth,int fmt)$/;"	f	file:
+print_string	backup_old_cp/cJSON.c	/^static char *print_string(cJSON *item)	{return print_string_ptr(item->valuestring);}$/;"	f	file:
 print_string	cJSON.c	/^static char *print_string(cJSON *item)	{return print_string_ptr(item->valuestring);}$/;"	f	file:
-print_string	cp/cJSON.c	/^static char *print_string(cJSON *item)	{return print_string_ptr(item->valuestring);}$/;"	f	file:
+print_string_ptr	backup_old_cp/cJSON.c	/^static char *print_string_ptr(const char *str)$/;"	f	file:
 print_string_ptr	cJSON.c	/^static char *print_string_ptr(const char *str)$/;"	f	file:
-print_string_ptr	cp/cJSON.c	/^static char *print_string_ptr(const char *str)$/;"	f	file:
+print_value	backup_old_cp/cJSON.c	/^static char *print_value(cJSON *item,int depth,int fmt)$/;"	f	file:
 print_value	cJSON.c	/^static char *print_value(cJSON *item,int depth,int fmt)$/;"	f	file:
-print_value	cp/cJSON.c	/^static char *print_value(cJSON *item,int depth,int fmt)$/;"	f	file:
-radius12_conn_thread	cp/radius.c	/^void* radius12_conn_thread(void *fd)$/;"	f
+radius12_conn_thread	backup_old_cp/radius.c	/^void* radius12_conn_thread(void *fd)$/;"	f
 radius12_conn_thread	radius.c	/^void* radius12_conn_thread(void *fd)$/;"	f
-radius12_pro_recv	cp/radius.c	/^int radius12_pro_recv(struct radius_recv *rr, char* proxy)$/;"	f
+radius12_pro_recv	backup_old_cp/radius.c	/^int radius12_pro_recv(struct radius_recv *rr, char* proxy)$/;"	f
 radius12_pro_recv	radius.c	/^int radius12_pro_recv(struct radius_recv *rr, char* proxy)$/;"	f
-radius12_pro_thread	cp/radius.c	/^void* radius12_pro_thread(void *fd)$/;"	f
+radius12_pro_thread	backup_old_cp/radius.c	/^void* radius12_pro_thread(void *fd)$/;"	f
 radius12_pro_thread	radius.c	/^void* radius12_pro_thread(void *fd)$/;"	f
-radius12_udp_sockfd	cp/radius.c	/^static int	radius12_udp_sockfd	= 0;	\/\/ radius12 socket$/;"	v	file:
+radius12_udp_sockfd	backup_old_cp/radius.c	/^static int	radius12_udp_sockfd	= 0;	\/\/ radius12 socket$/;"	v	file:
 radius12_udp_sockfd	radius.c	/^static int	radius12_udp_sockfd	= 0;	\/\/ radius12 socket$/;"	v	file:
-radius12_udp_sockfd_lock	cp/radius.c	/^static pthread_mutex_t	radius12_udp_sockfd_lock;	\/\/ radius12 socket 互斥锁$/;"	v	file:
+radius12_udp_sockfd_lock	backup_old_cp/radius.c	/^static pthread_mutex_t	radius12_udp_sockfd_lock;	\/\/ radius12 socket 互斥锁$/;"	v	file:
 radius12_udp_sockfd_lock	radius.c	/^static pthread_mutex_t	radius12_udp_sockfd_lock;	\/\/ radius12 socket 互斥锁$/;"	v	file:
-radius13_conn_thread	cp/radius.c	/^void* radius13_conn_thread(void *fd)$/;"	f
+radius13_conn_thread	backup_old_cp/radius.c	/^void* radius13_conn_thread(void *fd)$/;"	f
 radius13_conn_thread	radius.c	/^void* radius13_conn_thread(void *fd)$/;"	f
-radius13_pro_recv	cp/radius.c	/^int radius13_pro_recv(struct radius_recv *rr)$/;"	f
+radius13_pro_recv	backup_old_cp/radius.c	/^int radius13_pro_recv(struct radius_recv *rr)$/;"	f
 radius13_pro_recv	radius.c	/^int radius13_pro_recv(struct radius_recv *rr)$/;"	f
-radius13_pro_thread	cp/radius.c	/^void* radius13_pro_thread(void *fd)$/;"	f
+radius13_pro_thread	backup_old_cp/radius.c	/^void* radius13_pro_thread(void *fd)$/;"	f
 radius13_pro_thread	radius.c	/^void* radius13_pro_thread(void *fd)$/;"	f
-radius13_udp_sockfd	cp/radius.c	/^static int	radius13_udp_sockfd	= 0;	\/\/ radius13 socket$/;"	v	file:
+radius13_udp_sockfd	backup_old_cp/radius.c	/^static int	radius13_udp_sockfd	= 0;	\/\/ radius13 socket$/;"	v	file:
 radius13_udp_sockfd	radius.c	/^static int	radius13_udp_sockfd	= 0;	\/\/ radius13 socket$/;"	v	file:
-radius13_udp_sockfd_lock	cp/radius.c	/^static pthread_mutex_t	radius13_udp_sockfd_lock;	\/\/ radius13 socket 互斥锁$/;"	v	file:
+radius13_udp_sockfd_lock	backup_old_cp/radius.c	/^static pthread_mutex_t	radius13_udp_sockfd_lock;	\/\/ radius13 socket 互斥锁$/;"	v	file:
 radius13_udp_sockfd_lock	radius.c	/^static pthread_mutex_t	radius13_udp_sockfd_lock;	\/\/ radius13 socket 互斥锁$/;"	v	file:
-radius_attr	cp/header.h	/^struct radius_attr{$/;"	s
+radius_attr	backup_old_cp/header.h	/^struct radius_attr{$/;"	s
 radius_attr	header.h	/^struct radius_attr{$/;"	s
-radius_bag	cp/header.h	/^struct radius_bag{$/;"	s
+radius_bag	backup_old_cp/header.h	/^struct radius_bag{$/;"	s
 radius_bag	header.h	/^struct radius_bag{$/;"	s
-radius_recv	cp/header.h	/^struct radius_recv{$/;"	s
+radius_recv	backup_old_cp/header.h	/^struct radius_recv{$/;"	s
 radius_recv	header.h	/^struct radius_recv{$/;"	s
-recv_ret	cp/header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:portal_recv
-recv_ret	cp/header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:radius_recv
+recv_ret	backup_old_cp/header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:portal_recv
+recv_ret	backup_old_cp/header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:radius_recv
 recv_ret	header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:portal_recv
 recv_ret	header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:radius_recv
-reqID	cp/header.h	/^	unsigned short reqID;		\/\/ 2个字节，由AC设备随机生成$/;"	m	struct:portal_ac
+reqID	backup_old_cp/header.h	/^	unsigned short reqID;		\/\/ 2个字节，由AC设备随机生成$/;"	m	struct:portal_ac
 reqID	header.h	/^	unsigned short reqID;		\/\/ 2个字节，由AC设备随机生成$/;"	m	struct:portal_ac
-res_username	cp/utils.c	/^int res_username(char* username, int* wu_id, int* login_type)$/;"	f
-rsv	cp/header.h	/^	unsigned char rsv;			\/\/ 保留字段，长度为 1 字节，在所有报文中值为 0$/;"	m	struct:portal_ac
+res_username	utils.c	/^int res_username(char* username, int* wu_id, int* login_type)$/;"	f
+rsv	backup_old_cp/header.h	/^	unsigned char rsv;			\/\/ 保留字段，长度为 1 字节，在所有报文中值为 0$/;"	m	struct:portal_ac
 rsv	header.h	/^	unsigned char rsv;			\/\/ 保留字段，长度为 1 字节，在所有报文中值为 0$/;"	m	struct:portal_ac
-run	cp/main.c	/^void run()$/;"	f
+run	backup_old_cp/main.c	/^void run()$/;"	f
 run	main.c	/^void run()$/;"	f
-serialNo	cp/header.h	/^	unsigned short serialNo;	\/\/ 报文的序列号，长度为 2 字节$/;"	m	struct:portal_ac
+serialNo	backup_old_cp/header.h	/^	unsigned short serialNo;	\/\/ 报文的序列号，长度为 2 字节$/;"	m	struct:portal_ac
 serialNo	header.h	/^	unsigned short serialNo;	\/\/ 报文的序列号，长度为 2 字节$/;"	m	struct:portal_ac
+skip	backup_old_cp/cJSON.c	/^static const char *skip(const char *in) {while (in && *in && (unsigned char)*in<=32) in++; return in;}$/;"	f	file:
 skip	cJSON.c	/^static const char *skip(const char *in) {while (in && *in && (unsigned char)*in<=32) in++; return in;}$/;"	f	file:
-skip	cp/cJSON.c	/^static const char *skip(const char *in) {while (in && *in && (unsigned char)*in<=32) in++; return in;}$/;"	f	file:
-sql_destory	cp/postgresql.c	/^void sql_destory(PGconn *conn)$/;"	f
-sql_err	header.h	/^	SQLLEN		sql_err;$/;"	m	struct:wt_sql_handle
-sql_exec	cp/postgresql.c	/^int sql_exec(PGconn *conn, char *sql_str)$/;"	f
-sql_exec_select	cp/postgresql.c	/^int sql_exec_select(PGconn *conn, char *sql_str, PGresult** res)$/;"	f
-sql_getvalue_string	cp/postgresql.c	/^char* sql_getvalue_string(PGresult *res, int h, int l)$/;"	f
-sql_init	cp/postgresql.c	/^PGconn* sql_init()$/;"	f
-sql_mlen	header.h	/^	SQLSMALLINT	sql_mlen;$/;"	m	struct:wt_sql_handle
-sql_ret	header.h	/^	SQLRETURN	sql_ret;$/;"	m	struct:wt_sql_handle
-sql_stat	header.h	/^	char		sql_stat[12];					\/\/ Status SQL$/;"	m	struct:wt_sql_handle
-sql_str	header.h	/^	char		sql_str[1024];$/;"	m	struct:wt_sql_handle
-sql_test	cp/postgresql.c	/^void sql_test()$/;"	f
-sql_test_thread	exec_sql.c	/^void* sql_test_thread(void *fd)$/;"	f
-sqlstr_handle	header.h	/^	SQLHSTMT	sqlstr_handle;					\/\/ 数据库执行语句句柄$/;"	m	struct:wt_sql_handle
-ssid	cp/server_mutual.c	/^	char* ssid;					\/\/ ssid$/;"	m	struct:plat_para	file:
+sql_destory	postgresql.c	/^void sql_destory(PGconn *conn)$/;"	f
+sql_err	backup_old_cp/header.h	/^	SQLLEN		sql_err;$/;"	m	struct:wt_sql_handle
+sql_exec	postgresql.c	/^int sql_exec(PGconn *conn, char *sql_str)$/;"	f
+sql_exec_select	postgresql.c	/^int sql_exec_select(PGconn *conn, char *sql_str, PGresult** res)$/;"	f
+sql_getvalue_string	postgresql.c	/^char* sql_getvalue_string(PGresult *res, int h, int l)$/;"	f
+sql_init	postgresql.c	/^PGconn* sql_init()$/;"	f
+sql_mlen	backup_old_cp/header.h	/^	SQLSMALLINT	sql_mlen;$/;"	m	struct:wt_sql_handle
+sql_ret	backup_old_cp/header.h	/^	SQLRETURN	sql_ret;$/;"	m	struct:wt_sql_handle
+sql_stat	backup_old_cp/header.h	/^	char		sql_stat[12];					\/\/ Status SQL$/;"	m	struct:wt_sql_handle
+sql_str	backup_old_cp/header.h	/^	char		sql_str[1024];$/;"	m	struct:wt_sql_handle
+sql_test	postgresql.c	/^void sql_test()$/;"	f
+sql_test_thread	backup_old_cp/exec_sql.c	/^void* sql_test_thread(void *fd)$/;"	f
+sqlstr_handle	backup_old_cp/header.h	/^	SQLHSTMT	sqlstr_handle;					\/\/ 数据库执行语句句柄$/;"	m	struct:wt_sql_handle
+ssid	backup_old_cp/server_mutual.c	/^	char* ssid;					\/\/ ssid$/;"	m	struct:plat_para	file:
 ssid	server_mutual.c	/^	char* ssid;					\/\/ ssid$/;"	m	struct:plat_para	file:
+string	backup_old_cp/cJSON.h	/^	char *string;				\/* The item's name string, if this item is the child of, or is in the list of subitems of an object. *\/$/;"	m	struct:cJSON
 string	cJSON.h	/^	char *string;				\/* The item's name string, if this item is the child of, or is in the list of subitems of an object. *\/$/;"	m	struct:cJSON
-string	cp/cJSON.h	/^	char *string;				\/* The item's name string, if this item is the child of, or is in the list of subitems of an object. *\/$/;"	m	struct:cJSON
+suffix_object	backup_old_cp/cJSON.c	/^static void suffix_object(cJSON *prev,cJSON *item) {prev->next=item;item->prev=prev;}$/;"	f	file:
 suffix_object	cJSON.c	/^static void suffix_object(cJSON *prev,cJSON *item) {prev->next=item;item->prev=prev;}$/;"	f	file:
-suffix_object	cp/cJSON.c	/^static void suffix_object(cJSON *prev,cJSON *item) {prev->next=item;item->prev=prev;}$/;"	f	file:
+type	backup_old_cp/cJSON.h	/^	int type;					\/* The type of the item, as above. *\/$/;"	m	struct:cJSON
+type	backup_old_cp/header.h	/^	unsigned char type;			\/\/ 报文的类型，长度为 1 字节$/;"	m	struct:portal_ac
+type	backup_old_cp/header.h	/^	unsigned char type;$/;"	m	struct:portal_ac_attr
+type	backup_old_cp/header.h	/^	unsigned char type;$/;"	m	struct:radius_attr
+type	backup_old_cp/server_mutual.c	/^	char* type;					\/\/ 报文类型 auth-tel, auth-wx, auth-temp$/;"	m	struct:plat_para	file:
 type	cJSON.h	/^	int type;					\/* The type of the item, as above. *\/$/;"	m	struct:cJSON
-type	cp/cJSON.h	/^	int type;					\/* The type of the item, as above. *\/$/;"	m	struct:cJSON
-type	cp/header.h	/^	unsigned char type;			\/\/ 报文的类型，长度为 1 字节$/;"	m	struct:portal_ac
-type	cp/header.h	/^	unsigned char type;$/;"	m	struct:portal_ac_attr
-type	cp/header.h	/^	unsigned char type;$/;"	m	struct:radius_attr
-type	cp/server_mutual.c	/^	char* type;					\/\/ 报文类型 auth-tel, auth-wx, auth-temp$/;"	m	struct:plat_para	file:
 type	header.h	/^	unsigned char type;			\/\/ 报文的类型，长度为 1 字节$/;"	m	struct:portal_ac
 type	header.h	/^	unsigned char type;$/;"	m	struct:portal_ac_attr
 type	header.h	/^	unsigned char type;$/;"	m	struct:radius_attr
 type	server_mutual.c	/^	char* type;					\/\/ 报文类型 auth-tel, auth-wx, auth-temp$/;"	m	struct:plat_para	file:
-update_mac	exec_sql.c	/^int update_mac(char* mac, int id)$/;"	f
-update_wifi_user	cp/exec_sql.c	/^int update_wifi_user(char* username, char* acip, char* usermac)$/;"	f
-userIP	cp/header.h	/^	unsigned int userIP;		\/\/ Portal用户的IP地址，长度为 4 字节，其值由Portal Server根据其获得的IP地址填写$/;"	m	struct:portal_ac
+update_mac	backup_old_cp/exec_sql.c	/^int update_mac(char* mac, int id)$/;"	f
+update_wifi_user	exec_sql.c	/^int update_wifi_user(char* username, char* acip, char* usermac)$/;"	f
+userIP	backup_old_cp/header.h	/^	unsigned int userIP;		\/\/ Portal用户的IP地址，长度为 4 字节，其值由Portal Server根据其获得的IP地址填写$/;"	m	struct:portal_ac
 userIP	header.h	/^	unsigned int userIP;		\/\/ Portal用户的IP地址，长度为 4 字节，其值由Portal Server根据其获得的IP地址填写$/;"	m	struct:portal_ac
-userPort	cp/header.h	/^	unsigned short userPort;	\/\/ UserPort字段目前没有用到，长度为 2 字节，在所有报文中其值为0$/;"	m	struct:portal_ac
+userPort	backup_old_cp/header.h	/^	unsigned short userPort;	\/\/ UserPort字段目前没有用到，长度为 2 字节，在所有报文中其值为0$/;"	m	struct:portal_ac
 userPort	header.h	/^	unsigned short userPort;	\/\/ UserPort字段目前没有用到，长度为 2 字节，在所有报文中其值为0$/;"	m	struct:portal_ac
-user_mp_list_add	cp/user_mp_list.c	/^void user_mp_list_add(unsigned int userid, char* usermac)$/;"	f
+user_mp_list_add	backup_old_cp/user_mp_list.c	/^void user_mp_list_add(unsigned int userid, char* usermac)$/;"	f
 user_mp_list_add	user_mp_list.c	/^void user_mp_list_add(unsigned int userid, char* usermac)$/;"	f
-user_mp_list_count	cp/user_mp_list.c	/^static int user_mp_list_count = 0;$/;"	v	file:
+user_mp_list_count	backup_old_cp/user_mp_list.c	/^static int user_mp_list_count = 0;$/;"	v	file:
 user_mp_list_count	user_mp_list.c	/^static int user_mp_list_count = 0;$/;"	v	file:
-user_mp_list_find_and_del	cp/user_mp_list.c	/^int user_mp_list_find_and_del(unsigned int userid, char* usermac)$/;"	f
+user_mp_list_find_and_del	backup_old_cp/user_mp_list.c	/^int user_mp_list_find_and_del(unsigned int userid, char* usermac)$/;"	f
 user_mp_list_find_and_del	user_mp_list.c	/^int user_mp_list_find_and_del(unsigned int userid, char* usermac)$/;"	f
-user_mp_list_head	cp/user_mp_list.c	/^LIST_HEAD(			user_mp_list_head);$/;"	v
+user_mp_list_head	backup_old_cp/user_mp_list.c	/^LIST_HEAD(			user_mp_list_head);$/;"	v
 user_mp_list_head	user_mp_list.c	/^LIST_HEAD(			user_mp_list_head);$/;"	v
-user_mp_list_init	cp/user_mp_list.c	/^void user_mp_list_init()$/;"	f
+user_mp_list_init	backup_old_cp/user_mp_list.c	/^void user_mp_list_init()$/;"	f
 user_mp_list_init	user_mp_list.c	/^void user_mp_list_init()$/;"	f
-user_mp_list_lock	cp/user_mp_list.c	/^static pthread_mutex_t		user_mp_list_lock;$/;"	v	file:
+user_mp_list_lock	backup_old_cp/user_mp_list.c	/^static pthread_mutex_t		user_mp_list_lock;$/;"	v	file:
 user_mp_list_lock	user_mp_list.c	/^static pthread_mutex_t		user_mp_list_lock;$/;"	v	file:
-user_mp_list_node	cp/user_mp_list.c	/^}user_mp_list_node;$/;"	t	typeref:struct:usermac_vs_wlanparameter	file:
+user_mp_list_node	backup_old_cp/user_mp_list.c	/^}user_mp_list_node;$/;"	t	typeref:struct:usermac_vs_wlanparameter	file:
 user_mp_list_node	user_mp_list.c	/^}user_mp_list_node;$/;"	t	typeref:struct:usermac_vs_wlanparameter	file:
-user_mp_list_node_size	cp/user_mp_list.c	/^static unsigned int user_mp_list_node_size = sizeof(user_mp_list_node);$/;"	v	file:
+user_mp_list_node_size	backup_old_cp/user_mp_list.c	/^static unsigned int user_mp_list_node_size = sizeof(user_mp_list_node);$/;"	v	file:
 user_mp_list_node_size	user_mp_list.c	/^static unsigned int user_mp_list_node_size = sizeof(user_mp_list_node);$/;"	v	file:
-user_offline	cp/exec_sql.c	/^int user_offline(char* username, char* userip, char* acip, char* apmac)$/;"	f
-user_online	cp/exec_sql.c	/^int user_online(char* username, char* userip, char* acip, char* apmac)$/;"	f
-user_online	exec_sql.c	/^int user_online(char*apmac, char* parameter)$/;"	f
-usercode	cp/server_mutual.c	/^	char* usercode;				\/\/ auth-tel：验证码，auth-wx：tid，auth-temp：空$/;"	m	struct:plat_para	file:
+user_offline	exec_sql.c	/^int user_offline(char* username, char* userip, char* acip, char* apmac)$/;"	f
+user_online	backup_old_cp/exec_sql.c	/^int user_online(char*apmac, char* parameter)$/;"	f
+user_online	exec_sql.c	/^int user_online(char* username, char* userip, char* acip, char* apmac)$/;"	f
+usercode	backup_old_cp/server_mutual.c	/^	char* usercode;				\/\/ auth-tel：验证码，auth-wx：tid，auth-temp：空$/;"	m	struct:plat_para	file:
 usercode	server_mutual.c	/^	char* usercode;				\/\/ auth-tel：验证码，auth-wx：tid，auth-temp：空$/;"	m	struct:plat_para	file:
-userid	cp/user_mp_list.c	/^	unsigned int		userid;$/;"	m	struct:usermac_vs_wlanparameter	file:
+userid	backup_old_cp/user_mp_list.c	/^	unsigned int		userid;$/;"	m	struct:usermac_vs_wlanparameter	file:
 userid	user_mp_list.c	/^	unsigned int		userid;$/;"	m	struct:usermac_vs_wlanparameter	file:
-usermac	cp/user_mp_list.c	/^	char				usermac[20];$/;"	m	struct:usermac_vs_wlanparameter	file:
+usermac	backup_old_cp/user_mp_list.c	/^	char				usermac[20];$/;"	m	struct:usermac_vs_wlanparameter	file:
 usermac	user_mp_list.c	/^	char				usermac[20];$/;"	m	struct:usermac_vs_wlanparameter	file:
-usermac_vs_wlanparameter	cp/user_mp_list.c	/^typedef struct usermac_vs_wlanparameter{$/;"	s	file:
+usermac_vs_wlanparameter	backup_old_cp/user_mp_list.c	/^typedef struct usermac_vs_wlanparameter{$/;"	s	file:
 usermac_vs_wlanparameter	user_mp_list.c	/^typedef struct usermac_vs_wlanparameter{$/;"	s	file:
-usernum	cp/server_mutual.c	/^	char* usernum;				\/\/ auth-tel：手机号，auth-wx：微信openid，auth-temp：空$/;"	m	struct:plat_para	file:
+usernum	backup_old_cp/server_mutual.c	/^	char* usernum;				\/\/ auth-tel：手机号，auth-wx：微信openid，auth-temp：空$/;"	m	struct:plat_para	file:
 usernum	server_mutual.c	/^	char* usernum;				\/\/ auth-tel：手机号，auth-wx：微信openid，auth-temp：空$/;"	m	struct:plat_para	file:
-value	cp/header.h	/^	unsigned char value[0];$/;"	m	struct:radius_attr
+value	backup_old_cp/header.h	/^	unsigned char value[0];$/;"	m	struct:radius_attr
 value	header.h	/^	unsigned char value[0];$/;"	m	struct:radius_attr
+valuedouble	backup_old_cp/cJSON.h	/^	double valuedouble;			\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
 valuedouble	cJSON.h	/^	double valuedouble;			\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
-valuedouble	cp/cJSON.h	/^	double valuedouble;			\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
+valueint	backup_old_cp/cJSON.h	/^	int valueint;				\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
 valueint	cJSON.h	/^	int valueint;				\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
-valueint	cp/cJSON.h	/^	int valueint;				\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
+valuestring	backup_old_cp/cJSON.h	/^	char *valuestring;			\/* The item's string, if type==cJSON_String *\/$/;"	m	struct:cJSON
 valuestring	cJSON.h	/^	char *valuestring;			\/* The item's string, if type==cJSON_String *\/$/;"	m	struct:cJSON
-valuestring	cp/cJSON.h	/^	char *valuestring;			\/* The item's string, if type==cJSON_String *\/$/;"	m	struct:cJSON
-ver	cp/header.h	/^	unsigned char ver;			\/\/ 协议的版本号，长度为 1 字节，目前定义的值为 0x01$/;"	m	struct:portal_ac
+ver	backup_old_cp/header.h	/^	unsigned char ver;			\/\/ 协议的版本号，长度为 1 字节，目前定义的值为 0x01$/;"	m	struct:portal_ac
 ver	header.h	/^	unsigned char ver;			\/\/ 协议的版本号，长度为 1 字节，目前定义的值为 0x01$/;"	m	struct:portal_ac
-wlanacip	cp/server_mutual.c	/^	char* wlanacip;				\/\/ ac ip$/;"	m	struct:plat_para	file:
+wlanacip	backup_old_cp/server_mutual.c	/^	char* wlanacip;				\/\/ ac ip$/;"	m	struct:plat_para	file:
 wlanacip	server_mutual.c	/^	char* wlanacip;				\/\/ ac ip$/;"	m	struct:plat_para	file:
-wlanacname	cp/server_mutual.c	/^	char* wlanacname;			\/\/ ac标识名称$/;"	m	struct:plat_para	file:
+wlanacname	backup_old_cp/server_mutual.c	/^	char* wlanacname;			\/\/ ac标识名称$/;"	m	struct:plat_para	file:
 wlanacname	server_mutual.c	/^	char* wlanacname;			\/\/ ac标识名称$/;"	m	struct:plat_para	file:
-wlanparameter	cp/server_mutual.c	/^	char* wlanparameter;		\/\/ 加密的mac$/;"	m	struct:plat_para	file:
+wlanparameter	backup_old_cp/server_mutual.c	/^	char* wlanparameter;		\/\/ 加密的mac$/;"	m	struct:plat_para	file:
 wlanparameter	server_mutual.c	/^	char* wlanparameter;		\/\/ 加密的mac$/;"	m	struct:plat_para	file:
-wlanuserfirsturl	cp/server_mutual.c	/^	char* wlanuserfirsturl;		\/\/ 访问的url$/;"	m	struct:plat_para	file:
+wlanuserfirsturl	backup_old_cp/server_mutual.c	/^	char* wlanuserfirsturl;		\/\/ 访问的url$/;"	m	struct:plat_para	file:
 wlanuserfirsturl	server_mutual.c	/^	char* wlanuserfirsturl;		\/\/ 访问的url$/;"	m	struct:plat_para	file:
-wlanuserip	cp/server_mutual.c	/^	char* wlanuserip;			\/\/ 用户ip$/;"	m	struct:plat_para	file:
+wlanuserip	backup_old_cp/server_mutual.c	/^	char* wlanuserip;			\/\/ 用户ip$/;"	m	struct:plat_para	file:
 wlanuserip	server_mutual.c	/^	char* wlanuserip;			\/\/ 用户ip$/;"	m	struct:plat_para	file:
-wt_close_sock	cp/net.c	/^void wt_close_sock(int *sock)$/;"	f
+wt_close_sock	backup_old_cp/net.c	/^void wt_close_sock(int *sock)$/;"	f
 wt_close_sock	net.c	/^void wt_close_sock(int *sock)$/;"	f
-wt_recv_block	cp/net.c	/^int wt_recv_block(int sock, unsigned char *buf, int len\/*, int block_flag*\/)$/;"	f
+wt_recv_block	backup_old_cp/net.c	/^int wt_recv_block(int sock, unsigned char *buf, int len\/*, int block_flag*\/)$/;"	f
 wt_recv_block	net.c	/^int wt_recv_block(int sock, unsigned char *buf, int len\/*, int block_flag*\/)$/;"	f
-wt_send_block	cp/net.c	/^int wt_send_block(int sock, unsigned char *buf, int len)$/;"	f
+wt_send_block	backup_old_cp/net.c	/^int wt_send_block(int sock, unsigned char *buf, int len)$/;"	f
 wt_send_block	net.c	/^int wt_send_block(int sock, unsigned char *buf, int len)$/;"	f
-wt_setblocking	cp/net.c	/^int inline wt_setblocking(int sockfd)$/;"	f
+wt_setblocking	backup_old_cp/net.c	/^int inline wt_setblocking(int sockfd)$/;"	f
 wt_setblocking	net.c	/^int inline wt_setblocking(int sockfd)$/;"	f
-wt_setnonblocking	cp/net.c	/^int inline wt_setnonblocking(int sockfd)$/;"	f
+wt_setnonblocking	backup_old_cp/net.c	/^int inline wt_setnonblocking(int sockfd)$/;"	f
 wt_setnonblocking	net.c	/^int inline wt_setnonblocking(int sockfd)$/;"	f
-wt_sock_init	cp/net.c	/^int wt_sock_init(int *sockfd, int port, int listen_num)$/;"	f
+wt_sock_init	backup_old_cp/net.c	/^int wt_sock_init(int *sockfd, int port, int listen_num)$/;"	f
 wt_sock_init	net.c	/^int wt_sock_init(int *sockfd, int port, int listen_num)$/;"	f
-wt_sql_destroy	sql.c	/^void wt_sql_destroy(wt_sql_handle *handle)$/;"	f
-wt_sql_exec	sql.c	/^int inline wt_sql_exec(wt_sql_handle *handle)$/;"	f
-wt_sql_exec_stored_procedure	sql.c	/^int inline wt_sql_exec_stored_procedure(wt_sql_handle *handle)$/;"	f
-wt_sql_handle	header.h	/^typedef struct wt_sql_handle{$/;"	s
-wt_sql_handle	header.h	/^}wt_sql_handle;$/;"	t	typeref:struct:wt_sql_handle
-wt_sql_init	sql.c	/^int wt_sql_init(wt_sql_handle *handle, char* sql_name, char* sql_user, char* sql_pass)$/;"	f
-xyprintf	cp/logs.c	/^int xyprintf(int err_no, char* format, ...)$/;"	f
+wt_sql_destroy	backup_old_cp/sql.c	/^void wt_sql_destroy(wt_sql_handle *handle)$/;"	f
+wt_sql_exec	backup_old_cp/sql.c	/^int inline wt_sql_exec(wt_sql_handle *handle)$/;"	f
+wt_sql_exec_stored_procedure	backup_old_cp/sql.c	/^int inline wt_sql_exec_stored_procedure(wt_sql_handle *handle)$/;"	f
+wt_sql_handle	backup_old_cp/header.h	/^typedef struct wt_sql_handle{$/;"	s
+wt_sql_handle	backup_old_cp/header.h	/^}wt_sql_handle;$/;"	t	typeref:struct:wt_sql_handle
+wt_sql_init	backup_old_cp/sql.c	/^int wt_sql_init(wt_sql_handle *handle, char* sql_name, char* sql_user, char* sql_pass)$/;"	f
+xyprintf	backup_old_cp/logs.c	/^int xyprintf(int err_no, char* format, ...)$/;"	f
 xyprintf	logs.c	/^int xyprintf(int err_no, char* format, ...)$/;"	f
-xyprintf_plat_para	cp/server_mutual.c	/^void xyprintf_plat_para(struct plat_para *para)$/;"	f
+xyprintf_plat_para	backup_old_cp/server_mutual.c	/^void xyprintf_plat_para(struct plat_para *para)$/;"	f
 xyprintf_plat_para	server_mutual.c	/^void xyprintf_plat_para(struct plat_para *para)$/;"	f
-xyprintf_portal_ac	cp/portal.c	/^void xyprintf_portal_ac(ST_PORTAL_AC* pa)$/;"	f
+xyprintf_portal_ac	backup_old_cp/portal.c	/^void xyprintf_portal_ac(ST_PORTAL_AC* pa)$/;"	f
 xyprintf_portal_ac	portal.c	/^void xyprintf_portal_ac(ST_PORTAL_AC* pa)$/;"	f
-xyprintf_radius_bag	cp/radius.c	/^void xyprintf_radius_bag(struct radius_bag* rb, unsigned int rb_len)$/;"	f
+xyprintf_radius_bag	backup_old_cp/radius.c	/^void xyprintf_radius_bag(struct radius_bag* rb, unsigned int rb_len)$/;"	f
 xyprintf_radius_bag	radius.c	/^void xyprintf_radius_bag(struct radius_bag* rb, unsigned int rb_len)$/;"	f

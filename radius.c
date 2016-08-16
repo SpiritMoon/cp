@@ -5,7 +5,7 @@
  *****************************************************/
 #include "header.h"
 
-#define RADIUS_DEBUG 0
+#define RADIUS_DEBUG 1
 
 #define RADIUS12_UDP_PORT	1812
 #define RADIUS13_UDP_PORT	1813
@@ -317,7 +317,7 @@ void* radius12_pro_thread(void *fd)
 	}
 	
 	char usermac[128] = {0};
-	if( mac_change(usermac, tempmac) ){
+	if( mac_change_12(usermac, tempmac) ){
 		xyprintf(0, "RADIUS DATA ERROR:Mac change error!");
 		goto DATA_ERR;
 	}
@@ -327,23 +327,31 @@ void* radius12_pro_thread(void *fd)
 
 	xyprintf(0, "1812: username %s, usermac %s", username, usermac);
 
+
+
+	int wu_id, login_type;
+	if( res_username(username, &wu_id, &login_type) ){
+		xyprintf(0, "ERROR:%s %d", __FILE__, __LINE__);
+		goto DATA_ERR;
+	}
+	
 	// 处理是否是临时放行
-	if(!strncmp(username, "temp-", strlen("temp-"))){
-		unsigned int id = atoi(&username[strlen("temp-")]);
-		if(id){
-			user_mp_list_add(id, usermac);
-		}
+	if( login_type == LOGIN_TYPE_TEMP ){
+		user_mp_list_add(wu_id, usermac);
 	}
 	
 	// 回复报文
 	radius12_pro_recv(rr, proxy);
 
-	// 如果是手机认证 更新mac到数据库
-	if( !strncmp( username, "tel-", strlen("tel-") ) ){
-		unsigned int id = atoi(&username[strlen("tel-")]);
-		if(id){
-			update_mac(usermac, id);
-		}
+	// 获取acip
+	char acip[32] = {0};
+	strcpy(acip, inet_ntoa(rr->client.sin_addr));
+#if RADIUS_DEBUG
+	xyprintf(0, "acip = %s", acip);
+#endif
+
+	if( update_wifi_user(username, acip, usermac) ){
+		xyprintf(0, "ERROR:%s %d", __FILE__, __LINE__);
 	}
 
 	free(rr);
@@ -518,17 +526,24 @@ void* radius13_pro_thread(void *fd)
 #if RADIUS_DEBUG
 	xyprintf(0, "username = %s", username);
 #endif
+	
 	// 获取用户mac
+	char tempmac[128] = {0};
+	if( get_attr_info(rb, RADIUS_ATTR_TYPE_CALLING_STATION_ID, tempmac, rb_len) ){
+		xyprintf(0, "RADIUS DATA ERROR:Get tempmac error!");
+		goto DATA_ERR;
+	}
+	
 	char usermac[128] = {0};
-	if( get_attr_info(rb, 31, usermac, rb_len) ){
-		xyprintf(0, "RADIUS DATA ERROR:Get usermac error!");
+	if( mac_change_12(usermac, tempmac) ){
+		xyprintf(0, "RADIUS DATA ERROR:Mac change error!");
 		goto DATA_ERR;
 	}
 #if RADIUS_DEBUG
 	xyprintf(0, "usermac = %s", usermac);
 #endif
-	
-	// 获取用户mac
+
+	// 获取操作状态
 	unsigned int acct_status_type;
 	if( get_attr_info(rb, RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE, (char*)&acct_status_type, rb_len) ){
 		xyprintf(0, "RADIUS DATA ERROR:Get RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE error!");
@@ -538,7 +553,7 @@ void* radius13_pro_thread(void *fd)
 #if RADIUS_DEBUG
 	xyprintf(0, "acct_status_type = %u", acct_status_type);
 #endif
-	
+
 	// 获取acip
 	char acip[32] = {0};
 	strcpy(acip, inet_ntoa(rr->client.sin_addr));
@@ -547,9 +562,13 @@ void* radius13_pro_thread(void *fd)
 #endif
 
 	// 获取apmac
+	if( get_attr_info(rb, RADIUS_ATTR_TYPE_CALLED_STATION_ID, tempmac, rb_len) ){
+		xyprintf(0, "RADIUS DATA ERROR:Get apmac error!");
+		goto DATA_ERR;
+	}
 	char apmac[128] = {0};
-	if( get_attr_info(rb, RADIUS_ATTR_TYPE_CALLED_STATION_ID, apmac, rb_len) ){
-		xyprintf(0, "RADIUS DATA ERROR:Get usermac error!");
+	if( mac_change_12(apmac, tempmac) ){
+		xyprintf(0, "RADIUS DATA ERROR:Mac change error!");
 		goto DATA_ERR;
 	}
 #if RADIUS_DEBUG
@@ -557,30 +576,40 @@ void* radius13_pro_thread(void *fd)
 #endif
 	
 	// 获取userip
-	unsigned int userip;
-	if( get_attr_info(rb, RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS, (char*)&userip, rb_len) ){
-		xyprintf(0, "RADIUS DATA ERROR:Get usermac error!");
+	unsigned char c_userip[4] = {0};
+	if( get_attr_info(rb, RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS, c_userip, rb_len) ){
+		xyprintf(0, "RADIUS DATA ERROR:Get userip error!");
 		goto DATA_ERR;
 	}
+	char userip[32] = {0};
+	snprintf(userip, 31, "%u.%u.%u.%u", c_userip[0], c_userip[1], c_userip[2], c_userip[3]);
 #if RADIUS_DEBUG
-	unsigned char *temp = &userip;
-	xyprintf(0, "userip = %u.%u.%u.%u", temp[0], temp[1], temp[2], temp[3]);
+	xyprintf(0, "userip = %s", userip);
 #endif
-	
+
+
+
+
+
+
+
+
 	if( acct_status_type == 1 ){
-		// TODO 用户上线成功
 		xyprintf(0, "1813: username %s, usermac %s online!!", username, usermac);
+		if( user_online(username, userip, acip, apmac) ){
+			xyprintf(0, "ERROR:%s %d", __FILE__, __LINE__);
+		}
 	}
 	else if ( acct_status_type == 2 ){
-		// TODO 用户下线
 		xyprintf(0, "1813: username %s, usermac %s offline!!", username, usermac);
+		if( user_offline(username, userip, acip, apmac) ){
+			xyprintf(0, "ERROR:%s %d", __FILE__, __LINE__);
+		}
 	}
 	else if ( acct_status_type == 3 ){
-		// TODO 用户状态更新
 		xyprintf(0, "1813: username %s, usermac %s update!!", username, usermac);
 	}
 	else {
-		// TODO 错误
 		xyprintf(0, "ERROR -- %s -- %d : acct_status_type(u%) is error", __FILE__, __LINE__, acct_status_type);
 	}
 

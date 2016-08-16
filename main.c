@@ -5,8 +5,8 @@
  *****************************************************/
 #include "header.h"
 
-#define IS_DAEMON_EXIST			0					// 精灵线程
-#define PORTAL_TEST_THREAD		1
+#define IS_DAEMON_EXIST			1					// 精灵线程
+#define PORTAL_TEST_THREAD		0
 #define SQL_TEST_THREAD			0
 
 /** 
@@ -34,12 +34,15 @@ void run()
 			*************************************************************************\n\
 			*************************************************************************\n",
 			getpid() );
-
 	RADIUS_SECRET_LEN = strlen(RADIUS_SECRET);
 	xyprintf(0, "RADIUS_SECRET is %s, len is %d", RADIUS_SECRET, RADIUS_SECRET_LEN);
 	
-	/****************平台连接监视线程**************************************************/
 	pthread_t pt;
+	/****************到时提出xiancheng**************************************************/
+	if( pthread_create(&pt, NULL, loop_deadline_thread, NULL) != 0 ){
+		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
+	}
+	/****************平台连接监视线程**************************************************/
 	if( pthread_create(&pt, NULL, platform_conn_thread, NULL) != 0 ){
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 	}
@@ -55,10 +58,6 @@ void run()
 	if( pthread_create(&pt, NULL, portal_conn_thread, NULL) != 0 ){
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 	}
-	/****************临时放行解除线程**************************************************/
-	if( pthread_create(&pt, NULL, loop_temp_discharged_thread, NULL) != 0 ){
-		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
-	}
 	/**********************************************************************************/
 #if SQL_TEST_THREAD
 	if( pthread_create(&pt, NULL, sql_test_thread, NULL) != 0 ){
@@ -70,11 +69,10 @@ void run()
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 	}
 #endif
-
+	
 	while(1){
 		sleep(100);
 	}
-
 	//不会执行到的一步
 	//pthread_mutex_destroy(&gv_authenticate_list_lock);
 }

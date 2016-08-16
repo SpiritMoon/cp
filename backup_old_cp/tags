@@ -4,37 +4,32 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-ACK_AUTH	header.h	121;"	d
-ACK_CHALLENGE	header.h	119;"	d
-ACK_INFO	header.h	128;"	d
-ACK_LOGOUT	header.h	124;"	d
-AFF_ACK_AUTH	header.h	125;"	d
+ACK_AUTH	header.h	120;"	d
+ACK_CHALLENGE	header.h	118;"	d
+ACK_INFO	header.h	127;"	d
+ACK_LOGOUT	header.h	123;"	d
+AFF_ACK_AUTH	header.h	124;"	d
+AgentId	server_mutual.c	/^	unsigned int AgentId;$/;"	m	struct:plat_para	file:
 CC	Makefile	/^CC=gcc$/;"	m
 Challenge	header.h	133;"	d
 ChapPassWord	header.h	134;"	d
-DB_HOSTADDR	header.h	20;"	d
-DB_NAME	header.h	17;"	d
-DB_PASSWORD	header.h	19;"	d
-DB_USERNAME	header.h	18;"	d
-DEPEND	Makefile	/^DEPEND=exec_sql.o postgresql.o main.o utils.o user_mp_list.o logs.o net.o server_mutual.o radius.o portal.o cJSON.o$/;"	m
-EXEC_SQL_DEBUG	exec_sql.c	9;"	d	file:
+CompanyId	server_mutual.c	/^	unsigned int CompanyId;$/;"	m	struct:plat_para	file:
+DEPEND	Makefile	/^DEPEND=es_discharged.o main.o utils.o user_mp_list.o sql.o exec_sql.o logs.o net.o server_mutual.o radius.o portal.o cJSON.o$/;"	m
 INIT_LIST_HEAD	list.h	/^static inline void INIT_LIST_HEAD(struct list_head *list)$/;"	f
 IS_DAEMON_EXIST	main.c	8;"	d	file:
-LIB	Makefile	/^LIB=-lpthread -lm -lpq -lcrypto$/;"	m
+LIB	Makefile	/^LIB=-lpthread -lm -lodbc -lcrypto$/;"	m
 LIST_HEAD	list.h	22;"	d
 LIST_HEAD_INIT	list.h	20;"	d
-LOGIN_TYPE_PHONE	header.h	26;"	d
-LOGIN_TYPE_TEMP	header.h	29;"	d
-LOGIN_TYPE_WHITE	header.h	28;"	d
-LOGIN_TYPE_WX	header.h	27;"	d
 LOGS_MAX_SIZE	header.h	10;"	d
-LOOP_DEADLINE_INTERVAL	header.h	22;"	d
+LOOP_TEMP_DISCHARGED_INTERVAL	es_discharged.c	91;"	d	file:
 MAKE	Makefile	/^MAKE=make$/;"	m
 MAX_EPOLL_NUM	header.h	13;"	d
-NTF_LOGOUT	header.h	126;"	d
+NTF_LOGOUT	header.h	125;"	d
 PORTAL_DEBUG	portal.c	8;"	d	file:
 PORTAL_RECV_PORT	portal.c	9;"	d	file:
 PORTAL_TEST_THREAD	main.c	9;"	d	file:
+PORTAL_TO_AC_PORT	header.h	16;"	d
+PUBLIC_DEPEND	Makefile	/^PUBLIC_DEPEND=$(PUBDIR)\/*.o$/;"	m
 PassWord	header.h	132;"	d
 RADIUS12_UDP_PORT	radius.c	10;"	d	file:
 RADIUS13_UDP_PORT	radius.c	11;"	d	file:
@@ -69,18 +64,26 @@ RADIUS_BASIC_LEN	radius.c	/^unsigned int RADIUS_BASIC_LEN$/;"	v
 RADIUS_DEBUG	radius.c	8;"	d	file:
 RADIUS_SECRET	header.h	289;"	d
 RADIUS_SECRET_LEN	radius.c	/^unsigned int RADIUS_SECRET_LEN	= 0;	\/\/ radius密钥长度$/;"	v
-REQ_AUTH	header.h	120;"	d
-REQ_CHALLENGE	header.h	118;"	d
-REQ_INFO	header.h	127;"	d
-REQ_LOGOUT	header.h	122;"	d
+REQ_AUTH	header.h	119;"	d
+REQ_CHALLENGE	header.h	117;"	d
+REQ_INFO	header.h	126;"	d
+REQ_LOGOUT	header.h	121;"	d
 SERVER_MUTUAL_DEBUG	server_mutual.c	8;"	d	file:
-SOURCE	Makefile	/^SOURCE=exec_sql.c postgresql.c main.c utils.c user_mp_list.c logs.c net.c server_mutual.c radius.c portal.c cJSON.c$/;"	m
+SOURCE	Makefile	/^SOURCE=es_discharged.c main.c utils.c user_mp_list.c sql.c exec_sql.c logs.c net.c server_mutual.c radius.c portal.c cJSON.c$/;"	m
+SQL_DELETE_tb_TmpUserDischarged_ID	es_discharged.c	17;"	d	file:
+SQL_DELETE_tb_TmpUserDischarged_IP	es_discharged.c	20;"	d	file:
+SQL_INSERT_tb_TmpUserDischarged	es_discharged.c	11;"	d	file:
+SQL_NAME	header.h	18;"	d
+SQL_PASSWD	header.h	20;"	d
+SQL_SELECT_tb_TmpUserDischarged	es_discharged.c	14;"	d	file:
 SQL_TEST_THREAD	main.c	10;"	d	file:
+SQL_USER	header.h	19;"	d
 ST_PORTAL_AC	header.h	/^}ST_PORTAL_AC;$/;"	t	typeref:struct:portal_ac
 ST_PORTAL_AC_ATTR	header.h	/^}ST_PORTAL_AC_ATTR;$/;"	t	typeref:struct:portal_ac_attr
 SendReqAuthAndRecv	portal.c	/^int SendReqAuthAndRecv(char* userip, char* usernum, char* usercode, char* ac_ip, int port)$/;"	f
 SendReqLogoutAndRecv	portal.c	/^int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)$/;"	f
 TARGET	Makefile	/^TARGET=cp.out$/;"	m
+TEMP_DISCHARGED	es_discharged.c	92;"	d	file:
 TO_PLATFORM_PORT	header.h	15;"	d
 UDP_create	net.c	/^int UDP_create(int *sockfd)$/;"	f
 UDP_recv_block	net.c	/^int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen)$/;"	f
@@ -89,11 +92,13 @@ USER_MP_LIST_DEBUG	user_mp_list.c	9;"	d	file:
 UserName	header.h	131;"	d
 WRITE_LOG	header.h	11;"	d
 WT_HEADER_H	header.h	7;"	d
-WX_TEMP_DISCHARGED	header.h	24;"	d
 _LINUX_LIST_H	list.h	2;"	d
 __list_add	list.h	/^static inline void __list_add(struct list_head *new,$/;"	f
 __list_del	list.h	/^static inline void __list_del(struct list_head * prev, struct list_head * next)$/;"	f
 ac_attr	header.h	/^	char ac_attr[512];$/;"	m	struct:portal_ac
+acid	server_mutual.c	/^	unsigned int acid;$/;"	m	struct:plat_para	file:
+add_apinfo	exec_sql.c	/^int add_apinfo(char* apmac, char* ssid, char* acname, unsigned int acid, unsigned int CompanyId, unsigned int AgentId)$/;"	f
+add_user	exec_sql.c	/^int add_user(char* parameter, char* apmac, char* type, char* value, int *id)$/;"	f
 addrlen	header.h	/^	socklen_t addrlen;				\/\/ 客户端地址长度$/;"	m	struct:portal_recv
 addrlen	header.h	/^	socklen_t addrlen;				\/\/ 客户端地址长度$/;"	m	struct:radius_recv
 apmac	server_mutual.c	/^	char* apmac;				\/\/ ap mac$/;"	m	struct:plat_para	file:
@@ -161,22 +166,23 @@ child	cJSON.h	/^	struct cJSON *child;		\/* An array or object item will have a c
 client	header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:portal_recv	typeref:struct:portal_recv::sockaddr_in
 client	header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:radius_recv	typeref:struct:radius_recv::sockaddr_in
 code	header.h	/^	unsigned char code;$/;"	m	struct:radius_bag
+conn_handle	header.h	/^	SQLHDBC		conn_handle;					\/\/ Handle connection 连接句柄$/;"	m	struct:wt_sql_handle
 create_reference	cJSON.c	/^static cJSON *create_reference(cJSON *item) {cJSON *ref=cJSON_New_Item();if (!ref) return 0;memcpy(ref,item,sizeof(cJSON));ref->string=0;ref->type|=cJSON_IsReference;ref->next=ref->prev=0;return ref;}$/;"	f	file:
+delete_discharged	es_discharged.c	/^int delete_discharged(char* userip, char* acip)$/;"	f
+env_handle	header.h	/^	SQLHENV		env_handle;						\/\/ Handle ODBC environment 环境句柄$/;"	m	struct:wt_sql_handle
 ep	cJSON.c	/^static const char *ep;$/;"	v	file:
 errCode	header.h	/^	unsigned char errCode;		\/\/ ErrCode字段和Type字段一起表示一定的意义，长度为 1字节$/;"	m	struct:portal_ac
-exec_sql_test	exec_sql.c	/^int exec_sql_test()$/;"	f
+err_msg	header.h	/^	char		err_msg[200];$/;"	m	struct:wt_sql_handle
 firstByteMark	cJSON.c	/^static const unsigned char firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC };$/;"	v	file:
 free_fn	cJSON.h	/^      void (*free_fn)(void *ptr);$/;"	m	struct:cJSON_Hooks
 generateSerialNo	portal.c	/^unsigned short generateSerialNo()$/;"	f
-get_acinfo	exec_sql.c	/^int get_acinfo(char* acname, unsigned int *acid, char* acip, int* acport)$/;"	f
-get_apinfo	exec_sql.c	/^int get_apinfo(char* apmac, unsigned int *apid, char* domain, unsigned int *s_id)$/;"	f
+get_acinfo	exec_sql.c	/^int get_acinfo(char* acname,unsigned int *acid, char* acip, int acip_len, unsigned int *CompanyId, unsigned int *AgentId)$/;"	f
 get_attr_info	radius.c	/^int get_attr_info(struct radius_bag* rb, unsigned char type, char *buf, unsigned int rb_len)$/;"	f
 get_curr_date_str	utils.c	/^void get_curr_date_str(char* buf)$/;"	f
 get_curr_time_str	utils.c	/^void get_curr_time_str(char* buf)$/;"	f
 get_plat_para	server_mutual.c	/^int get_plat_para(cJSON *json, struct plat_para *para)$/;"	f
-get_wuid	exec_sql.c	/^int get_wuid(unsigned int s_id, char* type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id)$/;"	f
 identifier	header.h	/^	unsigned char identifier;$/;"	m	struct:radius_bag
-insert_deadline	exec_sql.c	/^int insert_deadline(char* userip, char* acip, int acport, int discharged_time)$/;"	f
+insert_discharged	es_discharged.c	/^int insert_discharged(char* userip, char* acip)$/;"	f
 len	header.h	/^	unsigned char len;$/;"	m	struct:portal_ac_attr
 length	header.h	/^	unsigned char length;$/;"	m	struct:radius_attr
 length	header.h	/^	unsigned short length;$/;"	m	struct:radius_bag
@@ -200,9 +206,9 @@ logs_ret	logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
 logs_strlen	logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
 logs_temp	logs.c	/^static char logs_temp[2048];		\/\/ log内容临时存放$/;"	v	file:
 logs_tm	logs.c	/^static time_t logs_tm;				\/\/ log时间$/;"	v	file:
-loop_deadline_thread	exec_sql.c	/^void* loop_deadline_thread(void *fd)$/;"	f
+loop_temp_discharged_thread	es_discharged.c	/^void* loop_temp_discharged_thread(void *fd)$/;"	f
 mac_change	utils.c	/^int mac_change(char* dest, const char* src)$/;"	f
-mac_change_12	utils.c	/^int mac_change_12(char* dest, char* src)$/;"	f
+mac_change_12	utils.c	/^int mac_change_12(char* dest, const char* src)$/;"	f
 main	main.c	/^int main(int argc, char** argv)$/;"	f
 malloc_fn	cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
 next	cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
@@ -249,17 +255,17 @@ radius_recv	header.h	/^struct radius_recv{$/;"	s
 recv_ret	header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:portal_recv
 recv_ret	header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:radius_recv
 reqID	header.h	/^	unsigned short reqID;		\/\/ 2个字节，由AC设备随机生成$/;"	m	struct:portal_ac
-res_username	utils.c	/^int res_username(char* username, int* wu_id, int* login_type)$/;"	f
 rsv	header.h	/^	unsigned char rsv;			\/\/ 保留字段，长度为 1 字节，在所有报文中值为 0$/;"	m	struct:portal_ac
 run	main.c	/^void run()$/;"	f
 serialNo	header.h	/^	unsigned short serialNo;	\/\/ 报文的序列号，长度为 2 字节$/;"	m	struct:portal_ac
 skip	cJSON.c	/^static const char *skip(const char *in) {while (in && *in && (unsigned char)*in<=32) in++; return in;}$/;"	f	file:
-sql_destory	postgresql.c	/^void sql_destory(PGconn *conn)$/;"	f
-sql_exec	postgresql.c	/^int sql_exec(PGconn *conn, char *sql_str)$/;"	f
-sql_exec_select	postgresql.c	/^int sql_exec_select(PGconn *conn, char *sql_str, PGresult** res)$/;"	f
-sql_getvalue_string	postgresql.c	/^char* sql_getvalue_string(PGresult *res, int h, int l)$/;"	f
-sql_init	postgresql.c	/^PGconn* sql_init()$/;"	f
-sql_test	postgresql.c	/^void sql_test()$/;"	f
+sql_err	header.h	/^	SQLLEN		sql_err;$/;"	m	struct:wt_sql_handle
+sql_mlen	header.h	/^	SQLSMALLINT	sql_mlen;$/;"	m	struct:wt_sql_handle
+sql_ret	header.h	/^	SQLRETURN	sql_ret;$/;"	m	struct:wt_sql_handle
+sql_stat	header.h	/^	char		sql_stat[12];					\/\/ Status SQL$/;"	m	struct:wt_sql_handle
+sql_str	header.h	/^	char		sql_str[1024];$/;"	m	struct:wt_sql_handle
+sql_test_thread	exec_sql.c	/^void* sql_test_thread(void *fd)$/;"	f
+sqlstr_handle	header.h	/^	SQLHSTMT	sqlstr_handle;					\/\/ 数据库执行语句句柄$/;"	m	struct:wt_sql_handle
 ssid	server_mutual.c	/^	char* ssid;					\/\/ ssid$/;"	m	struct:plat_para	file:
 string	cJSON.h	/^	char *string;				\/* The item's name string, if this item is the child of, or is in the list of subitems of an object. *\/$/;"	m	struct:cJSON
 suffix_object	cJSON.c	/^static void suffix_object(cJSON *prev,cJSON *item) {prev->next=item;item->prev=prev;}$/;"	f	file:
@@ -268,7 +274,7 @@ type	header.h	/^	unsigned char type;			\/\/ 报文的类型，长度为 1 字节
 type	header.h	/^	unsigned char type;$/;"	m	struct:portal_ac_attr
 type	header.h	/^	unsigned char type;$/;"	m	struct:radius_attr
 type	server_mutual.c	/^	char* type;					\/\/ 报文类型 auth-tel, auth-wx, auth-temp$/;"	m	struct:plat_para	file:
-update_wifi_user	exec_sql.c	/^int update_wifi_user(char* username, char* acip, char* usermac)$/;"	f
+update_mac	exec_sql.c	/^int update_mac(char* mac, int id)$/;"	f
 userIP	header.h	/^	unsigned int userIP;		\/\/ Portal用户的IP地址，长度为 4 字节，其值由Portal Server根据其获得的IP地址填写$/;"	m	struct:portal_ac
 userPort	header.h	/^	unsigned short userPort;	\/\/ UserPort字段目前没有用到，长度为 2 字节，在所有报文中其值为0$/;"	m	struct:portal_ac
 user_mp_list_add	user_mp_list.c	/^void user_mp_list_add(unsigned int userid, char* usermac)$/;"	f
@@ -279,8 +285,7 @@ user_mp_list_init	user_mp_list.c	/^void user_mp_list_init()$/;"	f
 user_mp_list_lock	user_mp_list.c	/^static pthread_mutex_t		user_mp_list_lock;$/;"	v	file:
 user_mp_list_node	user_mp_list.c	/^}user_mp_list_node;$/;"	t	typeref:struct:usermac_vs_wlanparameter	file:
 user_mp_list_node_size	user_mp_list.c	/^static unsigned int user_mp_list_node_size = sizeof(user_mp_list_node);$/;"	v	file:
-user_offline	exec_sql.c	/^int user_offline(char* username, char* userip, char* acip, char* apmac)$/;"	f
-user_online	exec_sql.c	/^int user_online(char* username, char* userip, char* acip, char* apmac)$/;"	f
+user_online	exec_sql.c	/^int user_online(char*apmac, char* parameter)$/;"	f
 usercode	server_mutual.c	/^	char* usercode;				\/\/ auth-tel：验证码，auth-wx：tid，auth-temp：空$/;"	m	struct:plat_para	file:
 userid	user_mp_list.c	/^	unsigned int		userid;$/;"	m	struct:usermac_vs_wlanparameter	file:
 usermac	user_mp_list.c	/^	char				usermac[20];$/;"	m	struct:usermac_vs_wlanparameter	file:
@@ -302,6 +307,12 @@ wt_send_block	net.c	/^int wt_send_block(int sock, unsigned char *buf, int len)$/
 wt_setblocking	net.c	/^int inline wt_setblocking(int sockfd)$/;"	f
 wt_setnonblocking	net.c	/^int inline wt_setnonblocking(int sockfd)$/;"	f
 wt_sock_init	net.c	/^int wt_sock_init(int *sockfd, int port, int listen_num)$/;"	f
+wt_sql_destroy	sql.c	/^void wt_sql_destroy(wt_sql_handle *handle)$/;"	f
+wt_sql_exec	sql.c	/^int inline wt_sql_exec(wt_sql_handle *handle)$/;"	f
+wt_sql_exec_stored_procedure	sql.c	/^int inline wt_sql_exec_stored_procedure(wt_sql_handle *handle)$/;"	f
+wt_sql_handle	header.h	/^typedef struct wt_sql_handle{$/;"	s
+wt_sql_handle	header.h	/^}wt_sql_handle;$/;"	t	typeref:struct:wt_sql_handle
+wt_sql_init	sql.c	/^int wt_sql_init(wt_sql_handle *handle, char* sql_name, char* sql_user, char* sql_pass)$/;"	f
 xyprintf	logs.c	/^int xyprintf(int err_no, char* format, ...)$/;"	f
 xyprintf_plat_para	server_mutual.c	/^void xyprintf_plat_para(struct plat_para *para)$/;"	f
 xyprintf_portal_ac	portal.c	/^void xyprintf_portal_ac(ST_PORTAL_AC* pa)$/;"	f

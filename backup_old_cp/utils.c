@@ -28,36 +28,22 @@ int mac_change(char* dest, const char* src)
 }
 
 // 将mac地址转换成 没有冒号  的形式
-int mac_change_12(char* dest, char* src)
+int mac_change_12(char* dest, const char* src)
 {
 	if(strlen(src) < 17){
 		return -1;
 	}
 
-	char *buf = src;
+	char *buf = dest;
 
 	int i = 0;
-	while(*buf){
-		if(*buf >= '0' && *buf <= '9'){
-			dest[i] = *buf;
-			i++;
+	for(; i < 17;i++){
+		if(i % 3 != 2){
+			*buf = src[i];
+			buf++;
 		}
-		else if( *buf >= 'a' && *buf <= 'z' ){
-			dest[i] = *buf;
-			i++;
-		}
-		else if( *buf >= 'A' && *buf <= 'Z' ){
-			dest[i] = *buf + 32;
-			i++;
-		}
-		buf++;
 	}
-
-	if( i != 12 ){
-		xyprintf(0, "ERROR:change mac12 error, src = %s", src);
-		return -1;
-	}
-
+	
 //	xyprintf(0, "Change mac success, %s --> %s", src, dest);
 
 	return 0;
@@ -83,35 +69,3 @@ void get_curr_date_str(char* buf)
 			ttm->tm_year + 1900, ttm->tm_mon + 1, ttm->tm_mday);
 //	xyprintf(0, "get date success -- %s",buf);	//在屏幕上打印log
 }
-
-// 
-int res_username(char* username, int* wu_id, int* login_type)
-{
-	// username, wu_id-login_type
-	*wu_id = atoi(username);
-	if( *wu_id <= 0 ){
-		xyprintf(0, "ERROR:%s %d -- resolve usernmae error, username is %s!", __FILE__, __LINE__, username);
-		return -1;
-	}
-#if EXEC_SQL_DEBUG
-	xyprintf(0, "Get wu_id(%d) success!", *wu_id);
-#endif
-
-	char* temp = strstr(username, "-");
-	if( !temp ){
-		xyprintf(0, "ERROR:%s %d -- resolve usernmae error, username is %s!", __FILE__, __LINE__, username);
-		return -1;
-	}
-	temp++;
-	*login_type = atoi(temp);
-	if( *login_type <= 0 ){
-		xyprintf(0, "ERROR:%s %d -- resolve usernmae error, username is %s!", __FILE__, __LINE__, username);
-		return -1;	
-	}
-#if EXEC_SQL_DEBUG
-		xyprintf(0, "Get login_type(%d) success!", *login_type);
-#endif
-
-	return 0;
-}
-
