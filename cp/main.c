@@ -36,12 +36,12 @@ void run()
 			getpid() );
 	RADIUS_SECRET_LEN = strlen(RADIUS_SECRET);
 	xyprintf(0, "RADIUS_SECRET is %s, len is %d", RADIUS_SECRET, RADIUS_SECRET_LEN);
+	
 	pthread_t pt;
 	/****************到时提出xiancheng**************************************************/
 	if( pthread_create(&pt, NULL, loop_deadline_thread, NULL) != 0 ){
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 	}
-#if 0
 	/****************平台连接监视线程**************************************************/
 	if( pthread_create(&pt, NULL, platform_conn_thread, NULL) != 0 ){
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
@@ -69,9 +69,7 @@ void run()
 		xyprintf(errno, "PTHREAD_ERROR: %s %d -- pthread_create()", __FILE__, __LINE__);
 	}
 #endif
-
-#endif
-	exec_sql_test();
+	
 	while(1){
 		sleep(100);
 	}

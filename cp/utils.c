@@ -28,22 +28,36 @@ int mac_change(char* dest, const char* src)
 }
 
 // 将mac地址转换成 没有冒号  的形式
-int mac_change_12(char* dest, const char* src)
+int mac_change_12(char* dest, char* src)
 {
 	if(strlen(src) < 17){
 		return -1;
 	}
 
-	char *buf = dest;
+	char *buf = src;
 
 	int i = 0;
-	for(; i < 17;i++){
-		if(i % 3 != 2){
-			*buf = src[i];
-			buf++;
+	while(*buf){
+		if(*buf >= '0' && *buf <= '9'){
+			dest[i] = *buf;
+			i++;
 		}
+		else if( *buf >= 'a' && *buf <= 'z' ){
+			dest[i] = *buf;
+			i++;
+		}
+		else if( *buf >= 'A' && *buf <= 'Z' ){
+			dest[i] = *buf + 32;
+			i++;
+		}
+		buf++;
 	}
-	
+
+	if( i != 12 ){
+		xyprintf(0, "ERROR:change mac12 error, src = %s", src);
+		return -1;
+	}
+
 //	xyprintf(0, "Change mac success, %s --> %s", src, dest);
 
 	return 0;

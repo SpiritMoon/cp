@@ -219,13 +219,6 @@ void* platform_process(void *fd)
 		//para.wlanacip = "223.99.130.172";
 	}
 	
-	unsigned int apid, s_id;
-	char domain[256] = {0};
-	if( get_apinfo(para.apmac, &apid, domain, &s_id) ){
-		xyprintf(0,"PLATFORM_ERROR:%s -- %d Get apinfo error!", __FILE__, __LINE__);
-		goto JSON_ERR;
-	}
-
 #if SERVER_MUTUAL_DEBUG
 	xyprintf_plat_para(&para);
 #endif
@@ -237,26 +230,26 @@ void* platform_process(void *fd)
 
 	// 如果是手机号认证
 	if(!strcmp(para.type, "auth-tel") ){
-		if( get_wuid(s_id, "phone", para.username, NULL, acid, para.wlanparameter, &wu_id) ){
+		if( get_wuid(s_id, "phone", para.usernum, NULL, acid, para.wlanparameter, &wu_id) ){
 			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
 			goto JSON_ERR;
 		}
 		
 		// 准备发送数据到ac
-		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_PHONE, domain);
+		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_PHONE, apdomain);
 		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, acport ) ){
 			snprintf(res, 127, "{\"stat\":\"ok\"}");
 		}
 	}
 	// 微信认证
 	else if(!strcmp(para.type, "auth-wx")){
-		if( get_wuid(s_id, "weixin", para.username, para.usercode, acid, para.wlanparameter, &wu_id) ){
+		if( get_wuid(s_id, "weixin", para.usernum, para.usercode, acid, para.wlanparameter, &wu_id) ){
 			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
 			goto JSON_ERR;
 		}
 
-		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_WX, domain);
-		if( user_online(username, para.wlanuserip, para,wlanacip, para.apmac) ){
+		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_WX, apdomain);
+		if( user_online(username, para.wlanuserip, para.wlanacip, para.apmac) ){
 			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
 			goto JSON_ERR;
 		}
@@ -270,7 +263,7 @@ void* platform_process(void *fd)
 			goto JSON_ERR;
 		}
 		// 准备发送数据到ac
-		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_WHITE, domain);
+		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_WHITE, apdomain);
 		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, acport ) ){
 			snprintf(res, 127, "{\"stat\":\"ok\"}");
 		}
@@ -287,7 +280,7 @@ void* platform_process(void *fd)
 		}
 		
 		// 准备发送数据到ac
-		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_TEMP, domain);
+		snprintf(username, 127, "%u-%u@%s", wu_id, LOGIN_TYPE_TEMP, apdomain);
 	
 		if( !SendReqAuthAndRecv(para.wlanuserip, username, "123456", para.wlanacip, acport ) ){
 			// 获取radius获取到的mac地址

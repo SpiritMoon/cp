@@ -4,18 +4,18 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-ACK_AUTH	header.h	117;"	d
-ACK_CHALLENGE	header.h	115;"	d
-ACK_INFO	header.h	124;"	d
-ACK_LOGOUT	header.h	120;"	d
-AFF_ACK_AUTH	header.h	121;"	d
+ACK_AUTH	header.h	121;"	d
+ACK_CHALLENGE	header.h	119;"	d
+ACK_INFO	header.h	128;"	d
+ACK_LOGOUT	header.h	124;"	d
+AFF_ACK_AUTH	header.h	125;"	d
 CC	Makefile	/^CC=gcc$/;"	m
-Challenge	header.h	129;"	d
-ChapPassWord	header.h	130;"	d
-DB_HOSTADDR	header.h	22;"	d
-DB_NAME	header.h	19;"	d
-DB_PASSWORD	header.h	21;"	d
-DB_USERNAME	header.h	20;"	d
+Challenge	header.h	133;"	d
+ChapPassWord	header.h	134;"	d
+DB_HOSTADDR	header.h	20;"	d
+DB_NAME	header.h	17;"	d
+DB_PASSWORD	header.h	19;"	d
+DB_USERNAME	header.h	18;"	d
 DEPEND	Makefile	/^DEPEND=exec_sql.o postgresql.o main.o utils.o user_mp_list.o logs.o net.o server_mutual.o radius.o portal.o cJSON.o$/;"	m
 EXEC_SQL_DEBUG	exec_sql.c	9;"	d	file:
 INIT_LIST_HEAD	list.h	/^static inline void INIT_LIST_HEAD(struct list_head *list)$/;"	f
@@ -23,53 +23,56 @@ IS_DAEMON_EXIST	main.c	8;"	d	file:
 LIB	Makefile	/^LIB=-lpthread -lm -lpq -lcrypto$/;"	m
 LIST_HEAD	list.h	22;"	d
 LIST_HEAD_INIT	list.h	20;"	d
+LOGIN_TYPE_PHONE	header.h	26;"	d
+LOGIN_TYPE_TEMP	header.h	29;"	d
+LOGIN_TYPE_WHITE	header.h	28;"	d
+LOGIN_TYPE_WX	header.h	27;"	d
 LOGS_MAX_SIZE	header.h	10;"	d
-LOOP_DEADLINE_INTERVAL	header.h	24;"	d
+LOOP_DEADLINE_INTERVAL	header.h	22;"	d
 MAKE	Makefile	/^MAKE=make$/;"	m
 MAX_EPOLL_NUM	header.h	13;"	d
-NTF_LOGOUT	header.h	122;"	d
+NTF_LOGOUT	header.h	126;"	d
 PORTAL_DEBUG	portal.c	8;"	d	file:
 PORTAL_RECV_PORT	portal.c	9;"	d	file:
 PORTAL_TEST_THREAD	main.c	9;"	d	file:
-PORTAL_TO_AC_PORT	header.h	17;"	d
-PassWord	header.h	128;"	d
+PassWord	header.h	132;"	d
 RADIUS12_UDP_PORT	radius.c	10;"	d	file:
 RADIUS13_UDP_PORT	radius.c	11;"	d	file:
-RADIUS_ATTR_TYPE_ACCT_AUTHENTIC	header.h	190;"	d
-RADIUS_ATTR_TYPE_ACCT_DELAY_TIME	header.h	186;"	d
-RADIUS_ATTR_TYPE_ACCT_INPUT_GIGAWORDS	header.h	195;"	d
-RADIUS_ATTR_TYPE_ACCT_INPUT_OCTETS	header.h	187;"	d
-RADIUS_ATTR_TYPE_ACCT_INPUT_PACKETS	header.h	192;"	d
-RADIUS_ATTR_TYPE_ACCT_OUTPUT_GIGAWORDS	header.h	196;"	d
-RADIUS_ATTR_TYPE_ACCT_OUTPUT_OCTETS	header.h	188;"	d
-RADIUS_ATTR_TYPE_ACCT_OUTPUT_PACKETS	header.h	193;"	d
-RADIUS_ATTR_TYPE_ACCT_SECCION_TIME	header.h	191;"	d
-RADIUS_ATTR_TYPE_ACCT_SESSION_ID	header.h	189;"	d
-RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE	header.h	185;"	d
-RADIUS_ATTR_TYPE_ACCT_TERMINATE_CAUSE	header.h	194;"	d
-RADIUS_ATTR_TYPE_CALLED_STATION_ID	header.h	181;"	d
-RADIUS_ATTR_TYPE_CALLING_STATION_ID	header.h	182;"	d
-RADIUS_ATTR_TYPE_EVENT_TIMESTAMP	header.h	197;"	d
-RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS	header.h	179;"	d
-RADIUS_ATTR_TYPE_FRAMED_PROTOCOL	header.h	178;"	d
-RADIUS_ATTR_TYPE_NAS_IDENTIFIER	header.h	183;"	d
-RADIUS_ATTR_TYPE_NAS_IP_ADDRESS	header.h	175;"	d
-RADIUS_ATTR_TYPE_NAS_PORT	header.h	176;"	d
-RADIUS_ATTR_TYPE_NAS_PORT_ID	header.h	199;"	d
-RADIUS_ATTR_TYPE_NAS_PORT_TYPE	header.h	198;"	d
-RADIUS_ATTR_TYPE_PROXY_STATE	header.h	184;"	d
-RADIUS_ATTR_TYPE_SERVICE_TYPE	header.h	177;"	d
-RADIUS_ATTR_TYPE_USER_NAME	header.h	173;"	d
-RADIUS_ATTR_TYPE_USER_PASSWORD	header.h	174;"	d
-RADIUS_ATTR_TYPE_VENDOR_SPECIFIC	header.h	180;"	d
+RADIUS_ATTR_TYPE_ACCT_AUTHENTIC	header.h	194;"	d
+RADIUS_ATTR_TYPE_ACCT_DELAY_TIME	header.h	190;"	d
+RADIUS_ATTR_TYPE_ACCT_INPUT_GIGAWORDS	header.h	199;"	d
+RADIUS_ATTR_TYPE_ACCT_INPUT_OCTETS	header.h	191;"	d
+RADIUS_ATTR_TYPE_ACCT_INPUT_PACKETS	header.h	196;"	d
+RADIUS_ATTR_TYPE_ACCT_OUTPUT_GIGAWORDS	header.h	200;"	d
+RADIUS_ATTR_TYPE_ACCT_OUTPUT_OCTETS	header.h	192;"	d
+RADIUS_ATTR_TYPE_ACCT_OUTPUT_PACKETS	header.h	197;"	d
+RADIUS_ATTR_TYPE_ACCT_SECCION_TIME	header.h	195;"	d
+RADIUS_ATTR_TYPE_ACCT_SESSION_ID	header.h	193;"	d
+RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE	header.h	189;"	d
+RADIUS_ATTR_TYPE_ACCT_TERMINATE_CAUSE	header.h	198;"	d
+RADIUS_ATTR_TYPE_CALLED_STATION_ID	header.h	185;"	d
+RADIUS_ATTR_TYPE_CALLING_STATION_ID	header.h	186;"	d
+RADIUS_ATTR_TYPE_EVENT_TIMESTAMP	header.h	201;"	d
+RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS	header.h	183;"	d
+RADIUS_ATTR_TYPE_FRAMED_PROTOCOL	header.h	182;"	d
+RADIUS_ATTR_TYPE_NAS_IDENTIFIER	header.h	187;"	d
+RADIUS_ATTR_TYPE_NAS_IP_ADDRESS	header.h	179;"	d
+RADIUS_ATTR_TYPE_NAS_PORT	header.h	180;"	d
+RADIUS_ATTR_TYPE_NAS_PORT_ID	header.h	203;"	d
+RADIUS_ATTR_TYPE_NAS_PORT_TYPE	header.h	202;"	d
+RADIUS_ATTR_TYPE_PROXY_STATE	header.h	188;"	d
+RADIUS_ATTR_TYPE_SERVICE_TYPE	header.h	181;"	d
+RADIUS_ATTR_TYPE_USER_NAME	header.h	177;"	d
+RADIUS_ATTR_TYPE_USER_PASSWORD	header.h	178;"	d
+RADIUS_ATTR_TYPE_VENDOR_SPECIFIC	header.h	184;"	d
 RADIUS_BASIC_LEN	radius.c	/^unsigned int RADIUS_BASIC_LEN$/;"	v
 RADIUS_DEBUG	radius.c	8;"	d	file:
-RADIUS_SECRET	header.h	285;"	d
+RADIUS_SECRET	header.h	289;"	d
 RADIUS_SECRET_LEN	radius.c	/^unsigned int RADIUS_SECRET_LEN	= 0;	\/\/ radius密钥长度$/;"	v
-REQ_AUTH	header.h	116;"	d
-REQ_CHALLENGE	header.h	114;"	d
-REQ_INFO	header.h	123;"	d
-REQ_LOGOUT	header.h	118;"	d
+REQ_AUTH	header.h	120;"	d
+REQ_CHALLENGE	header.h	118;"	d
+REQ_INFO	header.h	127;"	d
+REQ_LOGOUT	header.h	122;"	d
 SERVER_MUTUAL_DEBUG	server_mutual.c	8;"	d	file:
 SOURCE	Makefile	/^SOURCE=exec_sql.c postgresql.c main.c utils.c user_mp_list.c logs.c net.c server_mutual.c radius.c portal.c cJSON.c$/;"	m
 SQL_TEST_THREAD	main.c	10;"	d	file:
@@ -83,10 +86,10 @@ UDP_create	net.c	/^int UDP_create(int *sockfd)$/;"	f
 UDP_recv_block	net.c	/^int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen)$/;"	f
 UDP_send_block	net.c	/^int UDP_send_block(int socket, char* ip, int port, unsigned char *buf, int len)$/;"	f
 USER_MP_LIST_DEBUG	user_mp_list.c	9;"	d	file:
-UserName	header.h	127;"	d
+UserName	header.h	131;"	d
 WRITE_LOG	header.h	11;"	d
 WT_HEADER_H	header.h	7;"	d
-WX_TEMP_DISCHARGED	header.h	26;"	d
+WX_TEMP_DISCHARGED	header.h	24;"	d
 _LINUX_LIST_H	list.h	2;"	d
 __list_add	list.h	/^static inline void __list_add(struct list_head *new,$/;"	f
 __list_del	list.h	/^static inline void __list_del(struct list_head * prev, struct list_head * next)$/;"	f
@@ -199,7 +202,7 @@ logs_temp	logs.c	/^static char logs_temp[2048];		\/\/ log内容临时存放$/;"	
 logs_tm	logs.c	/^static time_t logs_tm;				\/\/ log时间$/;"	v	file:
 loop_deadline_thread	exec_sql.c	/^void* loop_deadline_thread(void *fd)$/;"	f
 mac_change	utils.c	/^int mac_change(char* dest, const char* src)$/;"	f
-mac_change_12	utils.c	/^int mac_change_12(char* dest, const char* src)$/;"	f
+mac_change_12	utils.c	/^int mac_change_12(char* dest, char* src)$/;"	f
 main	main.c	/^int main(int argc, char** argv)$/;"	f
 malloc_fn	cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
 next	cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
@@ -246,7 +249,7 @@ radius_recv	header.h	/^struct radius_recv{$/;"	s
 recv_ret	header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:portal_recv
 recv_ret	header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:radius_recv
 reqID	header.h	/^	unsigned short reqID;		\/\/ 2个字节，由AC设备随机生成$/;"	m	struct:portal_ac
-res_username	exec_sql.c	/^int res_username(char* username, int* wu_id, int* login_type)$/;"	f
+res_username	utils.c	/^int res_username(char* username, int* wu_id, int* login_type)$/;"	f
 rsv	header.h	/^	unsigned char rsv;			\/\/ 保留字段，长度为 1 字节，在所有报文中值为 0$/;"	m	struct:portal_ac
 run	main.c	/^void run()$/;"	f
 serialNo	header.h	/^	unsigned short serialNo;	\/\/ 报文的序列号，长度为 2 字节$/;"	m	struct:portal_ac

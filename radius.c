@@ -541,7 +541,7 @@ void* radius13_pro_thread(void *fd)
 	
 	// 获取acip
 	char acip[32] = {0};
-	strcpy(acip, inet_ntoa(rr->client.sin_addr.s_addr));
+	strcpy(acip, inet_ntoa(rr->client.sin_addr));
 #if RADIUS_DEBUG
 	xyprintf(0, "acip = %s", acip);
 #endif

@@ -85,6 +85,7 @@ int user_mp_list_find_and_del(unsigned int userid, char* usermac);
 
 // utils
 int mac_change(char* dest, const char* src);
+int mac_change_12(char* dest, char* src);
 void get_curr_time_str(char* buf);
 int res_username(char* username, int* wu_id, int* login_type);
 
