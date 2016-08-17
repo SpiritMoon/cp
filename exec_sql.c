@@ -109,7 +109,7 @@ ERROR:
 // acid
 // wlanparameter
 // wu_id 传回参数
-int get_wuid(unsigned int s_id, char* type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id)
+int get_wuid(unsigned int s_id, int type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id)
 {
 	// 建立数据库连接
 	PGconn* conn = sql_init();
@@ -162,15 +162,23 @@ int get_wuid(unsigned int s_id, char* type, char* para1, char* para2, unsigned i
 #endif
 		
 		// 没有查询到 添加新的记录
-		if( !strcmp(type, "phone") ){
+		if( type == LOGIN_TYPE_PHONE ){
 			snprintf(sql_str, 1023, "INSERT INTO wifi_user(s_id, mac, phonenum, created_at, updated_at)"
 					" VALUES(%u, '%s', '%s', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
 					s_id, usermac, para1);
 		}
-		else if( !strcmp(type, "weixin") ){
+		else if( type == LOGIN_TYPE_WX ){
 			snprintf(sql_str, 1023, "INSERT INTO wifi_user(s_id, mac, wx_openid, wx_tid, created_at, updated_at)"
 					" VALUES(%u, '%s', '%s', '%s', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
 					s_id, usermac, para1, para2);
+		}
+		//else if( type == LOGIN_TYPE_WHITE ){
+			// 白名单用户不会出现在这里
+		//}
+		else if( type == LOGIN_TYPE_TEMP ){
+			snprintf(sql_str, 1023, "INSERT INTO wifi_user(s_id, mac, created_at, updated_at)"
+					" VALUES(%u, '%s', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
+					s_id, usermac);
 		}
 		else {
 			xyprintf(0, "ERROR:%s %d -- type(%s) is error!", __FILE__, __LINE__, type);
@@ -200,11 +208,10 @@ int get_wuid(unsigned int s_id, char* type, char* para1, char* para2, unsigned i
 #endif
 	}
 	else {
-		xyprintf(0, "mac is cunzai!");
 		*wu_id = atoi(sql_getvalue_string(sql_res, 0, 0));
 		// 比较手机号码是否变化，变化则修改
 
-		if( !strcmp(type, "phone") ){
+		if( type == LOGIN_TYPE_PHONE ){
 			if( strcmp( para1, sql_getvalue_string(sql_res, 0, 1)) ){
 				snprintf(sql_str, 1023, "UPDATE wifi_user SET phonenum = '%s' WHERE id = %u",
 						para1, *wu_id);
@@ -217,7 +224,7 @@ int get_wuid(unsigned int s_id, char* type, char* para1, char* para2, unsigned i
 #endif
 			}
 		}
-		else if( !strcmp(type, "weixin") ){
+		else if( type == LOGIN_TYPE_WX ){
 			if( strcmp( para1, sql_getvalue_string(sql_res, 0, 2)) ||
 					strcmp( para2, sql_getvalue_string(sql_res, 0, 3)) ){
 
@@ -232,11 +239,15 @@ int get_wuid(unsigned int s_id, char* type, char* para1, char* para2, unsigned i
 #endif
 			}
 		}
-		else if( !strcmp(type, "white") ){
+		else if( type == LOGIN_TYPE_WHITE ){
 #if EXEC_SQL_DEBUG
 			xyprintf(0, "This user is in the white list!");
 #endif
-			
+		}
+		else if( type == LOGIN_TYPE_TEMP ){
+#if EXEC_SQL_DEBUG
+			xyprintf(0, "This user is temp!");
+#endif
 		}
 		else {
 			xyprintf(0, "ERROR:%s %d -- type(%s) is error!", __FILE__, __LINE__, type);
@@ -662,7 +673,7 @@ int insert_deadline(char* userip, char* acip, int acport, int discharged_time)
 
 	// 添加临时放行记录
 	snprintf(sql_str, 1023, "INSERT INTO wifi_user_deadline(userip, acip, acport, deadline_time)"
-			" VALUES('%s','%s', %d, CURRENT_TIMESTAMP + interval '%d S')",
+			" VALUES('%s','%s', %d, CURRENT_TIMESTAMP + '%d M')",
 			userip, acip, acport, discharged_time);
 	if( sql_exec(conn, sql_str) ){
 		xyprintf(0, "ERROR:%s %d -- sql exec failed!", __FILE__, __LINE__);

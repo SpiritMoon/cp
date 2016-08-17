@@ -230,7 +230,7 @@ void* platform_process(void *fd)
 
 	// 如果是手机号认证
 	if(!strcmp(para.type, "auth-tel") ){
-		if( get_wuid(s_id, "phone", para.usernum, NULL, acid, para.wlanparameter, &wu_id) ){
+		if( get_wuid(s_id, LOGIN_TYPE_PHONE, para.usernum, NULL, acid, para.wlanparameter, &wu_id) ){
 			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
 			goto JSON_ERR;
 		}
@@ -243,7 +243,7 @@ void* platform_process(void *fd)
 	}
 	// 微信认证
 	else if(!strcmp(para.type, "auth-wx")){
-		if( get_wuid(s_id, "weixin", para.usernum, para.usercode, acid, para.wlanparameter, &wu_id) ){
+		if( get_wuid(s_id, LOGIN_TYPE_WX, para.usernum, para.usercode, acid, para.wlanparameter, &wu_id) ){
 			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
 			goto JSON_ERR;
 		}
@@ -258,7 +258,7 @@ void* platform_process(void *fd)
 	}
 	// 如果是白名单
 	else if(!strcmp(para.type, "auth-white")) {
-		if( get_wuid(s_id, "white", NULL, NULL, acid, para.wlanparameter, &wu_id) ){
+		if( get_wuid(s_id, LOGIN_TYPE_WHITE, NULL, NULL, acid, para.wlanparameter, &wu_id) ){
 			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
 			goto JSON_ERR;
 		}
@@ -270,7 +270,7 @@ void* platform_process(void *fd)
 	}
 	// 临时放行
 	else if(!strcmp(para.type, "auth-temp") ){
-		if( get_wuid(s_id, "temp", NULL, NULL, acid, para.wlanparameter, &wu_id) ){
+		if( get_wuid(s_id, LOGIN_TYPE_TEMP, NULL, NULL, acid, para.wlanparameter, &wu_id) ){
 			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
 			goto JSON_ERR;
 		}

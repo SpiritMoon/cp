@@ -220,34 +220,6 @@ int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)
 	return 0;
 }
 
-
-/** 
- *@brief  测试线程
- *@param  
- *@return 
- */
-void* portal_test_thread(void* fd)
-{
-	pthread_detach(pthread_self());
-	sleep(1);
-	xyprintf(0, "protal test thread is working!!");
-	
-	SendReqLogoutAndRecv("10.221.144.42", "223.99.130.172", 2000);
-	
-	/*
-	if( SendReqAuthAndRecv("10.187.226.4", "18866120427", "123456", "111.17.237.28", PORTAL_TO_AC_PORT ) ){
-		xyprintf(0, "stat: failed");
-	}
-	else{
-		xyprintf(0, "stat: ok");
-	}
-	*/
-		
-	sleep(180);
-	
-	pthread_exit(NULL);
-}
-
 /** 
  *@brief  portal数据包处理
  *@param

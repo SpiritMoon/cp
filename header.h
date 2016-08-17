@@ -21,7 +21,7 @@
 
 #define LOOP_DEADLINE_INTERVAL	10
 
-#define WX_TEMP_DISCHARGED					300
+#define WX_TEMP_DISCHARGED		5
 
 #define LOGIN_TYPE_PHONE		1
 #define LOGIN_TYPE_WX			2
@@ -100,7 +100,7 @@ void sql_destory(PGconn *conn);
 // exec_sql.c
 int get_apinfo(char* apmac, unsigned int *apid, char* domain, unsigned int *s_id);
 int get_acinfo(char* acname, unsigned int *acid, char* acip, int* acport);
-int get_wuid(unsigned int s_id, char* type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id);
+int get_wuid(unsigned int s_id, int type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id);
 int update_wifi_user(char* username, char* acip, char* usermac);
 int user_online(char* username, char* userip, char* acip, char* apmac);
 int user_offline(char* username, char* userip, char* acip, char* apmac);

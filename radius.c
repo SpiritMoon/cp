@@ -581,7 +581,7 @@ void* radius13_pro_thread(void *fd)
 		xyprintf(0, "RADIUS DATA ERROR:Get userip error!");
 		goto DATA_ERR;
 	}
-	char userip[32] = {0};
+	unsigned char userip[32] = {0};
 	snprintf(userip, 31, "%u.%u.%u.%u", c_userip[0], c_userip[1], c_userip[2], c_userip[3]);
 #if RADIUS_DEBUG
 	xyprintf(0, "userip = %s", userip);
@@ -592,24 +592,28 @@ void* radius13_pro_thread(void *fd)
 
 
 
-
+	// 开始处理
 
 	if( acct_status_type == 1 ){
+		// 用户上线
 		xyprintf(0, "1813: username %s, usermac %s online!!", username, usermac);
 		if( user_online(username, userip, acip, apmac) ){
 			xyprintf(0, "ERROR:%s %d", __FILE__, __LINE__);
 		}
 	}
 	else if ( acct_status_type == 2 ){
+		// 用户下线
 		xyprintf(0, "1813: username %s, usermac %s offline!!", username, usermac);
 		if( user_offline(username, userip, acip, apmac) ){
 			xyprintf(0, "ERROR:%s %d", __FILE__, __LINE__);
 		}
 	}
 	else if ( acct_status_type == 3 ){
+		// 用户心跳
 		xyprintf(0, "1813: username %s, usermac %s update!!", username, usermac);
 	}
 	else {
+		// 未知
 		xyprintf(0, "ERROR -- %s -- %d : acct_status_type(u%) is error", __FILE__, __LINE__, acct_status_type);
 	}
 
