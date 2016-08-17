@@ -84,7 +84,7 @@ void user_mp_list_add(unsigned int userid, char* usermac);
 int user_mp_list_find_and_del(unsigned int userid, char* usermac);
 
 // utils
-int mac_change(char* dest, const char* src);
+int mac_change_17(char* dest, const char* src);
 int mac_change_12(char* dest, char* src);
 void get_curr_time_str(char* buf);
 int res_username(char* username, int* wu_id, int* login_type);
@@ -180,12 +180,12 @@ void* portal_conn_thread(void *fd);
 #define RADIUS_ATTR_TYPE_NAS_PORT				5		// nac 端口
 #define RADIUS_ATTR_TYPE_SERVICE_TYPE			6		// 服务器类型 2-Framed
 #define RADIUS_ATTR_TYPE_FRAMED_PROTOCOL		7		// ff-Ascend-ARA
-#define RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS		8		//
+#define RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS		8		// 用户ip
 #define RADIUS_ATTR_TYPE_VENDOR_SPECIFIC		26		//
 #define RADIUS_ATTR_TYPE_CALLED_STATION_ID		30		// ap mac和ssid
 #define RADIUS_ATTR_TYPE_CALLING_STATION_ID		31		// 用户mac
 #define RADIUS_ATTR_TYPE_NAS_IDENTIFIER			32		//
-#define RADIUS_ATTR_TYPE_PROXY_STATE			33		//
+#define RADIUS_ATTR_TYPE_PROXY_STATE			33		// proxy 中兴设备需要返回回去
 #define RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE		40		// 计费请求标志 1-start 2-stop 3-update
 #define RADIUS_ATTR_TYPE_ACCT_DELAY_TIME		41		//
 #define RADIUS_ATTR_TYPE_ACCT_INPUT_OCTETS		42		//

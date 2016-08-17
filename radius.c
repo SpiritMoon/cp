@@ -337,7 +337,16 @@ void* radius12_pro_thread(void *fd)
 	
 	// 处理是否是临时放行
 	if( login_type == LOGIN_TYPE_TEMP ){
-		user_mp_list_add(wu_id, usermac);
+		char usermac17[128] = {0};
+		if( mac_change_17(usermac17, tempmac) ){
+			xyprintf(0, "RADIUS DATA ERROR:Mac change error!");
+			goto DATA_ERR;
+		}
+#if RADIUS_DEBUG
+		xyprintf(0, "usermac17 = %s", usermac17);
+#endif
+
+		user_mp_list_add(wu_id, usermac17);
 	}
 	
 	// 回复报文

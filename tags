@@ -199,8 +199,8 @@ logs_strlen	logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
 logs_temp	logs.c	/^static char logs_temp[2048];		\/\/ log内容临时存放$/;"	v	file:
 logs_tm	logs.c	/^static time_t logs_tm;				\/\/ log时间$/;"	v	file:
 loop_deadline_thread	exec_sql.c	/^void* loop_deadline_thread(void *fd)$/;"	f
-mac_change	utils.c	/^int mac_change(char* dest, const char* src)$/;"	f
 mac_change_12	utils.c	/^int mac_change_12(char* dest, char* src)$/;"	f
+mac_change_17	utils.c	/^int mac_change_17(char* dest, const char* src)$/;"	f
 main	main.c	/^int main(int argc, char** argv)$/;"	f
 malloc_fn	cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
 next	cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON

@@ -669,15 +669,17 @@ int insert_deadline(char* userip, char* acip, int acport, int discharged_time)
 		goto SQLED_ERROR;
 	}
 
+	// 如果放行时间是0 则不添加到踢出表
 	xyprintf(0, "EXEC_SQL_DEBUG:%s success!", sql_str);
-
-	// 添加临时放行记录
-	snprintf(sql_str, 1023, "INSERT INTO wifi_user_deadline(userip, acip, acport, deadline_time)"
-			" VALUES('%s','%s', %d, CURRENT_TIMESTAMP + '%d M')",
-			userip, acip, acport, discharged_time);
-	if( sql_exec(conn, sql_str) ){
-		xyprintf(0, "ERROR:%s %d -- sql exec failed!", __FILE__, __LINE__);
-		goto SQLED_ERROR;
+	if( discharged_time ){
+		// 添加临时放行记录
+		snprintf(sql_str, 1023, "INSERT INTO wifi_user_deadline(userip, acip, acport, deadline_time)"
+				" VALUES('%s','%s', %d, CURRENT_TIMESTAMP + '%d M')",
+				userip, acip, acport, discharged_time);
+		if( sql_exec(conn, sql_str) ){
+			xyprintf(0, "ERROR:%s %d -- sql exec failed!", __FILE__, __LINE__);
+			goto SQLED_ERROR;
+		}
 	}
 	
 	xyprintf(0, "EXEC_SQL_DEBUG:%s success!", sql_str);

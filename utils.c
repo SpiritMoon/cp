@@ -6,7 +6,7 @@
 #include "header.h"
 
 // 将mac地址转换成 aa:aa:aa:aa:aa:aa 的形式
-int mac_change(char* dest, const char* src)
+int mac_change_17(char* dest, const char* src)
 {
 	if(strlen(src) < 17){
 		return -1;
