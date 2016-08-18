@@ -125,7 +125,6 @@ int get_plat_para(cJSON *json, struct plat_para *para)
 	}
 	para->wlanacip = temp->valuestring;
 	
-	
 	// get apmac
 	temp = cJSON_GetObjectItem(json,"apmac");
 	if (!temp){
@@ -204,7 +203,6 @@ void* platform_process(void *fd)
 		goto JSON_ERR;
 	}
 	
-
 	// 查询ac信息
 	unsigned int acid, acport;
 	char acip[256] = {0};
@@ -212,9 +210,10 @@ void* platform_process(void *fd)
 		xyprintf(0,"PLATFORM_ERROR:%s -- %d Get acinfo error!", __FILE__, __LINE__);
 		goto JSON_ERR;
 	}
+xyprintf(0, "%s -- %d -- %p", __FILE__, __LINE__, para.wlanacip);
 	
 	// 如果没有ACip 用数据库里查出来的值
-	if( !strlen(para.wlanacip) ){
+	if( !para.wlanacip || !strlen(para.wlanacip) ){
 		para.wlanacip = acip;
 		//para.wlanacip = "223.99.130.172";
 	}
