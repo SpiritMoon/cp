@@ -115,8 +115,7 @@ int get_plat_para(cJSON *json, struct plat_para *para)
 		return -1;
 	}
 	para->ssid = temp->valuestring;
-
-
+/*
 	// get wlanacip 
 	temp = cJSON_GetObjectItem(json,"wlanacip");
 	if (!temp){
@@ -124,7 +123,7 @@ int get_plat_para(cJSON *json, struct plat_para *para)
 		return -1;
 	}
 	para->wlanacip = temp->valuestring;
-	
+*/	
 	// get apmac
 	temp = cJSON_GetObjectItem(json,"apmac");
 	if (!temp){
@@ -213,10 +212,9 @@ void* platform_process(void *fd)
 xyprintf(0, "%s -- %d -- %p", __FILE__, __LINE__, para.wlanacip);
 	
 	// 如果没有ACip 用数据库里查出来的值
-	if( !para.wlanacip || !strlen(para.wlanacip) ){
+//	if( !para.wlanacip || !strlen(para.wlanacip) ){
 		para.wlanacip = acip;
-		//para.wlanacip = "223.99.130.172";
-	}
+//	}
 	
 #if SERVER_MUTUAL_DEBUG
 	xyprintf_plat_para(&para);
@@ -269,6 +267,7 @@ xyprintf(0, "%s -- %d -- %p", __FILE__, __LINE__, para.wlanacip);
 	}
 	// 临时放行
 	else if(!strcmp(para.type, "auth-temp") ){
+		
 		if( get_wuid(s_id, LOGIN_TYPE_TEMP, NULL, NULL, acid, para.wlanparameter, &wu_id) ){
 			xyprintf(0, "ERROR %s -- %d", __FILE__, __LINE__);
 			goto JSON_ERR;
@@ -296,6 +295,7 @@ xyprintf(0, "%s -- %d -- %p", __FILE__, __LINE__, para.wlanacip);
 				xyprintf(0, "Can not find usermac, sleep 100 us continue!");
 			}
 		}
+//		snprintf(res, 127, "{\"stat\":\"b4:0b:44:1a:63:12\"}");
 	}
 	else {
 		xyprintf(0,"PLATFORM_ERROR:Type unknown(%s) -- %s -- %d!!!", para.type, __FILE__, __LINE__);

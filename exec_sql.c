@@ -459,7 +459,7 @@ int user_online(char* username, char* userip, char* acip, char* apmac)
 
 	PQclear(sql_res);
 	
-	// 查询apid
+	// 查询acport
 	snprintf(sql_str, 1023, "SELECT port FROM ac WHERE ip = '%s'", acip);
 	if( sql_exec_select(conn, sql_str, &sql_res) ){
 		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
