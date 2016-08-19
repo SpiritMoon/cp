@@ -163,21 +163,21 @@ int get_wuid(unsigned int s_id, int type, char* para1, char* para2, unsigned int
 		
 		// 没有查询到 添加新的记录
 		if( type == LOGIN_TYPE_PHONE ){
-			snprintf(sql_str, 1023, "INSERT INTO wifi_user(s_id, mac, phonenum, created_at, updated_at)"
-					" VALUES(%u, '%s', '%s', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
+			snprintf(sql_str, 1023, "INSERT INTO wifi_user(s_id, mac, phonenum, created_at, updated_at, isonline, login_num)"
+					" VALUES(%u, '%s', '%s', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false, 0)",
 					s_id, usermac, para1);
 		}
 		else if( type == LOGIN_TYPE_WX ){
-			snprintf(sql_str, 1023, "INSERT INTO wifi_user(s_id, mac, wx_openid, wx_tid, created_at, updated_at)"
-					" VALUES(%u, '%s', '%s', '%s', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
+			snprintf(sql_str, 1023, "INSERT INTO wifi_user(s_id, mac, wx_openid, wx_tid, created_at, updated_at, isonline, login_num)"
+					" VALUES(%u, '%s', '%s', '%s', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false, 0)",
 					s_id, usermac, para1, para2);
 		}
 		//else if( type == LOGIN_TYPE_WHITE ){
 			// 白名单用户不会出现在这里
 		//}
 		else if( type == LOGIN_TYPE_TEMP ){
-			snprintf(sql_str, 1023, "INSERT INTO wifi_user(s_id, mac, created_at, updated_at)"
-					" VALUES(%u, '%s', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
+			snprintf(sql_str, 1023, "INSERT INTO wifi_user(s_id, mac, created_at, updated_at, isonline, login_num)"
+					" VALUES(%u, '%s', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false, 0)",
 					s_id, usermac);
 		}
 		else {
@@ -213,7 +213,7 @@ int get_wuid(unsigned int s_id, int type, char* para1, char* para2, unsigned int
 
 		if( type == LOGIN_TYPE_PHONE ){
 			if( strcmp( para1, sql_getvalue_string(sql_res, 0, 1)) ){
-				snprintf(sql_str, 1023, "UPDATE wifi_user SET phonenum = '%s' WHERE id = %u",
+				snprintf(sql_str, 1023, "UPDATE wifi_user SET phonenum = '%s', updated_at = CURRENT_TIMESTAMP WHERE id = %u",
 						para1, *wu_id);
 				if( sql_exec(conn, sql_str) ){
 					xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
@@ -228,7 +228,7 @@ int get_wuid(unsigned int s_id, int type, char* para1, char* para2, unsigned int
 			if( strcmp( para1, sql_getvalue_string(sql_res, 0, 2)) ||
 					strcmp( para2, sql_getvalue_string(sql_res, 0, 3)) ){
 
-				snprintf(sql_str, 1023, "UPDATE wifi_user SET wx_openid = '%s', wx_tid = '%s' WHERE id = %u",
+				snprintf(sql_str, 1023, "UPDATE wifi_user SET wx_openid = '%s', wx_tid = '%s', updated_at = CURRENT_TIMESTAMP WHERE id = %u",
 						para1, para2, *wu_id);
 				if( sql_exec(conn, sql_str) ){
 					xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
@@ -336,7 +336,7 @@ int update_wifi_user(char* username, char* acip, char* usermac)
 		PQclear(sql_res);
 
 		// 更新mac
-		snprintf(sql_str, 1023, "UPDATE wifi_user SET mac = '%s' WHERE id = %d", usermac, wu_id);
+		snprintf(sql_str, 1023, "UPDATE wifi_user SET mac = '%s', updated_at = CURRENT_TIMESTAMP WHERE id = %d", usermac, wu_id);
 		if( sql_exec(conn, sql_str) ){
 			xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
 			goto SQLED_ERROR;
@@ -485,7 +485,7 @@ int user_online(char* username, char* userip, char* acip, char* apmac)
 
 
 	// 在线状态
-	snprintf(sql_str, 1023, "UPDATE wifi_user SET isonline = true WHERE id = %d", wu_id);
+	snprintf(sql_str, 1023, "UPDATE wifi_user SET isonline = true, updated_at = CURRENT_TIMESTAMP, login_num = login_num + 1 WHERE id = %d", wu_id);
 	if( sql_exec(conn, sql_str) ){
 		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
 		goto SQLED_ERROR;
@@ -612,7 +612,7 @@ int user_offline(char* username, char* userip, char* acip, char* apmac)
 
 
 	// 在线状态
-	snprintf(sql_str, 1023, "UPDATE wifi_user SET isonline = false WHERE id = %d", wu_id);
+	snprintf(sql_str, 1023, "UPDATE wifi_user SET isonline = false, updated_at = CURRENT_TIMESTAMP WHERE id = %d", wu_id);
 	if( sql_exec(conn, sql_str) ){
 		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
 		goto SQLED_ERROR;
