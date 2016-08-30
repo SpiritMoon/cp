@@ -493,10 +493,16 @@ int user_online(char* username, char* userip, char* acip, char* apmac)
 #if EXEC_SQL_DEBUG
 	xyprintf(0, "EXEC_SQL_DEBUG: %s success!", sql_str);
 #endif
+	
+	// deadline
+	if( insert_deadline(userip, acip, acport, auth_time) ){
+		xyprintf(0, "ERROR:%s %d -- insert deadline error!", __FILE__, __LINE__);
+		goto SQLED_ERROR;
+	}
 
 	// log
-	snprintf(sql_str, 1023, "INSERT INTO wifi_user_log(wu_id, ip, type, time, apid, login_type)"
-			" VALUES(%d, '%s', 1, CURRENT_TIMESTAMP, %d, %d)",
+	snprintf(sql_str, 1023, "INSERT INTO wifi_user_log(wu_id, ip, apid, login_type, complete, conn_time)"
+			" VALUES(%d, '%s', %d, %d, false, CURRENT_TIMESTAMP)",
 			wu_id, userip, apid, login_type);
 	if( sql_exec(conn, sql_str) ){
 		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
@@ -506,11 +512,6 @@ int user_online(char* username, char* userip, char* acip, char* apmac)
 	xyprintf(0, "EXEC_SQL_DEBUG: %s success!", sql_str);
 #endif
 
-	// deadline
-	if( insert_deadline(userip, acip, acport, auth_time) ){
-		xyprintf(0, "ERROR:%s %d -- insert deadline error!", __FILE__, __LINE__);
-		goto SQLED_ERROR;
-	}
 
 	sql_destory(conn);
 	return 0;
@@ -621,10 +622,20 @@ int user_offline(char* username, char* userip, char* acip, char* apmac)
 	xyprintf(0, "EXEC_SQL_DEBUG: %s success!", sql_str);
 #endif
 
+	// 删除已有记录
+	snprintf(sql_str, 1023, "DELETE FROM wifi_user_deadline WHERE userip = '%s' AND acip = '%s'", userip, acip);
+	if( sql_exec(conn, sql_str) ){
+		xyprintf(0, "ERROR:%s %d -- sql exec failed!", __FILE__, __LINE__);
+		goto SQLED_ERROR;
+	}
+#if EXEC_SQL_DEBUG
+	xyprintf(0, "EXEC_SQL_DEBUG:%s success!", sql_str);
+#endif
+
 	// log
-	snprintf(sql_str, 1023, "INSERT INTO wifi_user_log(wu_id, ip, type, time, apid, login_type)"
-			" VALUES(%d, '%s', 0, CURRENT_TIMESTAMP, %d, %d)",
-			wu_id, userip, apid, login_type);
+	snprintf(sql_str, 1023, "UPDATE wifi_user_log SET complete = true, disconn_time = CURRENT_TIMESTAMP,"
+			" online_time = TRUNC(EXTRACT(EPOCH FROM AGE(CURRENT_TIMESTAMP, conn_time)) / 60) "
+			"WHERE wu_id = %d AND complete = false", wu_id);
 	if( sql_exec(conn, sql_str) ){
 		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
 		goto SQLED_ERROR;
@@ -632,15 +643,6 @@ int user_offline(char* username, char* userip, char* acip, char* apmac)
 #if EXEC_SQL_DEBUG
 	xyprintf(0, "EXEC_SQL_DEBUG: %s success!", sql_str);
 #endif
-
-	// 删除已有记录
-	snprintf(sql_str, 1023, "DELETE FROM wifi_user_deadline WHERE userip = '%s' AND acip = '%s'", userip, acip);
-	if( sql_exec(conn, sql_str) ){
-		xyprintf(0, "ERROR:%s %d -- sql exec failed!", __FILE__, __LINE__);
-		goto SQLED_ERROR;
-	}
-	
-	xyprintf(0, "EXEC_SQL_DEBUG:%s success!", sql_str);
 
 	sql_destory(conn);
 	return 0;
