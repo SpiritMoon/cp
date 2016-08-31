@@ -613,7 +613,7 @@ void* radius13_pro_thread(void *fd)
 	else if ( acct_status_type == 2 ){
 		// 用户下线
 		xyprintf(0, "1813: username %s, usermac %s offline!!", username, usermac);
-		if( user_offline(username, userip, acip, apmac) ){
+		if( user_offline(username, userip, acip) ){
 			xyprintf(0, "ERROR:%s %d", __FILE__, __LINE__);
 		}
 	}

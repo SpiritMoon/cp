@@ -101,14 +101,7 @@ ERROR:
 	return -1;
 }
 
-// 用户手机登录信息
-// s_id 门店id
-// type 认证类型，weixin，phone
-// para 认证参数1
-// para2 认证参数2
-// acid
-// wlanparameter
-// wu_id 传回参数
+// 获取wifiuser id 如果没有记录则插入
 int get_wuid(unsigned int s_id, int type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id)
 {
 	// 建立数据库连接
@@ -267,6 +260,7 @@ ERROR:
 	return -1;
 }
 
+// 更新wifi user 信息 将获取到的mac 更新到数据表中
 int update_wifi_user(char* username, char* acip, char* usermac)
 {
 	int wu_id, login_type;
@@ -366,6 +360,7 @@ ERROR:
 	return -1;
 }
 
+// 用户上线
 int user_online(char* username, char* userip, char* acip, char* apmac)
 {
 	int wu_id, login_type;
@@ -501,9 +496,9 @@ int user_online(char* username, char* userip, char* acip, char* apmac)
 	}
 
 	// log
-	snprintf(sql_str, 1023, "INSERT INTO wifi_user_log(wu_id, ip, apid, login_type, complete, conn_time)"
-			" VALUES(%d, '%s', %d, %d, false, CURRENT_TIMESTAMP)",
-			wu_id, userip, apid, login_type);
+	snprintf(sql_str, 1023, "INSERT INTO wifi_user_log(wu_id, ip, apid, login_type, complete, conn_time, s_id)"
+			" VALUES(%d, '%s', %d, %d, false, CURRENT_TIMESTAMP, %d)",
+			wu_id, userip, apid, login_type, s_id);
 	if( sql_exec(conn, sql_str) ){
 		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
 		goto SQLED_ERROR;
@@ -522,7 +517,8 @@ ERROR:
 	return -1;
 }
 
-int user_offline(char* username, char* userip, char* acip, char* apmac)
+// 用户下线
+int user_offline(char* username, char* userip, char* acip)
 {
 	int wu_id, login_type;
 	if( res_username(username, &wu_id, &login_type) ){
@@ -538,81 +534,8 @@ int user_offline(char* username, char* userip, char* acip, char* apmac)
 	}
 
 	char sql_str[1024] = {0};
-	// 查询s_id
-	snprintf(sql_str, 1023, "SELECT s_id FROM wifi_user WHERE id = %d", wu_id);
-	PGresult* sql_res;
-	if( sql_exec_select(conn, sql_str, &sql_res) ){
-		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
-		goto SQLED_ERROR;
-	}
 
-	// 判断是否查询到
-	int tuples = PQntuples(sql_res);
-	if( tuples < 1 ){
-		xyprintf(0, "ERROR:%s %d -- Not find recond of wu_id is %d", __FILE__, __LINE__, wu_id);
-		PQclear(sql_res);
-		goto SQLED_ERROR;
-	}
-
-	// 取值
-	int s_id = atoi( sql_getvalue_string(sql_res, 0, 0) );
-
-#if EXEC_SQL_DEBUG
-	xyprintf(0, "EXEC_SQL_DEBUG: SELECT s_id(%d) FROM wifi_user WHERE id = %d success!", s_id, wu_id);
-#endif
-
-	PQclear(sql_res);
-
-	// 查询apid
-	snprintf(sql_str, 1023, "SELECT id FROM ap WHERE mac = '%s'", apmac);
-	if( sql_exec_select(conn, sql_str, &sql_res) ){
-		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
-		goto SQLED_ERROR;
-	}
-
-	// 判断是否查询到
-	tuples = PQntuples(sql_res);
-	if( tuples < 1 ){
-		xyprintf(0, "ERROR:%s %d -- Not find recond of apmac is %s", __FILE__, __LINE__, apmac);
-		PQclear(sql_res);
-		goto SQLED_ERROR;
-	}
-
-	// 取值
-	int apid = atoi( sql_getvalue_string(sql_res, 0, 0) );
-
-#if EXEC_SQL_DEBUG
-	xyprintf(0, "EXEC_SQL_DEBUG: SELECT id(%d) FROM ap WHERE mac = %s success!", apid, apmac);
-#endif
-
-	PQclear(sql_res);
-	
-	// 查询apid
-	snprintf(sql_str, 1023, "SELECT port FROM ac WHERE ip = '%s'", acip);
-	if( sql_exec_select(conn, sql_str, &sql_res) ){
-		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
-		goto SQLED_ERROR;
-	}
-
-	// 判断是否查询到
-	tuples = PQntuples(sql_res);
-	if( tuples < 1 ){
-		xyprintf(0, "ERROR:%s %d -- Not find recond of acip is %s", __FILE__, __LINE__, acip);
-		PQclear(sql_res);
-		goto SQLED_ERROR;
-	}
-
-	// 取值
-	int acport = atoi( sql_getvalue_string(sql_res, 0, 0) );
-
-#if EXEC_SQL_DEBUG
-	xyprintf(0, "EXEC_SQL_DEBUG: SELECT port(%d) FROM ac WHERE ip = %s success!", acport, acip);
-#endif
-
-	PQclear(sql_res);
-
-
-	// 在线状态
+	// 更新在线状态
 	snprintf(sql_str, 1023, "UPDATE wifi_user SET isonline = false, updated_at = CURRENT_TIMESTAMP WHERE id = %d", wu_id);
 	if( sql_exec(conn, sql_str) ){
 		xyprintf(0, "ERROR:%s %d -- sql exec select failed!", __FILE__, __LINE__);
@@ -622,7 +545,7 @@ int user_offline(char* username, char* userip, char* acip, char* apmac)
 	xyprintf(0, "EXEC_SQL_DEBUG: %s success!", sql_str);
 #endif
 
-	// 删除已有记录
+	// 删除已有到时踢出记录
 	snprintf(sql_str, 1023, "DELETE FROM wifi_user_deadline WHERE userip = '%s' AND acip = '%s'", userip, acip);
 	if( sql_exec(conn, sql_str) ){
 		xyprintf(0, "ERROR:%s %d -- sql exec failed!", __FILE__, __LINE__);
@@ -632,7 +555,7 @@ int user_offline(char* username, char* userip, char* acip, char* apmac)
 	xyprintf(0, "EXEC_SQL_DEBUG:%s success!", sql_str);
 #endif
 
-	// log
+	// 更新wifi user log
 	snprintf(sql_str, 1023, "UPDATE wifi_user_log SET complete = true, disconn_time = CURRENT_TIMESTAMP,"
 			" online_time = TRUNC(EXTRACT(EPOCH FROM AGE(CURRENT_TIMESTAMP, conn_time)) / 60) "
 			"WHERE wu_id = %d AND complete = false", wu_id);

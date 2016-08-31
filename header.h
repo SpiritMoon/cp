@@ -103,7 +103,7 @@ int get_acinfo(char* acname, unsigned int *acid, char* acip, int* acport);
 int get_wuid(unsigned int s_id, int type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id);
 int update_wifi_user(char* username, char* acip, char* usermac);
 int user_online(char* username, char* userip, char* acip, char* apmac);
-int user_offline(char* username, char* userip, char* acip, char* apmac);
+int user_offline(char* username, char* userip, char* acip);
 int insert_deadline(char* userip, char* acip, int acport, int discharged_time);
 void* loop_deadline_thread(void *fd);
 int exec_sql_test();

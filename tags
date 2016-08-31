@@ -276,7 +276,7 @@ user_mp_list_init	user_mp_list.c	/^void user_mp_list_init()$/;"	f
 user_mp_list_lock	user_mp_list.c	/^static pthread_mutex_t		user_mp_list_lock;$/;"	v	file:
 user_mp_list_node	user_mp_list.c	/^}user_mp_list_node;$/;"	t	typeref:struct:usermac_vs_wlanparameter	file:
 user_mp_list_node_size	user_mp_list.c	/^static unsigned int user_mp_list_node_size = sizeof(user_mp_list_node);$/;"	v	file:
-user_offline	exec_sql.c	/^int user_offline(char* username, char* userip, char* acip, char* apmac)$/;"	f
+user_offline	exec_sql.c	/^int user_offline(char* username, char* userip, char* acip)$/;"	f
 user_online	exec_sql.c	/^int user_online(char* username, char* userip, char* acip, char* apmac)$/;"	f
 usercode	server_mutual.c	/^	char* usercode;				\/\/ auth-tel：验证码，auth-wx：tid，auth-temp：空$/;"	m	struct:plat_para	file:
 userid	user_mp_list.c	/^	unsigned int		userid;$/;"	m	struct:usermac_vs_wlanparameter	file:
