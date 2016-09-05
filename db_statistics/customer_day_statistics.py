@@ -19,21 +19,6 @@ def conndb():
     cur = conn.cursor()
     return conn, cur
 
-def print_row_num(cur):
-    """
-    打印log表行数
-    """
-    print("\n* * * * * * Row Num * * * * * *")
-    cur.execute("SELECT COUNT(id) FROM wifi_user_log")
-    count = cur.fetchone()
-    print("wifi_user_log count: ", count[0])
-    cur.execute("SELECT COUNT(id) FROM wifi_user_log_backup")
-    count = cur.fetchone()
-    print("wifi_user_log_backup count: ", count[0])
-    print("* * * * * * Row Num * * * * * *\n")
-
-
-
 def create_store_day_stat_row(conn, cur, str_yesterday):
     """
     创建store_day_statistics的昨日记录
