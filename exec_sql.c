@@ -303,8 +303,8 @@ int update_wifi_user(char* username, char* acip, char* usermac)
 
 	PQclear(sql_res);
 
-	
-	if( strcmp(sqlmac, usermac) ){
+	// 加一个mac长度的判断，	
+	if( strcmp(sqlmac, usermac) && strlen(sqlmac) != 12 ){
 
 		snprintf(sql_str, 1023, "SELECT id FROM ac WHERE ip = '%s'", acip);
 		if( sql_exec_select(conn, sql_str, &sql_res) ){

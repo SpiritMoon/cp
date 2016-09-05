@@ -53,6 +53,8 @@ if __name__ == "__main__":
     然后插入或者更新到store_day_statistics表中
     操作完成后，将已统计的数据转移到备份数据表中
     """
+    print( time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), " -- ", "select store id and day in wifi_user_log...")
+    
     # 按照门店id 和 日期将表wifi_user_log进行分组，并统计出平均在线时间和用户数
     cur.execute("""SELECT s_id, EXTRACT(YEAR FROM conn_time), EXTRACT(MONTH FROM conn_time), EXTRACT(DAY FROM conn_time), AVG(online_time), COUNT(id)
             FROM wifi_user_log
@@ -74,7 +76,6 @@ if __name__ == "__main__":
                 online_time >= 60 AND online_time < 120, online_time >= 120 AND online_time < 240, online_time >= 240"""
                 % store[0:4])
         ots = cur.fetchall()
-        print("online time duration group:", ots)
         for ot in ots:
             if ot[0] < 10:
                 ot_duration_group[0] = ot[1]
@@ -99,7 +100,6 @@ if __name__ == "__main__":
                 GROUP BY EXTRACT(HOUR FROM conn_time)"""
                 % store[0:4])
         conn_hours = cur.fetchall()
-        print("conn time group hour:", conn_hours)
         for conn_hour in conn_hours:
             conn_hour_num[ int(conn_hour[0]) ] = conn_hour[1]
 
@@ -185,27 +185,29 @@ if __name__ == "__main__":
     #end for
     
     """
-    统计每日的新增人数
+    统计昨日的新增人数
     """
-    cur.execute("""SELECT id, s_id, day
-            FROM store_day_statistics
-            WHERE new_per_num IS NULL""")
-    stores = cur.fetchall()
-    for store in stores:
+    
+    str_yesterday = time.strftime("%Y-%m-%d", time.localtime(time.time() - 24 * 60 * 60))
+    print( time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), " -- ", "select %s new per num..." % str_yesterday )
+    
+    cur.execute("""SELECT id FROM store""")
+    sids = cur.fetchall()
+    for sid in sids:
         # 查询出没有数据的当天新增的用户数量
         cur.execute("""SELECT COUNT(id)
                 FROM wifi_user
                 WHERE s_id = %d AND created_at >= '%s 0:0:0' AND created_at <= '%s 23:59:59'"""
-                % (store[1], store[2], store[2]) )
+                % (sid[0], str_yesterday, str_yesterday) )
         new_per_num = cur.fetchone()
 
-        print("s_id %d -- %s : %d" % (store[1], store[2], new_per_num[0]))
+        print("s_id %d -- %d" % (sid[0], new_per_num[0]))
 
         # 更新到数据表中
         cur.execute("""UPDATE store_day_statistics
                 SET new_per_num = %d
-                WHERE id = %d"""
-                % (new_per_num[0], store[0]) )
+                WHERE s_id = %d AND day = '%s'"""
+                % (new_per_num[0], sid[0], str_yesterday) )
     conn.commit()
 
     """
@@ -224,7 +226,16 @@ if __name__ == "__main__":
     conn.commit()
 
 
-
+    """
+    统计最近30天，用户的上网次数
+    """
+    cur.execute("""SELECT MIN(num), COUNT(num) FROM 
+            (SELECT COUNT(id) AS num
+            FROM wifi_user_log_backup
+            WHERE s_id = 6 AND conn_time >= CURRENT_TIMESTAMP - INTERVAL '31 Days'
+            GROUP BY wu_id
+            ) AS nums
+            GROUP BY num = 1, num >1 AND num < 5, num >=5 AND num < 10, num > 10""")
 
 
 

@@ -159,6 +159,9 @@ child	cJSON.h	/^	struct cJSON *child;		\/* An array or object item will have a c
 client	header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:portal_recv	typeref:struct:portal_recv::sockaddr_in
 client	header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:radius_recv	typeref:struct:radius_recv::sockaddr_in
 code	header.h	/^	unsigned char code;$/;"	m	struct:radius_bag
+conn_hour_num	db_statistics/store_day_statistics.py	/^        conn_hour_num = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]$/;"	v
+conn_hours	db_statistics/store_day_statistics.py	/^        conn_hours = cur.fetchall()$/;"	v
+conndb	db_statistics/store_day_statistics.py	/^def conndb():$/;"	f
 create_reference	cJSON.c	/^static cJSON *create_reference(cJSON *item) {cJSON *ref=cJSON_New_Item();if (!ref) return 0;memcpy(ref,item,sizeof(cJSON));ref->string=0;ref->type|=cJSON_IsReference;ref->next=ref->prev=0;return ref;}$/;"	f	file:
 ep	cJSON.c	/^static const char *ep;$/;"	v	file:
 errCode	header.h	/^	unsigned char errCode;		\/\/ ErrCode字段和Type字段一起表示一定的意义，长度为 1字节$/;"	m	struct:portal_ac
@@ -173,6 +176,7 @@ get_curr_date_str	utils.c	/^void get_curr_date_str(char* buf)$/;"	f
 get_curr_time_str	utils.c	/^void get_curr_time_str(char* buf)$/;"	f
 get_plat_para	server_mutual.c	/^int get_plat_para(cJSON *json, struct plat_para *para)$/;"	f
 get_wuid	exec_sql.c	/^int get_wuid(unsigned int s_id, int type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id)$/;"	f
+id	db_statistics/store_day_statistics.py	/^        id = cur.fetchone()$/;"	v
 identifier	header.h	/^	unsigned char identifier;$/;"	m	struct:radius_bag
 insert_deadline	exec_sql.c	/^int insert_deadline(char* userip, char* acip, int acport, int discharged_time)$/;"	f
 len	header.h	/^	unsigned char len;$/;"	m	struct:portal_ac_attr
@@ -203,9 +207,12 @@ mac_change_12	utils.c	/^int mac_change_12(char* dest, char* src)$/;"	f
 mac_change_17	utils.c	/^int mac_change_17(char* dest, const char* src)$/;"	f
 main	main.c	/^int main(int argc, char** argv)$/;"	f
 malloc_fn	cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
+new_per_num	db_statistics/store_day_statistics.py	/^        new_per_num = cur.fetchone()$/;"	v
 next	cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
 next	list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::list_head
 node	user_mp_list.c	/^	struct list_head	node;$/;"	m	struct:usermac_vs_wlanparameter	typeref:struct:usermac_vs_wlanparameter::list_head	file:
+ot_duration_group	db_statistics/store_day_statistics.py	/^        ot_duration_group = [0, 0, 0, 0, 0, 0]$/;"	v
+ots	db_statistics/store_day_statistics.py	/^        ots = cur.fetchall()$/;"	v
 pap_chap	header.h	/^	unsigned char pap_chap;		\/\/ 认证方式，长度为 1 字节$/;"	m	struct:portal_ac
 parse_array	cJSON.c	/^static const char *parse_array(cJSON *item,const char *value)$/;"	f	file:
 parse_number	cJSON.c	/^static const char *parse_number(cJSON *item,const char *num)$/;"	f	file:
@@ -227,6 +234,7 @@ prev	list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:str
 print_array	cJSON.c	/^static char *print_array(cJSON *item,int depth,int fmt)$/;"	f	file:
 print_number	cJSON.c	/^static char *print_number(cJSON *item)$/;"	f	file:
 print_object	cJSON.c	/^static char *print_object(cJSON *item,int depth,int fmt)$/;"	f	file:
+print_row_num	db_statistics/store_day_statistics.py	/^def print_row_num(cur):$/;"	f
 print_string	cJSON.c	/^static char *print_string(cJSON *item)	{return print_string_ptr(item->valuestring);}$/;"	f	file:
 print_string_ptr	cJSON.c	/^static char *print_string_ptr(const char *str)$/;"	f	file:
 print_value	cJSON.c	/^static char *print_value(cJSON *item,int depth,int fmt)$/;"	f	file:
@@ -243,6 +251,7 @@ radius13_udp_sockfd_lock	radius.c	/^static pthread_mutex_t	radius13_udp_sockfd_l
 radius_attr	header.h	/^struct radius_attr{$/;"	s
 radius_bag	header.h	/^struct radius_bag{$/;"	s
 radius_recv	header.h	/^struct radius_recv{$/;"	s
+reconds	db_statistics/store_day_statistics.py	/^        reconds = cur.fetchall()$/;"	v
 recv_ret	header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:portal_recv
 recv_ret	header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:radius_recv
 reqID	header.h	/^	unsigned short reqID;		\/\/ 2个字节，由AC设备随机生成$/;"	m	struct:portal_ac
@@ -250,6 +259,7 @@ res_username	utils.c	/^int res_username(char* username, int* wu_id, int* login_t
 rsv	header.h	/^	unsigned char rsv;			\/\/ 保留字段，长度为 1 字节，在所有报文中值为 0$/;"	m	struct:portal_ac
 run	main.c	/^void run()$/;"	f
 serialNo	header.h	/^	unsigned short serialNo;	\/\/ 报文的序列号，长度为 2 字节$/;"	m	struct:portal_ac
+sids	db_statistics/store_day_statistics.py	/^    sids = cur.fetchall()$/;"	v
 skip	cJSON.c	/^static const char *skip(const char *in) {while (in && *in && (unsigned char)*in<=32) in++; return in;}$/;"	f	file:
 sql_destory	postgresql.c	/^void sql_destory(PGconn *conn)$/;"	f
 sql_exec	postgresql.c	/^int sql_exec(PGconn *conn, char *sql_str)$/;"	f
@@ -258,6 +268,7 @@ sql_getvalue_string	postgresql.c	/^char* sql_getvalue_string(PGresult *res, int 
 sql_init	postgresql.c	/^PGconn* sql_init()$/;"	f
 sql_test	postgresql.c	/^void sql_test()$/;"	f
 ssid	server_mutual.c	/^	char* ssid;					\/\/ ssid$/;"	m	struct:plat_para	file:
+stores	db_statistics/store_day_statistics.py	/^    stores = cur.fetchall()$/;"	v
 string	cJSON.h	/^	char *string;				\/* The item's name string, if this item is the child of, or is in the list of subitems of an object. *\/$/;"	m	struct:cJSON
 suffix_object	cJSON.c	/^static void suffix_object(cJSON *prev,cJSON *item) {prev->next=item;item->prev=prev;}$/;"	f	file:
 type	cJSON.h	/^	int type;					\/* The type of the item, as above. *\/$/;"	m	struct:cJSON
