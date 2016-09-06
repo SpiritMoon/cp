@@ -15,7 +15,7 @@ def conndb():
     """
     连接数据库，并建立Cursor对象
     """
-    conn = psycopg2.connect(database="wifi", user="postgres", password="Zzwx13869121158", host="139.129.42.237", port="5432")
+    conn = psycopg2.connect(database="wifi", user="postgres", password="Zzwx13869121158", host="127.0.0.1", port="5432")
     cur = conn.cursor()
     return conn, cur
 
@@ -163,7 +163,8 @@ def stat_wifi_log(conn, cur):
                     hour_num_20 = hour_num_20 + %d,
                     hour_num_21 = hour_num_21 + %d,
                     hour_num_22 = hour_num_22 + %d,
-                    hour_num_23 = hour_num_23 + %d
+                    hour_num_23 = hour_num_23 + %d,
+                    updated_at = CURRENT_TIMESTAMP
                     WHERE id = %d"""
                     % (store[4:6] + store[5:6] + store[5:6] + tuple(ot_duration_group) + tuple(conn_hour_num) + tuple(id)) )
 
