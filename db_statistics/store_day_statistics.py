@@ -48,16 +48,10 @@ def create_store_day_stat_row(conn, cur, str_yesterday):
         id = cur.fetchone()
         if id is None:
             # 不存在则插入记录
-            cur.execute("""INSERT INTO store_day_statistics
-                    (s_id, day, per_capita_duration, per_num,
-                    duration_0_10_per_num, duration_10_30_per_num, duration_30_60_per_num, duration_60_120_per_num, duration_120_240_per_num, duration_240_max_per_num,
-                    hour_num_0, hour_num_1, hour_num_2, hour_num_3, hour_num_4, hour_num_5, hour_num_6, hour_num_7, hour_num_8, hour_num_9, hour_num_10, hour_num_11,
-                    hour_num_12, hour_num_13, hour_num_14, hour_num_15, hour_num_16, hour_num_17, hour_num_18, hour_num_19, hour_num_20, hour_num_21, hour_num_22, hour_num_23)
-                    VALUES(%d, '%s', 0, 0,
-                    0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)"""
+            cur.execute("""INSERT INTO store_day_statistics(s_id, day)
+                    VALUES(%d, '%s')"""
                     % (sid[0], str_yesterday) )
+    conn.commit()
     return sids
 
 def stat_wifi_log(conn, cur):
