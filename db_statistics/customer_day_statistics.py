@@ -197,8 +197,9 @@ def stat_store_table(conn, cur, cids):
                 SET per_capita_duration = %0.2f,
                 per_num = %d,
                 last30_conn_num_stat = '%d,%d,%d,%d'
+                WHERE id = %d
                 """
-                %(per_capita_duration, per_num, last30_1, last30_2, last30_5, last30_10) )
+                %(per_capita_duration, per_num, last30_1, last30_2, last30_5, last30_10, cid[0]) )
     conn.commit()
 
 if __name__ == "__main__":

@@ -210,7 +210,7 @@ def stat_new_per_num(conn, cur, str_yesterday, sids):
 
         # 更新到数据表中
         cur.execute("""UPDATE store_day_statistics
-                SET new_per_num = %d
+                SET new_per_num = %d, updated_at = CURRENT_TIMESTAMP
                 WHERE s_id = %d AND day = '%s'"""
                 % (new_per_num[0], sid[0], str_yesterday) )
     conn.commit()
