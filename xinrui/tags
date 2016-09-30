@@ -1,0 +1,345 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ACK_AUTH	header.h	122;"	d
+ACK_CHALLENGE	header.h	120;"	d
+ACK_INFO	header.h	129;"	d
+ACK_LOGOUT	header.h	125;"	d
+AFF_ACK_AUTH	header.h	126;"	d
+CC	Makefile	/^CC=gcc$/;"	m
+Challenge	header.h	134;"	d
+ChapPassWord	header.h	135;"	d
+DB_HOSTADDR	header.h	20;"	d
+DB_NAME	header.h	17;"	d
+DB_PASSWORD	header.h	19;"	d
+DB_USERNAME	header.h	18;"	d
+DEPEND	Makefile	/^DEPEND=exec_sql.o postgresql.o main.o utils.o user_mp_list.o logs.o net.o server_mutual.o radius.o portal.o cJSON.o$/;"	m
+EXEC_SQL_DEBUG	exec_sql.c	9;"	d	file:
+INIT_LIST_HEAD	list.h	/^static inline void INIT_LIST_HEAD(struct list_head *list)$/;"	f
+IS_DAEMON_EXIST	main.c	8;"	d	file:
+LIB	Makefile	/^LIB=-lpthread -lm -lpq -lcrypto$/;"	m
+LIST_HEAD	list.h	22;"	d
+LIST_HEAD_INIT	list.h	20;"	d
+LOGIN_TYPE_PHONE	header.h	26;"	d
+LOGIN_TYPE_TEMP	header.h	29;"	d
+LOGIN_TYPE_WHITE	header.h	28;"	d
+LOGIN_TYPE_WX	header.h	27;"	d
+LOGS_MAX_SIZE	header.h	10;"	d
+LOOP_DEADLINE_INTERVAL	header.h	22;"	d
+MAKE	Makefile	/^MAKE=make$/;"	m
+MAX_EPOLL_NUM	header.h	13;"	d
+NTF_LOGOUT	header.h	127;"	d
+PORTAL_DEBUG	portal.c	8;"	d	file:
+PORTAL_RECV_PORT	portal.c	9;"	d	file:
+PassWord	header.h	133;"	d
+RADIUS12_UDP_PORT	radius.c	10;"	d	file:
+RADIUS13_UDP_PORT	radius.c	11;"	d	file:
+RADIUS_ATTR_TYPE_ACCT_AUTHENTIC	header.h	195;"	d
+RADIUS_ATTR_TYPE_ACCT_DELAY_TIME	header.h	191;"	d
+RADIUS_ATTR_TYPE_ACCT_INPUT_GIGAWORDS	header.h	200;"	d
+RADIUS_ATTR_TYPE_ACCT_INPUT_OCTETS	header.h	192;"	d
+RADIUS_ATTR_TYPE_ACCT_INPUT_PACKETS	header.h	197;"	d
+RADIUS_ATTR_TYPE_ACCT_OUTPUT_GIGAWORDS	header.h	201;"	d
+RADIUS_ATTR_TYPE_ACCT_OUTPUT_OCTETS	header.h	193;"	d
+RADIUS_ATTR_TYPE_ACCT_OUTPUT_PACKETS	header.h	198;"	d
+RADIUS_ATTR_TYPE_ACCT_SECCION_TIME	header.h	196;"	d
+RADIUS_ATTR_TYPE_ACCT_SESSION_ID	header.h	194;"	d
+RADIUS_ATTR_TYPE_ACCT_STATUS_TYPE	header.h	190;"	d
+RADIUS_ATTR_TYPE_ACCT_TERMINATE_CAUSE	header.h	199;"	d
+RADIUS_ATTR_TYPE_CALLED_STATION_ID	header.h	186;"	d
+RADIUS_ATTR_TYPE_CALLING_STATION_ID	header.h	187;"	d
+RADIUS_ATTR_TYPE_EVENT_TIMESTAMP	header.h	202;"	d
+RADIUS_ATTR_TYPE_FRAMED_IP_ADDRESS	header.h	184;"	d
+RADIUS_ATTR_TYPE_FRAMED_PROTOCOL	header.h	183;"	d
+RADIUS_ATTR_TYPE_NAS_IDENTIFIER	header.h	188;"	d
+RADIUS_ATTR_TYPE_NAS_IP_ADDRESS	header.h	180;"	d
+RADIUS_ATTR_TYPE_NAS_PORT	header.h	181;"	d
+RADIUS_ATTR_TYPE_NAS_PORT_ID	header.h	204;"	d
+RADIUS_ATTR_TYPE_NAS_PORT_TYPE	header.h	203;"	d
+RADIUS_ATTR_TYPE_PROXY_STATE	header.h	189;"	d
+RADIUS_ATTR_TYPE_SERVICE_TYPE	header.h	182;"	d
+RADIUS_ATTR_TYPE_USER_NAME	header.h	178;"	d
+RADIUS_ATTR_TYPE_USER_PASSWORD	header.h	179;"	d
+RADIUS_ATTR_TYPE_VENDOR_SPECIFIC	header.h	185;"	d
+RADIUS_BASIC_LEN	radius.c	/^unsigned int RADIUS_BASIC_LEN$/;"	v
+RADIUS_DEBUG	radius.c	8;"	d	file:
+RADIUS_SECRET	header.h	290;"	d
+RADIUS_SECRET_LEN	radius.c	/^unsigned int RADIUS_SECRET_LEN	= 0;	\/\/ radius密钥长度$/;"	v
+REQ_AUTH	header.h	121;"	d
+REQ_CHALLENGE	header.h	119;"	d
+REQ_INFO	header.h	128;"	d
+REQ_LOGOUT	header.h	123;"	d
+SERVER_MUTUAL_DEBUG	server_mutual.c	8;"	d	file:
+SOURCE	Makefile	/^SOURCE=exec_sql.c postgresql.c main.c utils.c user_mp_list.c logs.c net.c server_mutual.c radius.c portal.c cJSON.c$/;"	m
+ST_PORTAL_AC	header.h	/^}ST_PORTAL_AC;$/;"	t	typeref:struct:portal_ac
+ST_PORTAL_AC_ATTR	header.h	/^}ST_PORTAL_AC_ATTR;$/;"	t	typeref:struct:portal_ac_attr
+SendReqAuthAndRecv	portal.c	/^int SendReqAuthAndRecv(char* userip, char* usernum, char* usercode, char* ac_ip, int port)$/;"	f
+SendReqLogoutAndRecv	portal.c	/^int SendReqLogoutAndRecv(char* userip, char* ac_ip, int port)$/;"	f
+TARGET	Makefile	/^TARGET=cp.out$/;"	m
+TO_PLATFORM_PORT	header.h	15;"	d
+UDP_create	net.c	/^int UDP_create(int *sockfd)$/;"	f
+UDP_recv_block	net.c	/^int UDP_recv_block(int socket, unsigned char *rcvBuf, int slLen)$/;"	f
+UDP_send_block	net.c	/^int UDP_send_block(int socket, char* ip, int port, unsigned char *buf, int len)$/;"	f
+USER_MP_LIST_DEBUG	user_mp_list.c	9;"	d	file:
+UserName	header.h	132;"	d
+WRITE_LOG	header.h	11;"	d
+WT_HEADER_H	header.h	7;"	d
+WX_TEMP_DISCHARGED	header.h	24;"	d
+_LINUX_LIST_H	list.h	2;"	d
+__list_add	list.h	/^static inline void __list_add(struct list_head *new,$/;"	f
+__list_del	list.h	/^static inline void __list_del(struct list_head * prev, struct list_head * next)$/;"	f
+ac_attr	header.h	/^	char ac_attr[512];$/;"	m	struct:portal_ac
+addrlen	header.h	/^	socklen_t addrlen;				\/\/ 客户端地址长度$/;"	m	struct:portal_recv
+addrlen	header.h	/^	socklen_t addrlen;				\/\/ 客户端地址长度$/;"	m	struct:radius_recv
+apmac	server_mutual.c	/^	char* apmac;				\/\/ ap mac$/;"	m	struct:plat_para	file:
+attrNum	header.h	/^	unsigned char attrNum;		\/\/ 表示其后边可变长度的属性字段属性的个数，长度为 1 字节$/;"	m	struct:portal_ac
+attrVal	header.h	/^	unsigned char attrVal[253];$/;"	m	struct:portal_ac_attr
+attributes	header.h	/^	struct radius_attr attributes[0];$/;"	m	struct:radius_bag	typeref:struct:radius_bag::radius_attr
+authenticator	header.h	/^	unsigned char authenticator[16];$/;"	m	struct:radius_bag
+buf	header.h	/^	char buf[1024];					\/\/ radius数据包信息$/;"	m	struct:portal_recv
+buf	header.h	/^	char buf[1024];					\/\/ radius数据包信息$/;"	m	struct:radius_recv
+cJSON	cJSON.h	/^typedef struct cJSON {$/;"	s
+cJSON	cJSON.h	/^} cJSON;$/;"	t	typeref:struct:cJSON
+cJSON_AddFalseToObject	cJSON.h	121;"	d
+cJSON_AddItemReferenceToArray	cJSON.c	/^void	cJSON_AddItemReferenceToArray(cJSON *array, cJSON *item)						{cJSON_AddItemToArray(array,create_reference(item));}$/;"	f
+cJSON_AddItemReferenceToObject	cJSON.c	/^void	cJSON_AddItemReferenceToObject(cJSON *object,const char *string,cJSON *item)	{cJSON_AddItemToObject(object,string,create_reference(item));}$/;"	f
+cJSON_AddItemToArray	cJSON.c	/^void   cJSON_AddItemToArray(cJSON *array, cJSON *item)						{cJSON *c=array->child;if (!item) return; if (!c) {array->child=item;} else {while (c && c->next) c=c->next; suffix_object(c,item);}}$/;"	f
+cJSON_AddItemToObject	cJSON.c	/^void   cJSON_AddItemToObject(cJSON *object,const char *string,cJSON *item)	{if (!item) return; if (item->string) cJSON_free(item->string);item->string=cJSON_strdup(string);cJSON_AddItemToArray(object,item);}$/;"	f
+cJSON_AddNullToObject	cJSON.h	119;"	d
+cJSON_AddNumberToObject	cJSON.h	122;"	d
+cJSON_AddStringToObject	cJSON.h	123;"	d
+cJSON_AddTrueToObject	cJSON.h	120;"	d
+cJSON_Array	cJSON.h	39;"	d
+cJSON_CreateArray	cJSON.c	/^cJSON *cJSON_CreateArray()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_Array;return item;}$/;"	f
+cJSON_CreateBool	cJSON.c	/^cJSON *cJSON_CreateBool(int b)					{cJSON *item=cJSON_New_Item();if(item)item->type=b?cJSON_True:cJSON_False;return item;}$/;"	f
+cJSON_CreateDoubleArray	cJSON.c	/^cJSON *cJSON_CreateDoubleArray(double *numbers,int count)		{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
+cJSON_CreateFalse	cJSON.c	/^cJSON *cJSON_CreateFalse()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_False;return item;}$/;"	f
+cJSON_CreateFloatArray	cJSON.c	/^cJSON *cJSON_CreateFloatArray(float *numbers,int count)			{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
+cJSON_CreateIntArray	cJSON.c	/^cJSON *cJSON_CreateIntArray(int *numbers,int count)				{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateNumber(numbers[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
+cJSON_CreateNull	cJSON.c	/^cJSON *cJSON_CreateNull()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_NULL;return item;}$/;"	f
+cJSON_CreateNumber	cJSON.c	/^cJSON *cJSON_CreateNumber(double num)			{cJSON *item=cJSON_New_Item();if(item){item->type=cJSON_Number;item->valuedouble=num;item->valueint=(int)num;}return item;}$/;"	f
+cJSON_CreateObject	cJSON.c	/^cJSON *cJSON_CreateObject()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_Object;return item;}$/;"	f
+cJSON_CreateString	cJSON.c	/^cJSON *cJSON_CreateString(const char *string)	{cJSON *item=cJSON_New_Item();if(item){item->type=cJSON_String;item->valuestring=cJSON_strdup(string);}return item;}$/;"	f
+cJSON_CreateStringArray	cJSON.c	/^cJSON *cJSON_CreateStringArray(const char **strings,int count)	{int i;cJSON *n=0,*p=0,*a=cJSON_CreateArray();for(i=0;a && i<count;i++){n=cJSON_CreateString(strings[i]);if(!i)a->child=n;else suffix_object(p,n);p=n;}return a;}$/;"	f
+cJSON_CreateTrue	cJSON.c	/^cJSON *cJSON_CreateTrue()						{cJSON *item=cJSON_New_Item();if(item)item->type=cJSON_True;return item;}$/;"	f
+cJSON_Delete	cJSON.c	/^void cJSON_Delete(cJSON *c)$/;"	f
+cJSON_DeleteItemFromArray	cJSON.c	/^void   cJSON_DeleteItemFromArray(cJSON *array,int which)			{cJSON_Delete(cJSON_DetachItemFromArray(array,which));}$/;"	f
+cJSON_DeleteItemFromObject	cJSON.c	/^void   cJSON_DeleteItemFromObject(cJSON *object,const char *string) {cJSON_Delete(cJSON_DetachItemFromObject(object,string));}$/;"	f
+cJSON_DetachItemFromArray	cJSON.c	/^cJSON *cJSON_DetachItemFromArray(cJSON *array,int which)			{cJSON *c=array->child;while (c && which>0) c=c->next,which--;if (!c) return 0;$/;"	f
+cJSON_DetachItemFromObject	cJSON.c	/^cJSON *cJSON_DetachItemFromObject(cJSON *object,const char *string) {int i=0;cJSON *c=object->child;while (c && cJSON_strcasecmp(c->string,string)) i++,c=c->next;if (c) return cJSON_DetachItemFromArray(object,i);return 0;}$/;"	f
+cJSON_False	cJSON.h	34;"	d
+cJSON_GetArrayItem	cJSON.c	/^cJSON *cJSON_GetArrayItem(cJSON *array,int item)				{cJSON *c=array->child;  while (c && item>0) item--,c=c->next; return c;}$/;"	f
+cJSON_GetArraySize	cJSON.c	/^int    cJSON_GetArraySize(cJSON *array)							{cJSON *c=array->child;int i=0;while(c)i++,c=c->next;return i;}$/;"	f
+cJSON_GetErrorPtr	cJSON.c	/^const char *cJSON_GetErrorPtr() {return ep;}$/;"	f
+cJSON_GetObjectItem	cJSON.c	/^cJSON *cJSON_GetObjectItem(cJSON *object,const char *string)	{cJSON *c=object->child; while (c && cJSON_strcasecmp(c->string,string)) c=c->next; return c;}$/;"	f
+cJSON_Hooks	cJSON.h	/^typedef struct cJSON_Hooks {$/;"	s
+cJSON_Hooks	cJSON.h	/^} cJSON_Hooks;$/;"	t	typeref:struct:cJSON_Hooks
+cJSON_InitHooks	cJSON.c	/^void cJSON_InitHooks(cJSON_Hooks* hooks)$/;"	f
+cJSON_IsReference	cJSON.h	42;"	d
+cJSON_NULL	cJSON.h	36;"	d
+cJSON_New_Item	cJSON.c	/^static cJSON *cJSON_New_Item()$/;"	f	file:
+cJSON_Number	cJSON.h	37;"	d
+cJSON_Object	cJSON.h	40;"	d
+cJSON_Parse	cJSON.c	/^cJSON *cJSON_Parse(const char *value)$/;"	f
+cJSON_Print	cJSON.c	/^char *cJSON_Print(cJSON *item)				{return print_value(item,0,1);}$/;"	f
+cJSON_PrintUnformatted	cJSON.c	/^char *cJSON_PrintUnformatted(cJSON *item)	{return print_value(item,0,0);}$/;"	f
+cJSON_ReplaceItemInArray	cJSON.c	/^void   cJSON_ReplaceItemInArray(cJSON *array,int which,cJSON *newitem)		{cJSON *c=array->child;while (c && which>0) c=c->next,which--;if (!c) return;$/;"	f
+cJSON_ReplaceItemInObject	cJSON.c	/^void   cJSON_ReplaceItemInObject(cJSON *object,const char *string,cJSON *newitem){int i=0;cJSON *c=object->child;while(c && cJSON_strcasecmp(c->string,string))i++,c=c->next;if(c){newitem->string=cJSON_strdup(string);cJSON_ReplaceItemInArray(object,i,newitem);}}$/;"	f
+cJSON_String	cJSON.h	38;"	d
+cJSON_True	cJSON.h	35;"	d
+cJSON__h	cJSON.h	24;"	d
+cJSON_free	cJSON.c	/^static void (*cJSON_free)(void *ptr) = free;$/;"	v	file:
+cJSON_malloc	cJSON.c	/^static void *(*cJSON_malloc)(size_t sz) = malloc;$/;"	v	file:
+cJSON_strcasecmp	cJSON.c	/^static int cJSON_strcasecmp(const char *s1,const char *s2)$/;"	f	file:
+cJSON_strdup	cJSON.c	/^static char* cJSON_strdup(const char* str)$/;"	f	file:
+child	cJSON.h	/^	struct cJSON *child;		\/* An array or object item will have a child pointer pointing to a chain of the items in the array\/object. *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
+cids	db_statistics/C_company_day_statistics.py	/^    cids = get_cids(conn, cur)$/;"	v
+cids	db_statistics/C_company_month_statistics.py	/^    cids = get_cids(cur)$/;"	v
+cids	db_statistics/customer_day_statistics.py	/^    cids = get_cids(conn, cur)$/;"	v
+client	header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:portal_recv	typeref:struct:portal_recv::sockaddr_in
+client	header.h	/^	struct sockaddr_in client;		\/\/ 客户端地址信息$/;"	m	struct:radius_recv	typeref:struct:radius_recv::sockaddr_in
+code	header.h	/^	unsigned char code;$/;"	m	struct:radius_bag
+conndb	db_statistics/C_company_day_statistics.py	/^def conndb():$/;"	f
+conndb	db_statistics/C_company_month_statistics.py	/^def conndb():$/;"	f
+conndb	db_statistics/customer_day_statistics.py	/^def conndb():$/;"	f
+conndb	db_statistics/store_day_statistics.py	/^def conndb():$/;"	f
+conndb	db_statistics/total_day_statistics.py	/^def conndb():$/;"	f
+create_reference	cJSON.c	/^static cJSON *create_reference(cJSON *item) {cJSON *ref=cJSON_New_Item();if (!ref) return 0;memcpy(ref,item,sizeof(cJSON));ref->string=0;ref->type|=cJSON_IsReference;ref->next=ref->prev=0;return ref;}$/;"	f	file:
+create_store_day_stat_row	db_statistics/store_day_statistics.py	/^def create_store_day_stat_row(conn, cur, str_yesterday):$/;"	f
+ep	cJSON.c	/^static const char *ep;$/;"	v	file:
+errCode	header.h	/^	unsigned char errCode;		\/\/ ErrCode字段和Type字段一起表示一定的意义，长度为 1字节$/;"	m	struct:portal_ac
+exec_sql_test	exec_sql.c	/^int exec_sql_test()$/;"	f
+firstByteMark	cJSON.c	/^static const unsigned char firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC };$/;"	v	file:
+free_fn	cJSON.h	/^      void (*free_fn)(void *ptr);$/;"	m	struct:cJSON_Hooks
+generateSerialNo	portal.c	/^unsigned short generateSerialNo()$/;"	f
+get_acinfo	exec_sql.c	/^int get_acinfo(char* acname, unsigned int *acid, char* acip, int* acport)$/;"	f
+get_apinfo	exec_sql.c	/^int get_apinfo(char* apmac, unsigned int *apid, char* domain, unsigned int *s_id)$/;"	f
+get_attr_info	radius.c	/^int get_attr_info(struct radius_bag* rb, unsigned char type, char *buf, unsigned int rb_len)$/;"	f
+get_cids	db_statistics/C_company_day_statistics.py	/^def get_cids(conn, cur):$/;"	f
+get_cids	db_statistics/C_company_month_statistics.py	/^def get_cids(cur):$/;"	f
+get_cids	db_statistics/customer_day_statistics.py	/^def get_cids(conn, cur):$/;"	f
+get_curr_date_str	utils.c	/^void get_curr_date_str(char* buf)$/;"	f
+get_curr_time_str	utils.c	/^void get_curr_time_str(char* buf)$/;"	f
+get_lastmonth	db_statistics/C_company_month_statistics.py	/^def get_lastmonth(cur):$/;"	f
+get_plat_para	server_mutual.c	/^int get_plat_para(cJSON *json, struct plat_para *para)$/;"	f
+get_wuid	exec_sql.c	/^int get_wuid(unsigned int s_id, int type, char* para1, char* para2, unsigned int acid, char* wlanparameter, unsigned int *wu_id)$/;"	f
+identifier	header.h	/^	unsigned char identifier;$/;"	m	struct:radius_bag
+insert_deadline	exec_sql.c	/^int insert_deadline(char* userip, char* acip, int acport, int discharged_time)$/;"	f
+len	header.h	/^	unsigned char len;$/;"	m	struct:portal_ac_attr
+length	header.h	/^	unsigned char length;$/;"	m	struct:radius_attr
+length	header.h	/^	unsigned short length;$/;"	m	struct:radius_bag
+list_add	list.h	/^static inline void list_add(struct list_head *new, struct list_head *head)$/;"	f
+list_add_tail	list.h	/^static inline void list_add_tail(struct list_head *new, struct list_head *head)$/;"	f
+list_del	list.h	/^static inline void list_del(struct list_head *entry)$/;"	f
+list_empty	list.h	/^static inline int list_empty(const struct list_head *head)$/;"	f
+list_for_each	list.h	112;"	d
+list_for_each_prev	list.h	120;"	d
+list_head	list.h	/^struct list_head {$/;"	s
+log_day	logs.c	/^int				log_day;			\/\/ 当前log文件对应的日期-天$/;"	v
+log_name	logs.c	/^char			log_name[32];		\/\/ log文件前缀名$/;"	v
+logs_buf	logs.c	/^static char logs_buf[2048];			\/\/ log内容$/;"	v	file:
+logs_create	logs.c	/^int logs_create()$/;"	f
+logs_destroy	logs.c	/^void logs_destroy()$/;"	f
+logs_fd	logs.c	/^int				logs_fd		= 0;	\/\/ 文件描述符$/;"	v
+logs_init	logs.c	/^int logs_init(char* prefix)$/;"	f
+logs_lock	logs.c	/^pthread_mutex_t logs_lock;			\/\/ log写入全局互斥锁$/;"	v
+logs_mytime	logs.c	/^static struct tm *logs_mytime;		\/\/ log时间$/;"	v	typeref:struct:tm	file:
+logs_ret	logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
+logs_strlen	logs.c	/^static int logs_strlen,logs_ret;	\/\/$/;"	v	file:
+logs_temp	logs.c	/^static char logs_temp[2048];		\/\/ log内容临时存放$/;"	v	file:
+logs_tm	logs.c	/^static time_t logs_tm;				\/\/ log时间$/;"	v	file:
+loop_deadline_thread	exec_sql.c	/^void* loop_deadline_thread(void *fd)$/;"	f
+mac_change_12	utils.c	/^int mac_change_12(char* dest, char* src)$/;"	f
+mac_change_17	utils.c	/^int mac_change_17(char* dest, const char* src)$/;"	f
+main	main.c	/^int main(int argc, char** argv)$/;"	f
+malloc_fn	cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
+next	cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
+next	list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::list_head
+node	user_mp_list.c	/^	struct list_head	node;$/;"	m	struct:usermac_vs_wlanparameter	typeref:struct:usermac_vs_wlanparameter::list_head	file:
+pap_chap	header.h	/^	unsigned char pap_chap;		\/\/ 认证方式，长度为 1 字节$/;"	m	struct:portal_ac
+parse_array	cJSON.c	/^static const char *parse_array(cJSON *item,const char *value)$/;"	f	file:
+parse_number	cJSON.c	/^static const char *parse_number(cJSON *item,const char *num)$/;"	f	file:
+parse_object	cJSON.c	/^static const char *parse_object(cJSON *item,const char *value)$/;"	f	file:
+parse_string	cJSON.c	/^static const char *parse_string(cJSON *item,const char *str)$/;"	f	file:
+parse_value	cJSON.c	/^static const char *parse_value(cJSON *item,const char *value)$/;"	f	file:
+plat_para	server_mutual.c	/^struct plat_para{$/;"	s	file:
+platform_conn_thread	server_mutual.c	/^void* platform_conn_thread(void *fd)$/;"	f
+platform_process	server_mutual.c	/^void* platform_process(void *fd)$/;"	f
+portal_ac	header.h	/^typedef struct portal_ac$/;"	s
+portal_ac_attr	header.h	/^typedef struct portal_ac_attr$/;"	s
+portal_conn_thread	portal.c	/^void* portal_conn_thread(void *fd)$/;"	f
+portal_pro_thread	portal.c	/^void* portal_pro_thread(void *fd)$/;"	f
+portal_recv	header.h	/^struct portal_recv{$/;"	s
+portal_recv_sockfd	portal.c	/^static int				portal_recv_sockfd		= 0;	\/\/ portal recv socket$/;"	v	file:
+portal_recv_sockfd_lock	portal.c	/^static pthread_mutex_t	portal_recv_sockfd_lock;		\/\/ radius socket 互斥锁$/;"	v	file:
+portal_test_thread	portal.c	/^void* portal_test_thread(void *fd)$/;"	f
+prev	cJSON.h	/^	struct cJSON *next,*prev;	\/* next\/prev allow you to walk array\/object chains. Alternatively, use GetArraySize\/GetArrayItem\/GetObjectItem *\/$/;"	m	struct:cJSON	typeref:struct:cJSON::
+prev	list.h	/^	struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::
+print_array	cJSON.c	/^static char *print_array(cJSON *item,int depth,int fmt)$/;"	f	file:
+print_number	cJSON.c	/^static char *print_number(cJSON *item)$/;"	f	file:
+print_object	cJSON.c	/^static char *print_object(cJSON *item,int depth,int fmt)$/;"	f	file:
+print_row_num	db_statistics/store_day_statistics.py	/^def print_row_num(cur):$/;"	f
+print_string	cJSON.c	/^static char *print_string(cJSON *item)	{return print_string_ptr(item->valuestring);}$/;"	f	file:
+print_string_ptr	cJSON.c	/^static char *print_string_ptr(const char *str)$/;"	f	file:
+print_value	cJSON.c	/^static char *print_value(cJSON *item,int depth,int fmt)$/;"	f	file:
+radius12_conn_thread	radius.c	/^void* radius12_conn_thread(void *fd)$/;"	f
+radius12_pro_recv	radius.c	/^int radius12_pro_recv(struct radius_recv *rr)$/;"	f
+radius12_pro_thread	radius.c	/^void* radius12_pro_thread(void *fd)$/;"	f
+radius12_udp_sockfd	radius.c	/^static int	radius12_udp_sockfd	= 0;	\/\/ radius12 socket$/;"	v	file:
+radius12_udp_sockfd_lock	radius.c	/^static pthread_mutex_t	radius12_udp_sockfd_lock;	\/\/ radius12 socket 互斥锁$/;"	v	file:
+radius13_conn_thread	radius.c	/^void* radius13_conn_thread(void *fd)$/;"	f
+radius13_pro_recv	radius.c	/^int radius13_pro_recv(struct radius_recv *rr)$/;"	f
+radius13_pro_thread	radius.c	/^void* radius13_pro_thread(void *fd)$/;"	f
+radius13_udp_sockfd	radius.c	/^static int	radius13_udp_sockfd	= 0;	\/\/ radius13 socket$/;"	v	file:
+radius13_udp_sockfd_lock	radius.c	/^static pthread_mutex_t	radius13_udp_sockfd_lock;	\/\/ radius13 socket 互斥锁$/;"	v	file:
+radius_attr	header.h	/^struct radius_attr{$/;"	s
+radius_bag	header.h	/^struct radius_bag{$/;"	s
+radius_recv	header.h	/^struct radius_recv{$/;"	s
+recv_ret	header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:portal_recv
+recv_ret	header.h	/^	unsigned int recv_ret;			\/\/ 接收到的长度$/;"	m	struct:radius_recv
+reqID	header.h	/^	unsigned short reqID;		\/\/ 2个字节，由AC设备随机生成$/;"	m	struct:portal_ac
+res_username	utils.c	/^int res_username(char* username, int* wu_id, int* login_type)$/;"	f
+rsv	header.h	/^	unsigned char rsv;			\/\/ 保留字段，长度为 1 字节，在所有报文中值为 0$/;"	m	struct:portal_ac
+run	main.c	/^void run()$/;"	f
+serialNo	header.h	/^	unsigned short serialNo;	\/\/ 报文的序列号，长度为 2 字节$/;"	m	struct:portal_ac
+sids	db_statistics/store_day_statistics.py	/^    sids = create_store_day_stat_row(conn, cur, str_yesterday)$/;"	v
+skip	cJSON.c	/^static const char *skip(const char *in) {while (in && *in && (unsigned char)*in<=32) in++; return in;}$/;"	f	file:
+sql_destory	postgresql.c	/^void sql_destory(PGconn *conn)$/;"	f
+sql_exec	postgresql.c	/^int sql_exec(PGconn *conn, char *sql_str)$/;"	f
+sql_exec_select	postgresql.c	/^int sql_exec_select(PGconn *conn, char *sql_str, PGresult** res)$/;"	f
+sql_getvalue_string	postgresql.c	/^char* sql_getvalue_string(PGresult *res, int h, int l)$/;"	f
+sql_init	postgresql.c	/^PGconn* sql_init()$/;"	f
+sql_test	postgresql.c	/^void sql_test()$/;"	f
+ssid	server_mutual.c	/^	char* ssid;					\/\/ ssid$/;"	m	struct:plat_para	file:
+stat_company_day_statistics	db_statistics/C_company_day_statistics.py	/^def stat_company_day_statistics(conn, cur, cids, str_yesterday):$/;"	f
+stat_company_day_statistics_for_date	db_statistics/C_company_day_statistics.py	/^def stat_company_day_statistics_for_date(conn, cur, day, cid):$/;"	f
+stat_company_month	db_statistics/C_company_month_statistics.py	/^def stat_company_month(conn, cur, cids, lm_year, lm_month):$/;"	f
+stat_company_table	db_statistics/total_day_statistics.py	/^def stat_company_table(conn, cur):$/;"	f
+stat_customer_day_statistics	db_statistics/customer_day_statistics.py	/^def stat_customer_day_statistics(conn, cur, cids, str_yesterday):$/;"	f
+stat_customer_day_statistics_for_date	db_statistics/customer_day_statistics.py	/^def stat_customer_day_statistics_for_date(conn, cur, day, cid):$/;"	f
+stat_customer_table	db_statistics/C_company_day_statistics.py	/^def stat_customer_table(conn, cur, cids):$/;"	f
+stat_last_30_days_conn_num	db_statistics/store_day_statistics.py	/^def stat_last_30_days_conn_num(conn, cur, sids):$/;"	f
+stat_new_ap_num	db_statistics/C_company_month_statistics.py	/^def stat_new_ap_num(cur, cid, lm_year, lm_month):$/;"	f
+stat_new_customer_num	db_statistics/C_company_month_statistics.py	/^def stat_new_customer_num(cur, cid, lm_year, lm_month):$/;"	f
+stat_new_cw_num	db_statistics/C_company_month_statistics.py	/^def stat_new_cw_num(cur, cid, lm_year, lm_month):$/;"	f
+stat_new_per_num	db_statistics/store_day_statistics.py	/^def stat_new_per_num(conn, cur, str_yesterday, sids):$/;"	f
+stat_new_store_num	db_statistics/C_company_month_statistics.py	/^def stat_new_store_num(cur, cid, lm_year, lm_month):$/;"	f
+stat_optimal_branch_company	db_statistics/C_company_month_statistics.py	/^def stat_optimal_branch_company(cur, cid, lm_year, lm_month):$/;"	f
+stat_optimal_customer_manager	db_statistics/C_company_month_statistics.py	/^def stat_optimal_customer_manager(cur, cid, lm_year, lm_month):$/;"	f
+stat_store_table	db_statistics/customer_day_statistics.py	/^def stat_store_table(conn, cur, cids):$/;"	f
+stat_total_day_statistics	db_statistics/total_day_statistics.py	/^def stat_total_day_statistics(conn, cur, str_yesterday):$/;"	f
+stat_total_day_statistics_for_date	db_statistics/total_day_statistics.py	/^def stat_total_day_statistics_for_date(conn, cur, day):$/;"	f
+stat_total_per_avg_time	db_statistics/store_day_statistics.py	/^def stat_total_per_avg_time(conn, cur):$/;"	f
+stat_wifi_log	db_statistics/store_day_statistics.py	/^def stat_wifi_log(conn, cur):$/;"	f
+str_yesterday	db_statistics/C_company_day_statistics.py	/^    str_yesterday = time.strftime("%Y-%m-%d", time.localtime(time.time() - 24 * 60 * 60))$/;"	v
+str_yesterday	db_statistics/customer_day_statistics.py	/^    str_yesterday = time.strftime("%Y-%m-%d", time.localtime(time.time() - 24 * 60 * 60))$/;"	v
+str_yesterday	db_statistics/store_day_statistics.py	/^    str_yesterday = time.strftime("%Y-%m-%d", time.localtime(time.time() - 24 * 60 * 60))$/;"	v
+str_yesterday	db_statistics/total_day_statistics.py	/^    str_yesterday = time.strftime("%Y-%m-%d", time.localtime(time.time() - 24 * 60 * 60))$/;"	v
+string	cJSON.h	/^	char *string;				\/* The item's name string, if this item is the child of, or is in the list of subitems of an object. *\/$/;"	m	struct:cJSON
+suffix_object	cJSON.c	/^static void suffix_object(cJSON *prev,cJSON *item) {prev->next=item;item->prev=prev;}$/;"	f	file:
+type	cJSON.h	/^	int type;					\/* The type of the item, as above. *\/$/;"	m	struct:cJSON
+type	header.h	/^	unsigned char type;			\/\/ 报文的类型，长度为 1 字节$/;"	m	struct:portal_ac
+type	header.h	/^	unsigned char type;$/;"	m	struct:portal_ac_attr
+type	header.h	/^	unsigned char type;$/;"	m	struct:radius_attr
+type	server_mutual.c	/^	char* type;					\/\/ 报文类型 auth-tel, auth-wx, auth-temp$/;"	m	struct:plat_para	file:
+update_wifi_user	exec_sql.c	/^int update_wifi_user(char* username, char* acip, char* usermac)$/;"	f
+userIP	header.h	/^	unsigned int userIP;		\/\/ Portal用户的IP地址，长度为 4 字节，其值由Portal Server根据其获得的IP地址填写$/;"	m	struct:portal_ac
+userPort	header.h	/^	unsigned short userPort;	\/\/ UserPort字段目前没有用到，长度为 2 字节，在所有报文中其值为0$/;"	m	struct:portal_ac
+user_mp_list_add	user_mp_list.c	/^void user_mp_list_add(unsigned int userid, char* usermac)$/;"	f
+user_mp_list_count	user_mp_list.c	/^static int user_mp_list_count = 0;$/;"	v	file:
+user_mp_list_find_and_del	user_mp_list.c	/^int user_mp_list_find_and_del(unsigned int userid, char* usermac)$/;"	f
+user_mp_list_head	user_mp_list.c	/^LIST_HEAD(			user_mp_list_head);$/;"	v
+user_mp_list_init	user_mp_list.c	/^void user_mp_list_init()$/;"	f
+user_mp_list_lock	user_mp_list.c	/^static pthread_mutex_t		user_mp_list_lock;$/;"	v	file:
+user_mp_list_node	user_mp_list.c	/^}user_mp_list_node;$/;"	t	typeref:struct:usermac_vs_wlanparameter	file:
+user_mp_list_node_size	user_mp_list.c	/^static unsigned int user_mp_list_node_size = sizeof(user_mp_list_node);$/;"	v	file:
+user_offline	exec_sql.c	/^int user_offline(char* username, char* userip, char* acip)$/;"	f
+user_online	exec_sql.c	/^int user_online(char* username, char* userip, char* acip, char* apmac)$/;"	f
+usercode	server_mutual.c	/^	char* usercode;				\/\/ auth-tel：验证码，auth-wx：tid，auth-temp：空$/;"	m	struct:plat_para	file:
+userid	user_mp_list.c	/^	unsigned int		userid;$/;"	m	struct:usermac_vs_wlanparameter	file:
+usermac	user_mp_list.c	/^	char				usermac[20];$/;"	m	struct:usermac_vs_wlanparameter	file:
+usermac_vs_wlanparameter	user_mp_list.c	/^typedef struct usermac_vs_wlanparameter{$/;"	s	file:
+usernum	server_mutual.c	/^	char* usernum;				\/\/ auth-tel：手机号，auth-wx：微信openid，auth-temp：空$/;"	m	struct:plat_para	file:
+value	header.h	/^	unsigned char value[0];$/;"	m	struct:radius_attr
+valuedouble	cJSON.h	/^	double valuedouble;			\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
+valueint	cJSON.h	/^	int valueint;				\/* The item's number, if type==cJSON_Number *\/$/;"	m	struct:cJSON
+valuestring	cJSON.h	/^	char *valuestring;			\/* The item's string, if type==cJSON_String *\/$/;"	m	struct:cJSON
+ver	header.h	/^	unsigned char ver;			\/\/ 协议的版本号，长度为 1 字节，目前定义的值为 0x01$/;"	m	struct:portal_ac
+wlanacip	server_mutual.c	/^	char* wlanacip;				\/\/ ac ip$/;"	m	struct:plat_para	file:
+wlanacname	server_mutual.c	/^	char* wlanacname;			\/\/ ac标识名称$/;"	m	struct:plat_para	file:
+wlanparameter	server_mutual.c	/^	char* wlanparameter;		\/\/ 加密的mac$/;"	m	struct:plat_para	file:
+wlanuserfirsturl	server_mutual.c	/^	char* wlanuserfirsturl;		\/\/ 访问的url$/;"	m	struct:plat_para	file:
+wlanuserip	server_mutual.c	/^	char* wlanuserip;			\/\/ 用户ip$/;"	m	struct:plat_para	file:
+wt_close_sock	net.c	/^void wt_close_sock(int *sock)$/;"	f
+wt_recv_block	net.c	/^int wt_recv_block(int sock, unsigned char *buf, int len\/*, int block_flag*\/)$/;"	f
+wt_send_block	net.c	/^int wt_send_block(int sock, unsigned char *buf, int len)$/;"	f
+wt_setblocking	net.c	/^int inline wt_setblocking(int sockfd)$/;"	f
+wt_setnonblocking	net.c	/^int inline wt_setnonblocking(int sockfd)$/;"	f
+wt_sock_init	net.c	/^int wt_sock_init(int *sockfd, int port, int listen_num)$/;"	f
+xyprintf	logs.c	/^int xyprintf(int err_no, char* format, ...)$/;"	f
+xyprintf_plat_para	server_mutual.c	/^void xyprintf_plat_para(struct plat_para *para)$/;"	f
+xyprintf_portal_ac	portal.c	/^void xyprintf_portal_ac(ST_PORTAL_AC* pa)$/;"	f
+xyprintf_radius_bag	radius.c	/^void xyprintf_radius_bag(struct radius_bag* rb, unsigned int rb_len)$/;"	f
